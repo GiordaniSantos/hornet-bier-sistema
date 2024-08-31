@@ -1,0 +1,110 @@
+
+
+/*----- MÁXIMO 475 -----*/
+@media (max-width:475px) {
+    .bt-whatsApp{
+        right: 19% !important;
+    }
+    #msg1{
+        right: 35% !important;
+    }
+    .masthead .masthead-avatar{
+        width: 22rem;
+    }
+}
+
+
+
+
+
+/*----- 476/575 -----*/
+@media (min-width: 476px) and (max-width: 575px) {
+    .bt-whatsApp{
+        right: 25% !important;
+    }
+    #msg1{
+        right: 39% !important;
+    }
+    .masthead .masthead-avatar{
+        width: 23rem;
+    }
+}
+
+
+
+
+
+/*----- 576/767 -----*/
+@media (min-width: 576px) and (max-width: 767px) {
+    .bt-whatsApp{
+        right: 23% !important;
+    }
+    #msg1{
+        right: 36% !important;
+    }
+}
+
+
+
+
+
+/*----- 768/991 -----*/
+@media (min-width: 768px) and (max-width: 991px) {
+    .bt-whatsApp{
+        right: 23% !important;
+    }
+    #msg1{
+        right: 36% !important;
+    }
+}
+
+
+
+
+
+/*----- 992/1199 -----*/
+@media (min-width: 992px) and (max-width: 1199px) {
+    .bt-whatsApp{
+        right: 34% !important;
+    }
+    #msg1{
+        right: 42% !important;
+    }
+}
+
+
+
+
+
+/*----- 1200/1399 -----*/
+@media (min-width: 1200px) and (max-width: 1399px) {
+
+}
+
+
+
+
+
+
+/*----- 1400/1679 -----*/
+@media (min-width: 1400px) and (max-width: 1679px) {
+ 
+}
+
+
+
+
+
+/*----- 1680/1920 -----*/
+@media (min-width: 1680px) and (max-width: 1920px) {
+
+}
+
+
+
+
+
+/*----- MAIS DE 1920 -----*/
+@media (min-width: 1921px) {
+
+}
