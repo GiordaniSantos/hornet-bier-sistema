@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ProblemaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,9 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
 
     //clientes
     Route::resource('/cliente', ClienteController::class);
+
+    //problemas
+    Route::resource('/problema', ProblemaController::class);
 
     //usuario
     Route::resource('/usuario', UserController::class);

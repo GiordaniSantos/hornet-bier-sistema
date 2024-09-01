@@ -87,7 +87,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ route('problema.index') }}">
                 <i class="fa-solid fa-circle-exclamation"></i>
                 <span>Problemas</span></a>
             </li>
