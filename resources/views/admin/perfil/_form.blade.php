@@ -10,7 +10,7 @@
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <input type="text" class="form-control form-control-user @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus
-                id="name" placeholder="Nome" value="{{ $user->name ?? old('name') }}">
+                id="name" placeholder="Nome" value="{{ old('name', $cliente->name) }}">
             @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -19,7 +19,7 @@
         </div>
         <div class="col-sm-6">
             <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="email" name="email" required autocomplete="email"
-                placeholder="Endereço de Email" value="{{ $user->email ?? old('email') }}">
+                placeholder="Endereço de Email" value="{{ old('email', $cliente->email) }}">
             @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

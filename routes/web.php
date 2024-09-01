@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,8 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
         return view('admin.table');
     })->name('table');
 
+    //clientes
+    Route::resource('/cliente', ClienteController::class);
 
     //usuario
     Route::resource('/usuario', UserController::class);

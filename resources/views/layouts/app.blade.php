@@ -81,7 +81,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ route('cliente.index') }}">
                 <i class="fa-solid fa-people-group"></i>
                 <span>Clientes</span></a>
             </li>
