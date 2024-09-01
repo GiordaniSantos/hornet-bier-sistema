@@ -7,11 +7,11 @@
         <h1 class="h3 mb-2 text-gray-800">Clientes</h1>
         <p class="mb-4">Aqui estão listados todos os seus Clientes, você pode adicionar, excluir e também realizar filtros de acordo com seu interesse.</p>
 
-        <a href="{{ route('cliente.create') }}" class="btn btn-primary btn-icon-split m-0">
+        <a href="{{ route('cliente.create') }}" class="btn btn-success btn-icon-split m-0">
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>
-            <span class="text">Criar</span>
+            <span class="text">Adicionar</span>
         </a><br>
         
         <div class="card shadow mb-4" style="margin-top: 1.5rem">

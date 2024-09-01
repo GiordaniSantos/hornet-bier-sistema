@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <a href="{{ route('problema.index') }}" class="btn btn-primary btn-icon-split m-0">
+        <a href="{{ route('problema.index') }}" class="btn btn-secondary btn-icon-split m-0">
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>

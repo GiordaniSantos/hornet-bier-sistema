@@ -31,5 +31,5 @@
         </div>
     </div>
 
-    <button class="btn btn-primary" type="submit">{{isset($problema->id) ? 'Atualizar' : 'Adicionar'}}</button>
+    <button class="btn btn-success" type="submit">{{isset($problema->id) ? 'Atualizar' : 'Adicionar'}}</button>
 </form>

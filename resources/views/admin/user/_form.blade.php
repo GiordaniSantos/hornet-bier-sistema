@@ -48,5 +48,5 @@
                 id="password-confirm">
         </div>
     </div>
-    <button class="btn btn-primary" type="submit">{{isset($user->id) ? 'Atualizar' : 'Criar'}}</button>
+    <button class="btn btn-success" type="submit">{{isset($user->id) ? 'Atualizar' : 'Adicionar'}}</button>
 </form>

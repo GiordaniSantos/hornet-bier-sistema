@@ -4,19 +4,19 @@
 
 @section('content')
 <div class="container-fluid">
-    <a href="{{ route('cliente.index') }}" class="btn btn-primary btn-icon-split m-0">
+    <a href="{{ route('cliente.index') }}" class="btn btn-secondary btn-icon-split m-0">
         <span class="icon text-white-50">
             <i class="fas fa-list"></i>
         </span>
         <span class="text">Listar</span>
     </a>
-    <a href="{{ route('cliente.edit', ['cliente' => $cliente->id]) }}" class="btn btn-primary btn-icon-split m-0">
+    <a href="{{ route('cliente.edit', ['cliente' => $cliente->id]) }}" class="btn btn-warning btn-icon-split m-0">
         <span class="icon text-white-50">
             <i class="fas fa-pen"></i>
         </span>
         <span class="text">Atualizar</span>
     </a>
-    <a href="{{ route('cliente.create') }}" class="btn btn-primary btn-icon-split m-0">
+    <a href="{{ route('cliente.create') }}" class="btn btn-success btn-icon-split m-0">
         <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
         </span>

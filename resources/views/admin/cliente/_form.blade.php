@@ -73,7 +73,7 @@
         </div>
     </div>
     
-    <button class="btn btn-primary" type="submit">{{isset($cliente->id) ? 'Atualizar' : 'Adicionar'}}</button>
+    <button class="btn btn-success" type="submit">{{isset($cliente->id) ? 'Atualizar' : 'Adicionar'}}</button>
 </form>
 
 <script type="text/javascript">
