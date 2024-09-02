@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProblemaController;
+use App\Http\Controllers\OrdemServicoController;
+use App\Models\OrdemServico;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,9 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
 
     //problemas
     Route::resource('/problema', ProblemaController::class);
+
+    //problemas
+    Route::resource('/ordem-servico', OrdemServicoController::class);
 
     //usuario
     Route::resource('/usuario', UserController::class);

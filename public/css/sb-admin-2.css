@@ -11284,3 +11284,7 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+.select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple{
+  border: 1px solid #d1d3e2 !important;
+}

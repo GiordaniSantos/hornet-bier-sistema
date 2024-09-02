@@ -43,5 +43,5 @@
                 id="password-confirm" placeholder="Confirmar Senha">
         </div>
     </div>
-    <button class="btn btn-primary" type="submit">Atualizar</button>
+    <button class="btn btn-success" type="submit">Atualizar</button>
 </form>

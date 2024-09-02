@@ -13,6 +13,7 @@ $(document).ready(function() {
         "previous": "Anterior",
         "next": "Próximo"
       }
-    }
+    },
+    "order": [[0, "desc"]]
   });
 });

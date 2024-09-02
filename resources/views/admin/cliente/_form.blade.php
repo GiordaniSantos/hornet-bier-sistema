@@ -14,7 +14,7 @@
             <label>Nome:</label>
             <input type="text" class="form-control form-control-user @error('nome') is-invalid @enderror" name="nome" required autocomplete="nome" autofocus
                 id="nome" value="{{ isset($cliente) ? old('nome', $cliente->nome) : old('nome') }}">
-            @error('name')
+            @error('nome')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>

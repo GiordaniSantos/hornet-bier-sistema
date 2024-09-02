@@ -75,7 +75,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ route('ordem-servico.index') }}">
                 <i class="fa-solid fa-gear"></i>
                 <span>Ordens de Serviço</span></a>
             </li>
