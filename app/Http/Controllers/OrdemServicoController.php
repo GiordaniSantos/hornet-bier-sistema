@@ -100,8 +100,8 @@ class OrdemServicoController extends Controller
      */
     public function destroy(OrdemServico $ordemServico)
     {
-        $ordemServico->delete();
         OrdemServicoProblema::where('ordem_servico_id', $ordemServico->id)->delete();
+        $ordemServico->delete();
 
         alert()->success('Concluído','Ordem de Serviço excluida com sucesso.');
         return redirect()->route('ordem-servico.index');

@@ -98,6 +98,17 @@ use App\Enums\StatusOrdemServico;
         </div>
     </div>
     <div class="form-group row">
+        <div class="col-sm-12 mb-3 mb-sm-0">
+            <label>Peças Utilizadas:</label>
+            <textarea id="pecas_utilizadas" name="pecas_utilizadas" rows="5" cols="33" class="pecas_utilizadas form-control form-control-user @error('pecas_utilizadas') is-invalid @enderror" autocomplete="pecas_utilizadas" autofocus>{{ isset($ordemServico) ? old('pecas_utilizadas', $ordemServico->pecas_utilizadas) : old('pecas_utilizadas') }}</textarea>
+            @error('pecas_utilizadas')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+    </div>
+    <div class="form-group row">
         @if(isset($ordemServico))
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <label>Data de Saída:</label>
@@ -163,6 +174,11 @@ use App\Enums\StatusOrdemServico;
     
     tinymce.init({
         selector:'textarea.descricao_servico',
+        language: 'pt_BR',
+    });
+
+    tinymce.init({
+        selector:'textarea.pecas_utilizadas',
         language: 'pt_BR',
     });
 </script>

@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProblemaController;
 use App\Http\Controllers\OrdemServicoController;
+use App\Http\Controllers\PdfController;
 use App\Models\OrdemServico;
 
 /*
@@ -28,6 +29,8 @@ Route::get('/admin', function(){
 });
 
 Auth::routes();
+
+Route::get('/orcamento-os/{id}', [PdfController::class, 'index'])->name('orcamento');
 
 Route::middleware(['auth'])->prefix('/admin')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

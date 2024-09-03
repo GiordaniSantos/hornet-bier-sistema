@@ -17,7 +17,8 @@ return new class extends Migration
             $table->char('status', 2)->nullable();
             $table->string('modelo', 300)->nullable();
             $table->string('serie', 200)->nullable();
-            $table->string('descricao_servico');
+            $table->text('descricao_servico')->nullable();
+            $table->text('pecas_utilizadas')->nullable();
             $table->date('data_saida')->nullable();
             $table->string('valor', 18)->nullable();
 

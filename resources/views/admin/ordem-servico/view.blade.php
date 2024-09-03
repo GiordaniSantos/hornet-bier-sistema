@@ -22,6 +22,12 @@
             </span>
             <span class="text">Adicionar</span>
         </a>
+        <a href="{{ route('orcamento', ['id' => $ordemServico->id]) }}" target="_blank" class="btn btn-info btn-icon-split m-0">
+            <span class="icon text-white-50">
+                <i class="fas fa-file-pdf"></i>
+            </span>
+            <span class="text">Gerar Orçamento</span>
+        </a>
         <br><br>
         <div class="card mb-4">
             <div class="card-header">Visualizar Ordem de Serviço: {{ $ordemServico->numero }}</div>
@@ -58,6 +64,10 @@
                     <tr>
                         <td>Serviços Prestados:</td>
                         <td><?=$ordemServico->descricao_servico?></td>
+                    </tr>
+                    <tr>
+                        <td>Peças Utilizadas:</td>
+                        <td><?=$ordemServico->pecas_utilizadas?></td>
                     </tr>
                     <tr>
                         <td>Valor:</td>
