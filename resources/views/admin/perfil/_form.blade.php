@@ -4,7 +4,7 @@
 
     <div class="form-group row" style="justify-content: center;">
 
-        <img class="rounded-circle" width="15%" src="/images/undraw_profile.svg" style="margin-top: 15px; margin-bottom:25px;">
+        <img class="rounded-circle" width="15%" src="/images/nova-logo.png" style="margin-top: 15px; margin-bottom:25px;">
    
     </div>
     <div class="form-group row">
