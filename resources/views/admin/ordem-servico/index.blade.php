@@ -43,6 +43,7 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" href="{{route('orcamento', ['id' => $ordemServico->id])}}" target="_blank">Gerar Orçamento</a>
+                                                <a class="dropdown-item" href="{{route('orcamento-zap', ['id' => $ordemServico->id])}}" target="_blank">Enviar Orçamento por Whatsapp</a>
                                                 <a class="dropdown-item" href="{{route('ordem-servico.edit', ['ordem_servico' => $ordemServico->id])}}">Atualizar</a>
                                                 <a class="dropdown-item" href="{{route('ordem-servico.show', ['ordem_servico' => $ordemServico->id])}}">Visualizar</a>
                                                 <a href="{{ route('ordem-servico.destroy', $ordemServico->id) }}" class="dropdown-item" data-confirm-delete="true">Deletar</a>

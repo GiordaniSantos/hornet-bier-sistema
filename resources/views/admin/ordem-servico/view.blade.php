@@ -20,13 +20,19 @@
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>
-            <span class="text">Adicionar</span>
+            <span class="text">Criar</span>
         </a>
         <a href="{{ route('orcamento', ['id' => $ordemServico->id]) }}" target="_blank" class="btn btn-info btn-icon-split m-0">
             <span class="icon text-white-50">
                 <i class="fas fa-file-pdf"></i>
             </span>
             <span class="text">Gerar Orçamento</span>
+        </a>
+        <a href="{{ route('orcamento-zap', ['id' => $ordemServico->id]) }}" target="_blank" class="btn btn-success btn-icon-split m-0">
+            <span class="icon text-white-50">
+                <i class="fa-brands fa-whatsapp"></i>
+            </span>
+            <span class="text">Enviar Orçamento por Whatsapp</span>
         </a>
         <br><br>
         <div class="card mb-4">

@@ -106,4 +106,22 @@ class OrdemServicoController extends Controller
         alert()->success('Concluído','Ordem de Serviço excluida com sucesso.');
         return redirect()->route('ordem-servico.index');
     }
+
+    public function enviarOrcamentoWhatsapp($id)
+    {
+        $ordemServico = OrdemServico::where(['id' => $id])->first();
+        if(!$ordemServico->cliente->celular){
+            alert()->error('Erro','O cliente não tem um celular cadastrado.');
+        }
+
+        $whats = preg_replace('/[^0-9]/i', '', $ordemServico->cliente->celular);
+        $mensagem = 'Olá '.$ordemServico->cliente->nome.', para acessar seu orçamento de ordem de serviço n° '.$ordemServico->numero.' e acompanhar o status do andamento do serviço basta acessar o seguinte link: '.route('orcamento', ['id' => $ordemServico->id]);
+
+        $msg = urlencode($mensagem);
+        $url = "https://web.whatsapp.com/send?phone=55{$whats}&text={$msg}";
+
+        return redirect()->away($url)->withHeaders([
+            'target' => '_blank',
+        ]);
+    }
 }

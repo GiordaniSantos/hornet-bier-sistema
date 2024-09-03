@@ -47,6 +47,8 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
     //problemas
     Route::resource('/ordem-servico', OrdemServicoController::class);
 
+    Route::get('/orcamento-whatsapp/{id}', [OrdemServicoController::class, 'enviarOrcamentoWhatsapp'])->name('orcamento-zap');
+
     //usuario
     Route::resource('/usuario', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'viewPerfil'])->name('perfil.view');
