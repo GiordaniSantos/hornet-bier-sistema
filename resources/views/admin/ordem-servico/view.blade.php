@@ -34,6 +34,12 @@
             </span>
             <span class="text">Enviar Orçamento por Whatsapp</span>
         </a>
+        <a href="{{ route('orcamento-email', ['id' => $ordemServico->id]) }}" class="btn btn-info btn-icon-split m-0">
+            <span class="icon text-white-50">
+                <i class="fa-solid fa-envelope"></i>
+            </span>
+            <span class="text">Enviar Orçamento por Email</span>
+        </a>
         <br><br>
         <div class="card mb-4">
             <div class="card-header">Visualizar Ordem de Serviço: {{ $ordemServico->numero }}</div>

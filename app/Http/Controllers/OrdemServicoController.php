@@ -124,4 +124,21 @@ class OrdemServicoController extends Controller
             'target' => '_blank',
         ]);
     }
+
+    public function enviarOrcamentoPorEmail($id)
+    {
+        $ordemServico = OrdemServico::where(['id' => $id])->first();
+        if(!$ordemServico->cliente->email){
+            alert()->error('Erro','O cliente não tem um email cadastrado.');
+        }
+
+        try {
+            \Illuminate\Support\Facades\Mail::send(new \App\Mail\OrdemServico($ordemServico));
+            alert()->success('Concluído','Email enviado com sucesso!');
+        } catch (\Exception $e) {
+            alert()->error('Erro', 'Erro ao enviar email: ' . $e->getMessage())->showConfirmButton('Confirmar', '#3085d6');
+        }
+
+        return redirect()->route('ordem-servico.show', ['ordem_servico' => $ordemServico->id]);
+    }
 }
