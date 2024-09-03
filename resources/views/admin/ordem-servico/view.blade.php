@@ -40,6 +40,12 @@
             </span>
             <span class="text">Enviar Orçamento por Email</span>
         </a>
+        <button type="button" class="btn btn-info btn-icon-split m-0" data-toggle="modal" data-target="#imagemModal">
+            <span class="icon text-white-50">
+                <i class="fa-solid fa-qrcode"></i>
+            </span>
+            <span class="text">Gerar QR</span>
+        </button>
         <br><br>
         <div class="card mb-4">
             <div class="card-header">Visualizar Ordem de Serviço: {{ $ordemServico->numero }}</div>
@@ -105,4 +111,48 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="imagemModal" tabindex="-1" role="dialog" aria-labelledby="imagemModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imagemModalLabel">QR-CODE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ route('qr-code', ['id' => $ordemServico->id]) }}" id="imagem" alt="QR-CODE">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-secondary" onclick="imprimirImagem()">Imprimir</button>
+                    <button type="button" class="btn btn-secondary" onclick="baixarImagem()">Baixar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function imprimirImagem() {
+            var imagem = document.getElementById('imagem').src;
+            var win = window.open('', '_blank', 'width=500,height=500');
+            win.document.write('<html><head><title>QR-CODE</title>');
+            win.document.write('</head><body style="text-align: center;">');
+            win.document.write('<img src="' + imagem + '" style="width: 100%; height: auto;">');
+            win.document.write('</body></html>');
+            
+            setTimeout(function() {
+                win.print();
+                win.close();
+            }, 2000);
+        }
+
+        function baixarImagem() {
+            var imagem = document.getElementById('imagem').src;
+            var link = document.createElement('a');
+            link.href = imagem;
+            link.download = 'qr-code.png';
+            link.click();
+        }
+    </script>
 @endsection

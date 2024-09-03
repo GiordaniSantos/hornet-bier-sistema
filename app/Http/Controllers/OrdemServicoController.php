@@ -7,6 +7,7 @@ use App\Models\OrdemServico;
 use App\Models\Problema;
 use App\Models\OrdemServicoProblema;
 use Illuminate\Http\Request;
+use LaravelQRCode\Facades\QRCode;
 
 class OrdemServicoController extends Controller
 {
@@ -140,5 +141,15 @@ class OrdemServicoController extends Controller
         }
 
         return redirect()->route('ordem-servico.show', ['ordem_servico' => $ordemServico->id]);
+    }
+
+    public function gerarQR($id)
+    {
+        $ordemServico = OrdemServico::where(['id' => $id])->first();
+        if(!$ordemServico){
+            alert()->error('Erro','Ordem de serviço não encontrado.');
+        }
+        $url = route('orcamento', ['id' => $ordemServico->id]);
+        return QRCode::url($url)->png();
     }
 }

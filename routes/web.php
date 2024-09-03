@@ -49,6 +49,8 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
 
     Route::get('/orcamento-whatsapp/{id}', [OrdemServicoController::class, 'enviarOrcamentoWhatsapp'])->name('orcamento-zap');
 
+    Route::get('/qr-code-orcamento/{id}', [OrdemServicoController::class, 'gerarQr'])->name('qr-code');
+
     Route::get('/orcamento-email/{id}', [OrdemServicoController::class, 'enviarOrcamentoPorEmail'])->name('orcamento-email');
 
     //usuario
