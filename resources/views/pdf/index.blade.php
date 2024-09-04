@@ -1,3 +1,15 @@
+<?php
+use App\Enums\StatusOrdemServico;
+
+$dataSaida = 'Previsão de Saída';
+if($ordemServico->status == StatusOrdemServico::Fechado->value || date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) < date('d/m/Y')){
+    $dataSaida = 'Data de Saída';
+}
+if($ordemServico->data_saida && date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) >= date('d/m/Y')){
+    $dataSaida = 'Previsão de Saída';
+}
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -67,7 +79,7 @@
             </tr>
             <tr>
                 <td><strong>Data de Entrada:</strong> {{ $ordemServico->created_at->format('d/m/Y') }}</td>
-                <td><strong>Data de Saída:</strong> {{ $ordemServico->data_saida ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : null }}</td>
+                <td><strong>{{ $dataSaida }}:</strong> {{ $ordemServico->data_saida ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : null }}</td>
                 <td><strong>Status:</strong> {{ $ordemServico->getStatusFormatado() }}</td>
                 <td><strong>Valor Total:</strong> R${{ $ordemServico->valor }}</td>
             </tr>
