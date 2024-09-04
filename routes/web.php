@@ -7,7 +7,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProblemaController;
 use App\Http\Controllers\OrdemServicoController;
 use App\Http\Controllers\PdfController;
-use App\Models\OrdemServico;
+use App\Http\Controllers\RelatorioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +52,10 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
     Route::get('/qr-code-orcamento/{id}', [OrdemServicoController::class, 'gerarQr'])->name('qr-code');
 
     Route::get('/orcamento-email/{id}', [OrdemServicoController::class, 'enviarOrcamentoPorEmail'])->name('orcamento-email');
+
+    //relatorio
+    Route::get('/relatorio-os-mes', [RelatorioController::class, 'dadosOSMes']);
+    Route::get('/relatorio-os-por-cliente', [RelatorioController::class, 'dadosOrdensPorCliente']);
 
     //usuario
     Route::resource('/usuario', UserController::class);

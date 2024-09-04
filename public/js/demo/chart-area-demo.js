@@ -1,7 +1,7 @@
 // Set new default font family and font color to mimic Bootstrap's default styling
 var dataMembresia;
 $.ajax({
-  url: 'relatorio-geral-dados-membresia',
+  url: 'relatorio-os-mes',
   type: 'GET',
   async: false,
   success: function(data){
@@ -45,16 +45,16 @@ var myLineChart = new Chart(ctx, {
   data: {
     labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
     datasets: [{
-      label: "Membros",
+      label: "Ordens de Serviço",
       lineTension: 0.3,
       backgroundColor: "rgba(78, 115, 223, 0.05)",
-      borderColor: "#015b41",
+      borderColor: "#000",
       pointRadius: 3,
-      pointBackgroundColor: "#02261c",
-      pointBorderColor: "#02261c",
+      pointBackgroundColor: "#ff3a00",
+      pointBorderColor: "#ff3a00",
       pointHoverRadius: 3,
-      pointHoverBackgroundColor: "#02261c",
-      pointHoverBorderColor: "#02261c",
+      pointHoverBackgroundColor: "#ff3a00",
+      pointHoverBorderColor: "#ff3a00",
       pointHitRadius: 10,
       pointBorderWidth: 2,
       data: dataMembresia,
