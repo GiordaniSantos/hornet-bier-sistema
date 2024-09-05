@@ -22,7 +22,7 @@
         </div>
         <div class="col-sm-6">
             <label>Endereço de Email:</label>
-            <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="email" name="email" required autocomplete="email" value="{{ isset($cliente) ? old('email', $cliente->email) : old('email') }}">
+            <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="email" name="email" autocomplete="email" value="{{ isset($cliente) ? old('email', $cliente->email) : old('email') }}">
             @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

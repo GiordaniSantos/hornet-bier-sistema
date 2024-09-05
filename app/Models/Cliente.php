@@ -19,7 +19,7 @@ class Cliente extends Model
             'nome' => 'required|max:250',
             'cpf_cnpj' => ['required', new CpfOuCnpj],
             'cidade' => 'max:200',
-            'email' => ['string', 'email', 'max:255', Rule::unique('clientes')->ignore($cliente ? $cliente->id : null)],
+            'email' => ['max:255', Rule::unique('clientes')->ignore($cliente ? $cliente->id : null)],
         ];
     }
 
