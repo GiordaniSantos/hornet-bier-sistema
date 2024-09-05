@@ -41,11 +41,11 @@
                     </tr>
                     <tr>
                         <td>Data Criação:</td>
-                        <td>{{ $problema->created_at->format('d/m/Y à H:i:s') }}</td>
+                        <td>{{ $problema->created_at->format('d/m/Y') }} às {{ $problema->created_at->format('H:i') }}h</td>
                     </tr>
                     <tr>
                         <td>Data Modificação:</td>
-                        <td>{{ $problema->updated_at->format('d/m/Y à H:i:s') }}</td>
+                        <td>{{ $problema->updated_at->format('d/m/Y') }} às {{ $problema->updated_at->format('H:i') }}h</td>
                     </tr>
                 </table>
             </div>

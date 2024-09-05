@@ -110,7 +110,16 @@ use App\Enums\StatusOrdemServico;
     </div>
     <div class="form-group row">
         @if(isset($ordemServico))
-            <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="col-sm-4 mb-3 mb-sm-0">
+                <label>Data de Entrada:</label>
+                <input type="datetime-local" class="form-control" required data-required-message="Por favor, selecione uma data" id="data_entrada" name="data_entrada" value="{{ isset($ordemServico) ? old('data_entrada', $ordemServico->created_at) : old('data_entrada') }}">
+                @error('data_entrada')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            <div class="col-sm-4 mb-3 mb-sm-0">
                 <label>Data de Saída:</label>
                 <input type="datetime-local" class="form-control" id="data_saida" name="data_saida" value="{{ isset($ordemServico) ? old('data_saida', $ordemServico->data_saida) : old('data_saida') }}">
                 @error('data_saida')
@@ -119,7 +128,7 @@ use App\Enums\StatusOrdemServico;
                     </span>
                 @enderror
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <label>Status:</label>
                 <select name="status" class="form-control form-control-user @error('status') is-invalid @enderror" id="status">
                     @foreach(StatusOrdemServico::cases() as $case)
@@ -139,7 +148,8 @@ use App\Enums\StatusOrdemServico;
 </form>
 
 <?php
-  $defaultDate = isset($ordemServico) && !empty($ordemServico->data_saida) ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : '';
+  $defaultDateDataEntrada = isset($ordemServico) && !empty($ordemServico->created_at) ? date('d/m/Y H:i', strtotime(str_replace('/', '-', $ordemServico->created_at))) : '';
+  $defaultDateDataSaida = isset($ordemServico) && !empty($ordemServico->data_saida) ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : '';
 ?>
 
 @if (isset($ordemServico) && count($ordemServico->problemas) > 0)
@@ -166,10 +176,19 @@ use App\Enums\StatusOrdemServico;
         reverse: true
     });
 
+    flatpickr("#data_entrada", {
+        locale: "pt",
+        dateFormat: "d/m/Y H:i",
+        enableTime: true,
+        allowInput: true,
+        defaultDate: "<?php echo $defaultDateDataEntrada; ?>"
+    });
+
     flatpickr("#data_saida", {
         locale: "pt",
         dateFormat: "d/m/Y",
-        defaultDate: "<?php echo $defaultDate; ?>"
+        allowInput: true,
+        defaultDate: "<?php echo $defaultDateDataSaida; ?>"
     });
     
     tinymce.init({

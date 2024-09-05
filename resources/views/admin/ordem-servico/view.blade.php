@@ -101,11 +101,11 @@
                     </tr>
                     <tr>
                         <td>Data de Criação da OS:</td>
-                        <td>{{ $ordemServico->created_at->format('d/m/Y à H:i:s') }}</td>
+                        <td>{{ $ordemServico->created_at->format('d/m/Y') }} às {{ $ordemServico->created_at->format('H:i') }}h</td>
                     </tr>
                     <tr>
                         <td>Data Modificação:</td>
-                        <td>{{ $ordemServico->updated_at->format('d/m/Y à H:i:s') }}</td>
+                        <td>{{ $ordemServico->updated_at->format('d/m/Y') }} às {{ $ordemServico->updated_at->format('H:i') }}h</td>
                     </tr>
                 </table>
             </div>

@@ -91,6 +91,9 @@ class OrdemServicoController extends Controller
         if($request->data_saida){
             $ordemServico->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
         }
+        if($request->data_entrada){
+            $ordemServico->created_at = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $request->data_entrada)));
+        }
         $ordemServico->update($request->all());
         alert()->success('Concluído','Ordem de Serviço atualizado com sucesso.');
         return redirect()->route('ordem-servico.show', ['ordem_servico' => $ordemServico->id]);
