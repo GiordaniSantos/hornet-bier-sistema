@@ -37,7 +37,7 @@ class ClienteController extends Controller
         if($clienteCriado){
             alert()->success('Concluído','Cliente adicionado com sucesso.');
         }
-        return view('admin.cliente.view', ['cliente' => $cliente]);
+        return view('admin.cliente.view', ['cliente' => $clienteCriado]);
     }
 
     /**
