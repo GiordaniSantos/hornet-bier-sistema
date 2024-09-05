@@ -22,7 +22,7 @@ use App\Http\Controllers\RelatorioController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('inicio');
 
 Route::get('/admin', function(){
     return redirect()->route('home');

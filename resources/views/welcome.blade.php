@@ -32,6 +32,7 @@
         </script>
     </head>
     <body id="home">
+        @include('sweetalert::alert')
         <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
             <div class="container">
                 <a href="#inicio" class="navbar-brand">

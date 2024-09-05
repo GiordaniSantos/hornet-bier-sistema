@@ -13,9 +13,10 @@ class PdfController extends Controller
     public function index($id)
     {
         $ordemServico = OrdemServico::where(['id' => $id])->first();
-        //dd($ordemServicos);
-        if(!$ordemServico){
 
+        if(!$ordemServico){
+            alert()->error('Erro','Ordem de Serviço não encontrada.');
+            return redirect()->route('inicio');
         }
         $html = view('pdf.index', ['ordemServico' => $ordemServico])->render();
         $pdf =  Pdf::loadHTML($html)->setPaper('a4', 'landscape')->setOption('isRemoteEnabled', true);
