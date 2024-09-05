@@ -55,7 +55,7 @@ class UserController extends Controller
         if($request->input('_token') != '' && $request->input('id') == ''){
            
             //validacao
-            $request->validate(User::rules(), User::feedback());
+            $request->validate(User::rules($user), User::feedback());
             if(isset($request->password)){
                 $user->password = Hash::make($request->password);
             }

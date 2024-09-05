@@ -52,11 +52,12 @@ class User extends Authenticatable
         ]);
     }
 
-    public static function rules(): array
+    public static function rules(User $user = null): array
     {
         return [
             'name' => ['string', 'max:255'],
             'email' => ['string', 'email', 'max:255', Rule::unique('users')->ignore(auth()->id())],
+            'email' => ['string', 'email', 'max:255', Rule::unique('users')->ignore($user ? $user->id : null)],
             'password' => ['string', 'nullable', 'min:8', 'confirmed'],
         ];
     }
