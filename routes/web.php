@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProblemaController;
+use App\Http\Controllers\PecaController;
 use App\Http\Controllers\OrdemServicoController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RelatorioController;
@@ -43,6 +44,9 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
 
     //problemas
     Route::resource('/problema', ProblemaController::class);
+
+    //problemas
+    Route::resource('/peca', PecaController::class);
 
     //problemas
     Route::resource('/ordem-servico', OrdemServicoController::class);
