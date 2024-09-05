@@ -14,7 +14,7 @@ class UserController extends Controller
     {
         $usuarios = User::orderBy('created_at', 'desc')->get();
 
-        confirmDelete('Deletar usuário!', "Você tem certeza que quer deletar este registro?");
+        confirmDelete('Deletar usuário administrativo!', "Você tem certeza que quer deletar este registro?");
         return view('admin.user.index', ['usuarios' => $usuarios]);
     }
 
@@ -35,7 +35,7 @@ class UserController extends Controller
             $user->email = $request->email;
         }
         if($user->save()){
-            alert()->success('Concluído','Perfil atualizado com sucesso.');
+            alert()->success('Concluído','Conta administrativa adicionada com sucesso.');
         }
         
         return redirect()->route('usuario.index');
@@ -64,9 +64,9 @@ class UserController extends Controller
             }
             $user->name = $request->name;
             if($user->save()){
-                alert()->success('Concluído','Perfil atualizado com sucesso.');
+                alert()->success('Concluído','Conta administrativa atualizada com sucesso.');
             }else{
-                alert()->error('ErrorAlert','Erro na atualização do Perfil.');
+                alert()->error('ErrorAlert','Erro na atualização do Conta administrativa.');
             }
         }
         
