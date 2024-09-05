@@ -11,7 +11,7 @@ class Cliente extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'cpf_cnpj', 'cidade', 'email', 'celular', 'telefone'];
+    protected $fillable = ['nome', 'cpf_cnpj', 'cidade', 'email', 'celular', 'celular_secundario', 'telefone'];
 
     public static function rules(Cliente $cliente = null): array
     {

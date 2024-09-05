@@ -48,8 +48,12 @@
                     <td>{{$cliente->cidade}}</td>
                 </tr>
                 <tr>
-                    <td>Celular:</td>
+                    <td>Celular Principal:</td>
                     <td>{{$cliente->celular}}</td>
+                </tr>
+                <tr>
+                    <td>Celular Secundário:</td>
+                    <td>{{$cliente->celular_secundario}}</td>
                 </tr>
                 <tr>
                     <td>Telefone:</td>

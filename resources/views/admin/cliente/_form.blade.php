@@ -53,8 +53,8 @@
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-sm-6">
-            <label>Celular:</label>
+        <div class="col-12 col-sm-4">
+            <label>Celular Principal:</label>
             <input type="text" class="form-control form-control-user @error('celular') is-invalid @enderror" id="celular" name="celular" autocomplete="celular" value="{{ isset($cliente) ? old('celular', $cliente->celular) : old('celular') }}">
             @error('celular')
                 <span class="invalid-feedback" role="alert">
@@ -62,8 +62,17 @@
                 </span>
             @enderror
         </div>
-        <div class="col-sm-6">
-            <label>Telefone:</label>
+        <div class="col-12 col-sm-4">
+            <label>Celular Secundário:</label>
+            <input type="text" class="form-control form-control-user @error('celular_secundario') is-invalid @enderror" id="celular_secundario" name="celular_secundario" autocomplete="celular_secundario" value="{{ isset($cliente) ? old('celular_secundario', $cliente->celular_secundario) : old('celular_secundario') }}">
+            @error('celular_secundario')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="col-12 col-sm-4">
+            <label>Telefone Fixo:</label>
             <input type="text" class="form-control form-control-user @error('telefone') is-invalid @enderror" id="telefone" name="telefone" autocomplete="telefone" value="{{ isset($cliente) ? old('telefone', $cliente->telefone) : old('telefone') }}">
             @error('telefone')
                 <span class="invalid-feedback" role="alert">
@@ -78,6 +87,7 @@
 
 <script type="text/javascript">
     $("#celular").mask("(00) 00000-0000");
+    $("#celular_secundario").mask("(00) 00000-0000");
     $("#telefone").mask("(00) 0000-0000");
   
     var options = {

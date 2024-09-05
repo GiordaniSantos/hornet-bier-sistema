@@ -37,7 +37,7 @@ class ClienteController extends Controller
         if($clienteCriado){
             alert()->success('Concluído','Cliente adicionado com sucesso.');
         }
-        return redirect()->route('cliente.index');
+        return view('admin.cliente.view', ['cliente' => $cliente]);
     }
 
     /**
@@ -64,7 +64,7 @@ class ClienteController extends Controller
         $request->validate(Cliente::rules($cliente), Cliente::feedback());
         $cliente->update($request->all());
         alert()->success('Concluído','Cliente atualizado com sucesso.');
-        return redirect()->route('cliente.index', ['cliente' => $cliente->id]);
+        return view('admin.cliente.view', ['cliente' => $cliente]);
     }
 
     /**
