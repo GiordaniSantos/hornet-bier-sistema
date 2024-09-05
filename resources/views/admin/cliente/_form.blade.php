@@ -33,7 +33,7 @@
     <div class="form-group row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <label>CPF/CNPJ:</label>
-            <input type="text" class="form-control form-control-user @error('cpf_cnpj') is-invalid @enderror" name="cpf_cnpj" required autocomplete="cpf_cnpj" autofocus
+            <input type="text" class="form-control form-control-user @error('cpf_cnpj') is-invalid @enderror" name="cpf_cnpj" autocomplete="cpf_cnpj" autofocus
                 id="cpf_cnpj" value="{{ isset($cliente) ? old('cpf_cnpj', $cliente->cpf_cnpj) : old('cpf_cnpj') }}">
             @error('cpf_cnpj')
                 <span class="invalid-feedback" role="alert">

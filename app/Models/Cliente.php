@@ -17,9 +17,9 @@ class Cliente extends Model
     {
         return [
             'nome' => 'required|max:250',
-            'cpf_cnpj' => ['required', new CpfOuCnpj],
+            //'cpf_cnpj' => ['required', new CpfOuCnpj],
             'cidade' => 'max:200',
-            'email' => ['max:255', Rule::unique('clientes')->ignore($cliente ? $cliente->id : null)],
+            //'email' => ['max:255', Rule::unique('clientes')->ignore($cliente ? $cliente->id : null)],
         ];
     }
 
@@ -29,8 +29,8 @@ class Cliente extends Model
             'required' => 'O campo :attribute deve ser preenchido',
             'nome.max' => 'O campo :attribute não pode ultrapassar 250 caracteres.',
             'cidade.max' => 'O campo :attribute não pode ultrapassar 200 caracteres.',
-            'email.max' => 'O campo email não pode ultrapassar 255 caracteres.',
-            'email.email' => 'O campo email deve ser do tipo Email.',
+            //'email.max' => 'O campo email não pode ultrapassar 255 caracteres.',
+            //'email.email' => 'O campo email deve ser do tipo Email.',
         ];
     }
 }
