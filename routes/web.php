@@ -28,7 +28,7 @@ Route::get('/admin', function(){
     return redirect()->route('home');
 });
 
-Auth::routes();
+Auth::routes(['register' => false, 'reset' => false, 'verify' => false, 'logout' => true]);
 
 Route::get('/orcamento-os/{id}', [PdfController::class, 'index'])->name('orcamento');
 
