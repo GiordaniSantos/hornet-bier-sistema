@@ -65,13 +65,6 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('ordem-servico.index') }}">
-                <i class="fa-solid fa-gear"></i>
-                <span>Ordens de Serviço</span></a>
-            </li>
-
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('cliente.index') }}">
                 <i class="fa-solid fa-people-group"></i>
@@ -82,6 +75,19 @@
                 <a class="nav-link" href="{{ route('problema.index') }}">
                 <i class="fa-solid fa-circle-exclamation"></i>
                 <span>Problemas</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('peca.index') }}">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <span>Peças</span></a>
+            </li>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('ordem-servico.index') }}">
+                <i class="fa-solid fa-gear"></i>
+                <span>Ordens de Serviço</span></a>
             </li>
 
             <li class="nav-item">
