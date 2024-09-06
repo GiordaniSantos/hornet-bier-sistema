@@ -12,12 +12,13 @@ class OrdemServico extends Model
 
     protected $table = 'ordem_servicos';
 
-    protected $fillable = ['status', 'modelo', 'serie', 'descricao_servico', 'valor', 'pecas_utilizadas', 'cliente_id'];
+    protected $fillable = ['status', 'modelo', 'serie', 'numero_motor', 'descricao_servico', 'valor', 'cliente_id'];
 
     public static function rules(): array
     {
         return [
             'modelo' => 'max:300',
+            'numero_motor' => 'max:300',
             'serie' => 'max:200',
             //'valor' => 'numeric',
             'cliente_id' => 'required|exists:clientes,id'
@@ -28,6 +29,7 @@ class OrdemServico extends Model
     {
         return [
             'required' => 'O campo :attribute deve ser preenchido',
+            'numero_motor.max' => 'O campo Número do Motor não pode ultrapassar 300 caracteres.',
             'modelo.max' => 'O campo :attribute não pode ultrapassar 300 caracteres.',
             'serie.max' => 'O campo :attribute não pode ultrapassar 200 caracteres.',
             'cliente_id.exists' => 'O cliente informado não existe!',
@@ -42,7 +44,7 @@ class OrdemServico extends Model
 
         static::saved(function ($model) {
             if (!$model->numero) {
-                $model->numero = $model->id.'/'.date('Y');
+                $model->numero = $model->id.'.'.$model->cliente->id.'.'.date('Y');
                 $model->save();
             }
             if (!$model->status) {
@@ -70,5 +72,10 @@ class OrdemServico extends Model
     public function problemas()
     {
         return $this->belongsToMany(Problema::class, 'ordem_servico_problemas', 'ordem_servico_id', 'problema_id');
+    }
+
+    public function pecas()
+    {
+        return $this->belongsToMany(Peca::class, 'ordem_servico_pecas', 'ordem_servico_id', 'peca_id')->withPivot('quantidade');
     }
 }

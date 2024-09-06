@@ -29,11 +29,7 @@ class HomeController extends Controller
         $totalOrdemServicos = OrdemServico::all()->count();
         $totalClientes = Cliente::all()->count();
         $totalUsers = User::all()->count();
-        $totalValorOrdemServicos = OrdemServico::all()->map(function ($ordemServico) {
-            $valor = str_replace('.', '', $ordemServico->valor);
-            $valor = str_replace(',', '.', $valor);
-            return (float) $valor;
-        })->sum();
+        $totalValorOrdemServicos = OrdemServico::sum('valor');
         
         return view('home', [
             'totalOrdemServicos' => $totalOrdemServicos,
