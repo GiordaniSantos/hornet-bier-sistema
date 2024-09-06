@@ -20,6 +20,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Nome</th>
                                 <th>email</th>
                                 <th>Data de Criação</th>
@@ -29,6 +30,7 @@
                         <tbody>
                             @foreach($usuarios as $usuario)
                                 <tr>
+                                    <td>{{$usuario->id}}</td>
                                     <td>{{$usuario->name}}</td>
                                     <td>{{$usuario->email}}</td>
                                     <td>{{$usuario->created_at->format('d/m/Y')}}</td>

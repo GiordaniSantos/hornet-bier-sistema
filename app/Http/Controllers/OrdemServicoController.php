@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\OrdemServico;
+use App\Models\OrdemServicoPeca;
 use App\Models\Problema;
 use App\Models\OrdemServicoProblema;
+use App\Models\Peca;
 use Illuminate\Http\Request;
 use LaravelQRCode\Facades\QRCode;
 
@@ -29,8 +31,9 @@ class OrdemServicoController extends Controller
     {
         $clientes = Cliente::all();
         $problemas = Problema::all();
+        $pecas = Peca::all();
 
-        return view('admin.ordem-servico.create', ['clientes' => $clientes, 'problemas' => $problemas]);
+        return view('admin.ordem-servico.create', ['clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas]);
     }
 
     /**
@@ -39,9 +42,23 @@ class OrdemServicoController extends Controller
     public function store(Request $request)
     {
         $request->validate(OrdemServico::rules(), OrdemServico::feedback());
+
         $ordemServico = new OrdemServico();
+        if($request->valor){
+            $valor = str_replace('.', '', $request->valor);
+            $valor = str_replace(',', '.', $valor);
+            $request['valor'] = $valor;
+        }
         $ordemServicoCriado = $ordemServico->create($request->all());
         if($ordemServicoCriado){
+            foreach($request->pecas as $peca){
+                $ordemPeca = new OrdemServicoPeca;
+                $ordemPeca->ordem_servico_id = $ordemServicoCriado->id;
+                $ordemPeca->peca_id = $peca['peca_id'];
+                $ordemPeca->quantidade = $peca['quantidade'];
+                $ordemPeca->save();
+            }
+
             foreach($request->problema_id as $problema){
                 $ordemProblema = new OrdemServicoProblema;
                 $ordemProblema->ordem_servico_id = $ordemServicoCriado->id;
@@ -58,6 +75,8 @@ class OrdemServicoController extends Controller
      */
     public function show(OrdemServico $ordemServico)
     {
+        confirmDelete('Deletar Ordem de Serviço!', "Você tem certeza que quer deletar este registro?");
+        
         return view('admin.ordem-servico.view', ['ordemServico' => $ordemServico]);
     }
 
@@ -68,8 +87,9 @@ class OrdemServicoController extends Controller
     {
         $clientes = Cliente::all();
         $problemas = Problema::all();
+        $pecas = Peca::all();
         
-        return view('admin.ordem-servico.edit', ['ordemServico' => $ordemServico, 'clientes' => $clientes, 'problemas' => $problemas]);
+        return view('admin.ordem-servico.edit', ['ordemServico' => $ordemServico, 'clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas]);
     }
 
     /**
@@ -77,7 +97,23 @@ class OrdemServicoController extends Controller
      */
     public function update(Request $request, OrdemServico $ordemServico)
     {   
+        //dd($request->pecas);
         $request->validate(OrdemServico::rules(), OrdemServico::feedback());
+        if($request->valor){
+            $valor = str_replace('.', '', $request->valor);
+            $valor = str_replace(',', '.', $valor);
+            $request['valor'] = $valor;
+        }
+
+        OrdemServicoPeca::where('ordem_servico_id', $request->idOs)->delete();
+
+        foreach($request->pecas as $peca){
+            $ordemPeca = new OrdemServicoPeca;
+            $ordemPeca->ordem_servico_id = $request->idOs;
+            $ordemPeca->peca_id = $peca['peca_id'];
+            $ordemPeca->quantidade = $peca['quantidade'];
+            $ordemPeca->save();
+        }
 
         OrdemServicoProblema::where('ordem_servico_id', $request->idOs)->delete();
   
@@ -105,6 +141,7 @@ class OrdemServicoController extends Controller
     public function destroy(OrdemServico $ordemServico)
     {
         OrdemServicoProblema::where('ordem_servico_id', $ordemServico->id)->delete();
+        OrdemServicoPeca::where('ordem_servico_id', $ordemServico->id)->delete();
         $ordemServico->delete();
 
         alert()->success('Concluído','Ordem de Serviço excluida com sucesso.');

@@ -20,6 +20,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Nome</th>
                                 <th>email</th>
                                 <th>CPF/CNPJ</th>
@@ -30,6 +31,7 @@
                         <tbody>
                             @foreach($clientes as $cliente)
                                 <tr>
+                                    <td>{{$cliente->id}}</td>
                                     <td>{{$cliente->nome}}</td>
                                     <td>{{$cliente->email}}</td>
                                     <td>{{$cliente->cpf_cnpj}}</td>

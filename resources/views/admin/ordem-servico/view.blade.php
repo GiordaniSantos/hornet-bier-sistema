@@ -68,6 +68,10 @@
                         <td>{{$ordemServico->serie}}</td>
                     </tr>
                     <tr>
+                        <td>Número do Motor:</td>
+                        <td>{{$ordemServico->numero_motor}}</td>
+                    </tr>
+                    <tr>
                         <td>Cliente:</td>
                         <td>{{$ordemServico->cliente->nome}}</td>
                     </tr>
@@ -80,16 +84,20 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Peças Utilizadas:</td>
+                        <td>
+                            @foreach($ordemServico->pecas as $peca)
+                                {{$peca->nome}} {{ $peca->pivot->quantidade }}x<br>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Serviços Prestados:</td>
                         <td><?=$ordemServico->descricao_servico?></td>
                     </tr>
                     <tr>
-                        <td>Peças Utilizadas:</td>
-                        <td><?=$ordemServico->pecas_utilizadas?></td>
-                    </tr>
-                    <tr>
-                        <td>Valor:</td>
-                        <td>R${{ $ordemServico->valor }}</td>
+                        <td>Valor Mão de Obra:</td>
+                        <td>R${{number_format($ordemServico->valor, 2, ',', '.')}}</td>
                     </tr>
                     <tr>
                         <td>Status:</td>

@@ -20,6 +20,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Número OS</th>
                                 <th>Cliente</th>
                                 <th>Modelo</th>
@@ -31,6 +32,7 @@
                         <tbody>
                             @foreach($ordemServicos as $ordemServico)
                                 <tr>
+                                    <td>{{$ordemServico->id}}</td>
                                     <td>{{$ordemServico->numero}}</td>
                                     <td>{{$ordemServico->cliente->nome}}</td>
                                     <td>{{$ordemServico->modelo}}</td>
