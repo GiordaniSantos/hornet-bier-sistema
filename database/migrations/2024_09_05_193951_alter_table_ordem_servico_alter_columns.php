@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('ordem_servicos', function (Blueprint $table) {
             $table->dropColumn('pecas_utilizadas');
             $table->string('numero_motor', 300)->nullable();
-            DB::statement("ALTER TABLE ordem_servicos ALTER COLUMN valor TYPE decimal(10, 2) USING (valor::decimal(10, 2))");
+            DB::statement("ALTER TABLE ordem_servicos CHANGE COLUMN valor valor DECIMAL(10, 2)");
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
         Schema::table('ordem_servicos', function (Blueprint $table) {
             $table->string('pecas_utilizadas');
             $table->dropColumn('numero_motor');
-            DB::statement("ALTER TABLE ordem_servicos ALTER COLUMN valor TYPE text USING valor::text");
+            DB::statement("ALTER TABLE ordem_servicos CHANGE COLUMN valor valor TEXT");
         });
     }
 };
