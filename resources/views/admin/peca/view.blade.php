@@ -32,6 +32,10 @@
                         <td>{{ $peca->id }}</td>
                     </tr>
                     <tr>
+                        <td>Nome Gerenciamento:</td>
+                        <td>{{ $peca->nome_admin }}</td>
+                    </tr>
+                    <tr>
                         <td>Nome:</td>
                         <td>{{ $peca->nome }}</td>
                     </tr>

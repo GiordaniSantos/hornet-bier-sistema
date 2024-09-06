@@ -66,6 +66,7 @@ class PecaController extends Controller
         $valor = str_replace('.', '', $request->valor_unitario);
         $valor = str_replace(',', '.', $valor);
         $request['valor_unitario'] = $valor;
+        $peca->nome_admin = $request->nome_admin;
         $peca->update($request->all());
         alert()->success('Concluído','Peca atualizado com sucesso.');
         return redirect()->route('peca.index', ['peca' => $peca->id]);

@@ -87,7 +87,7 @@
                         <td>Peças Utilizadas:</td>
                         <td>
                             @foreach($ordemServico->pecas as $peca)
-                                {{$peca->nome}} {{ $peca->pivot->quantidade }}x<br>
+                                {{$peca->nome_admin}} - R${{ number_format($peca->valor_unitario, 2, ',', '.') }} {{ $peca->pivot->quantidade }}x<br>
                             @endforeach
                         </td>
                     </tr>

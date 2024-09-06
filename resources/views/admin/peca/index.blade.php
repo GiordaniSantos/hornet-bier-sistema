@@ -21,6 +21,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Nome Gerenciamento</th>
                                 <th>Nome</th>
                                 <th>Valor Unitário</th>
                                 <th>Data de Criação</th>
@@ -31,6 +32,7 @@
                             @foreach($pecas as $peca)
                                 <tr>
                                     <td>{{$peca->id}}</td>
+                                    <td>{{$peca->nome_admin}}</td>
                                     <td>{{$peca->nome}}</td>
                                     <td>R${{number_format($peca->valor_unitario, 2, ',', '.')}}</td>
                                     <td>{{$peca->created_at->format('d/m/Y')}}</td>
