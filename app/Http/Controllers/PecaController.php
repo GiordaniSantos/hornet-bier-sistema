@@ -76,9 +76,13 @@ class PecaController extends Controller
      */
     public function destroy(Peca $peca)
     {
-        $peca->delete();
-  
-        alert()->success('Concluído','Peca removido com sucesso.');
-        return redirect()->route('peca.index');
+        try {
+            $peca->delete();
+            alert()->success('Concluído','Peça removida com sucesso.');
+            return redirect()->route('peca.index');
+        } catch (\Exception $e) {
+            alert()->error('Erro', $e->getMessage());
+            return redirect()->route('peca.index');
+        }
     }
 }

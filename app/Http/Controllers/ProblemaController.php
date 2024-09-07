@@ -72,9 +72,13 @@ class ProblemaController extends Controller
      */
     public function destroy(Problema $problema)
     {
-        $problema->delete();
-  
-        alert()->success('Concluído','Problema removido com sucesso.');
-        return redirect()->route('problema.index');
+        try {
+            $problema->delete();
+            alert()->success('Concluído','Problema removido com sucesso.');
+            return redirect()->route('problema.index');
+        } catch (\Exception $e) {
+            alert()->error('Erro', $e->getMessage());
+            return redirect()->route('problema.index');
+        }
     }
 }

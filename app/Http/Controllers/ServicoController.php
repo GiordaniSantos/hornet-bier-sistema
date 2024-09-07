@@ -70,9 +70,13 @@ class ServicoController extends Controller
      */
     public function destroy(Servico $servico)
     {
-        $servico->delete();
-  
-        alert()->success('Concluído','Servico removido com sucesso.');
-        return redirect()->route('servico.index');
+        try {
+            $servico->delete();
+            alert()->success('Concluído','Servico removido com sucesso.');
+            return redirect()->route('servico.index');
+        } catch (\Exception $e) {
+            alert()->error('Erro', $e->getMessage());
+            return redirect()->route('servico.index');
+        }
     }
 }

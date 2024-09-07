@@ -61,27 +61,42 @@ if($ordemServico->data_saida && date('d/m/Y', strtotime(str_replace('/', '-', $o
                 <td><strong>Número de OS:</strong> {{ $ordemServico->numero }}</td>
             </tr>
             <tr>
-                <td colspan="2"><strong>MODELO:</strong> {{ $ordemServico->modelo }}</td>
-                <td colspan="2"><strong>SÉRIE:</strong> {{ $ordemServico->serie }}</td>
+                <td><strong>MODELO:</strong> {{ $ordemServico->modelo }}</td>
+                <td><strong>SÉRIE:</strong> {{ $ordemServico->serie }}</td>
+                <td colspan="2"><strong>NÚMERO DO MOTOR:</strong> {{ $ordemServico->serie }}</td>
             </tr>
             <tr>
                 <td colspan="4"><strong>Problema apresentado no equipamento:</strong> <br>
-                    @foreach($ordemServico->problemas as $problema)
-                        {{$problema->nome}} {{ $problema->descricao ? " - ". $problema->descricao : null }}<br>
-                    @endforeach
+                    {{ implode(', ', $ordemServico->problemas->pluck('nome')->toArray()) }}
                 </td>
             </tr>
             <tr>
-                <td colspan="4"><strong>Descrição dos serviços prestados:</strong> <?=$ordemServico->descricao_servico?></td>
+                <td colspan="4"><strong>Descrição dos serviços prestados:</strong> <br>
+                    desmontagem, limpeza,
+                    @foreach($ordemServico->servicos as $servico)
+                        {{$servico->nome}}, 
+                    @endforeach
+                    ajuste da temperatura de 0 a - 1 grau
+                </td>
             </tr>
             <tr>
-                <td colspan="4"><strong>Peças Utilizadas:</strong>  <?=$ordemServico->pecas_utilizadas?></td>
+                <td colspan="4" style="text-align: center;"><strong>PEÇAS UTILIZADAS</strong></td>
             </tr>
+            <tr>
+                <td colspan="2"><strong>PEÇA</strong></td>
+                <td colspan="2"><strong>QUANTIDADE</strong></td>
+            </tr>
+            @foreach($ordemServico->pecas as $peca)
+                <tr>
+                    <td colspan="2">{{ $peca->nome }}</td>
+                    <td colspan="2">{{ $peca->pivot->quantidade }}</td>
+                </tr>
+            @endforeach
             <tr>
                 <td><strong>Data de Entrada:</strong> {{ $ordemServico->created_at->format('d/m/Y') }}</td>
                 <td><strong>{{ $dataSaida }}:</strong> {{ $ordemServico->data_saida ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : null }}</td>
                 <td><strong>Status:</strong> {{ $ordemServico->getStatusFormatado() }}</td>
-                <td><strong>Valor Total:</strong> R${{ $ordemServico->valor }}</td>
+                <td><strong>Valor Total:</strong> R${{ $ordemServico->valor_total }}</td>
             </tr>
         </table>
     </body>
