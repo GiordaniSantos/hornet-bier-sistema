@@ -58,6 +58,7 @@ class OrdemServicoController extends Controller
             $ordemServicoCriado->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
         }
         $valorTotal = 0;
+        
         if($ordemServicoCriado){
             foreach($request->pecas as $peca){
                 $ordemPeca = new OrdemServicoPeca;
@@ -126,36 +127,43 @@ class OrdemServicoController extends Controller
             $request['valor'] = $valor;
         }
 
-        /*OrdemServicoPeca::where('ordem_servico_id', $request->idOs)->delete();
-        $valorTotal = 0;
-        foreach($request->pecas as $peca){
-            $ordemPeca = new OrdemServicoPeca;
-            $ordemPeca->ordem_servico_id = $request->idOs;
-            $ordemPeca->peca_id = $peca['peca_id'];
-            $ordemPeca->quantidade = $peca['quantidade'];
-            $ordemPeca->valor_peca = $peca['valor_unitario'];
-            $ordemPeca->save();
-            $valorTotal += $peca['valor_unitario'] * $peca['quantidade'];
-        }
-        $ordemServico->valor_total = $valorTotal;
+        if($request->pecas && isset($request->pecas[0]['peca_id'])){
+            OrdemServicoPeca::where('ordem_servico_id', $request->idOs)->delete();
+            $valorTotal = 0;
 
-        OrdemServicoProblema::where('ordem_servico_id', $request->idOs)->delete();
-  
-        foreach($request->problema_id as $problema){
-            $ordemProblema = new OrdemServicoProblema;
-            $ordemProblema->ordem_servico_id = $request->idOs;
-            $ordemProblema->problema_id = $problema;
-            $ordemProblema->save();
+            foreach($request->pecas as $peca){
+                $ordemPeca = new OrdemServicoPeca;
+                $ordemPeca->ordem_servico_id = $request->idOs;
+                $ordemPeca->peca_id = $peca['peca_id'];
+                $ordemPeca->quantidade = $peca['quantidade'];
+                $ordemPeca->valor_peca = $peca['valor_unitario'];
+                $ordemPeca->save();
+                $valorTotal += $peca['valor_unitario'] * $peca['quantidade'];
+            }
+            $ordemServico->valor_total = $valorTotal + $request->valor;
         }
 
-        OrdemServicoServico::where('ordem_servico_id', $request->idOs)->delete();
+        if($request->problema_id){
+            OrdemServicoProblema::where('ordem_servico_id', $request->idOs)->delete();
+      
+            foreach($request->problema_id as $problema){
+                $ordemProblema = new OrdemServicoProblema;
+                $ordemProblema->ordem_servico_id = $request->idOs;
+                $ordemProblema->problema_id = $problema;
+                $ordemProblema->save();
+            }
+        }
 
-        foreach($request->servico_id as $servicoId){
-            $servico = new OrdemServicoServico;
-            $servico->ordem_servico_id = $request->idOs;
-            $servico->servico_id = $servicoId;
-            $servico->save();
-        }*/
+        if($request->servico_id){
+            OrdemServicoServico::where('ordem_servico_id', $request->idOs)->delete();
+    
+            foreach($request->servico_id as $servicoId){
+                $servico = new OrdemServicoServico;
+                $servico->ordem_servico_id = $request->idOs;
+                $servico->servico_id = $servicoId;
+                $servico->save();
+            }
+        }
 
         $ordemServico->data_saida = null;
         if($request->data_saida){

@@ -2,7 +2,7 @@
 <?php 
 use App\Enums\StatusOrdemServico;
 
-$isDisabled = isset($ordemServico) ? 'disabled' : '';
+$isDisabled = isset($ordemServico) && $ordemServico->status == StatusOrdemServico::Fechado->value ? 'disabled' : '';
 
 $countOrdemPecas = 0;
 if(isset($ordemServico) && $ordemServico->pecas){
@@ -104,7 +104,7 @@ if ($pecas) {
     <div class="form-group row">
         <div class="col-12 col-sm-6">
             <label>Problema(s) Apresentado(s):</label>
-            <select name="problema_id[]" class="multiple-problem js-states form-control @error('problema_id') is-invalid @enderror" multiple required autocomplete="problema_id" autofocus id="problema_id" {{ (isset($ordemServico) ? 'disabled' : '') }}>
+            <select name="problema_id[]" class="multiple-problem js-states form-control @error('problema_id') is-invalid @enderror" multiple required autocomplete="problema_id" autofocus id="problema_id" {{ $isDisabled }}>
                 @if ($problemas)            
                     @foreach ($problemas as $problema)
                         <option value="{{$problema->id}}">{{$problema->nome}}</option>
@@ -119,7 +119,7 @@ if ($pecas) {
         </div>
         <div class="col-12 col-sm-6">
             <label>Servico(s) Prestado(s):</label>
-            <select name="servico_id[]" class="multiple-servico js-states form-control @error('servico_id') is-invalid @enderror" multiple required autocomplete="servico_id" autofocus id="servico_id" {{ (isset($ordemServico) ? 'disabled' : '') }}>
+            <select name="servico_id[]" class="multiple-servico js-states form-control @error('servico_id') is-invalid @enderror" multiple required autocomplete="servico_id" autofocus id="servico_id" {{ $isDisabled }}>
                 @if ($servicos)            
                     @foreach ($servicos as $servico)
                         <option value="{{$servico->id}}">{{$servico->nome}}</option>
@@ -165,23 +165,24 @@ if ($pecas) {
                     @foreach($ordemServico->pecas as $key=>$ordemServicoPeca)
                         <tr>
                             <td>
-                                <select name="pecas[<?=$key?>][peca_id]" class="single-peca js-states form-control" required style="width: 100%" disabled>
+                                <select name="pecas[<?=$key?>][peca_id]" class="single-peca js-states form-control" required style="width: 100%" {{ $isDisabled }}>
                                     <option></option>
                                     @if ($pecas)            
                                         @foreach ($pecas as $peca)
-                                            <option value="{{$peca->id}}" {{ $ordemServicoPeca->id == $peca->id ? 'selected' : '' }}>{{$peca->nome}} - R${{ number_format($peca->valor_unitario, 2, ',', '.') }}</option>
+                                            <option value="{{$peca->id}}" data-valor-unitario="{{$peca->valor_unitario}}" {{ $ordemServicoPeca->id == $peca->id ? 'selected' : '' }}>{{$peca->nome}} - R${{ number_format($peca->valor_unitario, 2, ',', '.') }}</option>
                                         @endforeach
                                     @endif
                                 </select>
                             </td>
                             <td>
-                                <input type="number" name="pecas[<?=$key?>][quantidade]" placeholder="Digite a quantidade" required value="{{ $ordemServicoPeca->pivot->quantidade }}" class="form-control" disabled>
+                                <input type="number" name="pecas[<?=$key?>][quantidade]" placeholder="Digite a quantidade" required value="{{ $ordemServicoPeca->pivot->quantidade }}" class="form-control" {{ $isDisabled }}>
+                                <input type="hidden" name="pecas[<?=$key?>][valor_unitario]" value="">
                             </td>
                             <td>
                                 @if($key==0)
-                                    <button type="button" name="add" id="add" class="btn btn-success" disabled>Adicionar</button>
+                                    <button type="button" name="add" id="add" class="btn btn-success" {{ $isDisabled }}>Adicionar</button>
                                 @else
-                                    <button type="button" class="btn btn-danger remove-table-row" disabled>Remover</button>
+                                    <button type="button" class="btn btn-danger remove-table-row" {{ $isDisabled }}>Remover</button>
                                 @endif
                             </td>
                         </tr>
@@ -323,10 +324,21 @@ if ($pecas) {
 
     $(document).ready(function() {
 
-        $('select[name="pecas[0][peca_id]"]').on('change', function() {
-            var valorUnitario = $(this).find('option:selected').data('valor-unitario');
-            $('input[name="pecas[0][valor_unitario]"]').val(valorUnitario);
+        //adiciona onChange para todas as peças
+        $('[name^="pecas["]').on('change', function() {
+            if ($(this).is('select')) {
+                var index = $(this).attr('name').match(/\[(\d+)\]/)[1];
+                var valorUnitario = $(this).find('option:selected').data('valor-unitario');
+                console.log(valorUnitario)
+                $(`input[name="pecas[${index}][valor_unitario]"]`).val(valorUnitario);
+            }
         });
+
+        //seta o valorUnitario para todas as peças
+        for (var j = 0; j <= i; j++) {
+            var valorUnitario = $('select[name="pecas[' + j + '][peca_id]"]').find('option:selected').data('valor-unitario');
+            $('input[name="pecas[' + j + '][valor_unitario]"]').val(valorUnitario);
+        }
 
         $('.single-cliente').select2({
             placeholder: 'Selecione o cliente',
