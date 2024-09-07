@@ -36,10 +36,6 @@
                         <td>{{ $problema->nome }}</td>
                     </tr>
                     <tr>
-                        <td>Descrição:</td>
-                        <td>{{$problema->descricao}}</td>
-                    </tr>
-                    <tr>
                         <td>Data Criação:</td>
                         <td>{{ $problema->created_at->format('d/m/Y') }} às {{ $problema->created_at->format('H:i') }}h</td>
                     </tr>

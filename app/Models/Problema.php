@@ -9,13 +9,12 @@ class Problema extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'descricao'];
+    protected $fillable = ['nome'];
 
     public static function rules(): array
     {
         return [
-            'nome' => 'required|max:300',
-            'descricao' => 'max:815',
+            'nome' => 'required|max:300'
         ];
     }
 
@@ -23,8 +22,7 @@ class Problema extends Model
     {
         return [
             'required' => 'O campo :attribute deve ser preenchido',
-            'nome.max' => 'O campo :attribute não pode ultrapassar 300 caracteres.',
-            'descricao.max' => 'O campo :attribute não pode ultrapassar 815 caracteres.',
+            'nome.max' => 'O campo :attribute não pode ultrapassar 300 caracteres.'
         ];
     }
 

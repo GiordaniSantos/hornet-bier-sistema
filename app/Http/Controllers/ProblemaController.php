@@ -61,7 +61,6 @@ class ProblemaController extends Controller
      */
     public function update(Request $request, Problema $problema)
     {
-        $request->validate(Problema::rules($problema), Problema::feedback());
         $problema->update($request->all());
         alert()->success('Concluído','Problema atualizado com sucesso.');
         return redirect()->route('problema.index', ['problema' => $problema->id]);

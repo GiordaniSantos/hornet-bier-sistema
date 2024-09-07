@@ -22,7 +22,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>descricao</th>
                                 <th>Data de Criação</th>
                                 <th></th>
                             </tr>
@@ -32,7 +31,6 @@
                                 <tr>
                                     <td>{{$problema->id}}</td>
                                     <td>{{$problema->nome}}</td>
-                                    <td>{{$problema->descricao}}</td>
                                     <td>{{$problema->created_at->format('d/m/Y')}}</td>
                                     <td>
                                         <div class="dropdown">
