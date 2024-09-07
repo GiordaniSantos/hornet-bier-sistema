@@ -7,6 +7,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProblemaController;
 use App\Http\Controllers\PecaController;
 use App\Http\Controllers\OrdemServicoController;
+use App\Http\Controllers\ServicoController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RelatorioController;
 
@@ -45,11 +46,14 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
     //problemas
     Route::resource('/problema', ProblemaController::class);
 
-    //problemas
+    //pecas
     Route::resource('/peca', PecaController::class);
 
-    //problemas
+    //ordem de servico
     Route::resource('/ordem-servico', OrdemServicoController::class);
+
+    //servicos
+    Route::resource('/servico', ServicoController::class);
 
     Route::get('/orcamento-whatsapp/{id}', [OrdemServicoController::class, 'enviarOrcamentoWhatsapp'])->name('orcamento-zap');
 

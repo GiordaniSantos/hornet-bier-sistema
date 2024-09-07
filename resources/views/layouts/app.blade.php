@@ -83,6 +83,12 @@
                 <span>Peças</span></a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('servico.index') }}">
+                <i class="fa-solid fa-briefcase"></i>
+                <span>Serviços</span></a>
+            </li>
+
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('ordem-servico.index') }}">
