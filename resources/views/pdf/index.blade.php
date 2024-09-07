@@ -72,11 +72,11 @@ if($ordemServico->data_saida && date('d/m/Y', strtotime(str_replace('/', '-', $o
             </tr>
             <tr>
                 <td colspan="4"><strong>Descrição dos serviços prestados:</strong> <br>
-                    desmontagem, limpeza,
+                    Desmontagem, Limpeza,
                     @foreach($ordemServico->servicos as $servico)
                         {{$servico->nome}}, 
                     @endforeach
-                    ajuste da temperatura de 0 a - 1 grau
+                    Ajuste da temperatura de 0 a - 1 grau
                 </td>
             </tr>
             <tr>

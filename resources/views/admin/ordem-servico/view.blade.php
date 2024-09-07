@@ -97,12 +97,12 @@
                     <tr>
                         <td>Serviços Prestados:</td>
                         <td>
-                            desmontagem<br>
-                            limpeza<br>
+                            Desmontagem<br>
+                            Limpeza<br>
                             @foreach($ordemServico->servicos as $servico)
                                 {{$servico->nome}}<br>
                             @endforeach
-                            ajuste da temperatura de 0 a - 1 grau
+                            Ajuste da temperatura de 0 a - 1 grau
                         </td>
                     </tr>
                     <tr>
