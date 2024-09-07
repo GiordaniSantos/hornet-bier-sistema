@@ -88,10 +88,10 @@ if($ordemServico->data_saida && date('d/m/Y', strtotime(str_replace('/', '-', $o
                 </td>
             </tr>
             <tr>
-                <td><strong>Data de Entrada:</strong> {{ $ordemServico->created_at->format('d/m/Y') }}</td>
-                <td><strong>{{ $dataSaida }}:</strong> {{ $ordemServico->data_saida ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : null }}</td>
-                <td><strong>Status:</strong> {{ $ordemServico->getStatusFormatado() }}</td>
-                <td><strong>Valor Total:</strong> R${{ number_format($ordemServico->valor_total, 2, ',', '.') }}</td>
+                <td style="width: 30%;"><strong>Data de Entrada:</strong> {{ $ordemServico->created_at->format('d/m/Y') }}</td>
+                <td style="width: 30%;"><strong>{{ $dataSaida }}:</strong> {{ $ordemServico->data_saida ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : null }}</td>
+                <td style="width: 20%;"><strong>Status:</strong> {{ $ordemServico->getStatusFormatado() }}</td>
+                <td style="width: 20%;"><strong>Valor Total:</strong> R${{ number_format($ordemServico->valor_total, 2, ',', '.') }}</td>
             </tr>
         </table>
     </body>
