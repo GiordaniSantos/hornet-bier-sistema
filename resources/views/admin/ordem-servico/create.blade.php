@@ -13,7 +13,7 @@
         <div class="card mb-4">
             <div class="card-header">Criar Ordem de Serviço</div>
             <div class="card-body">
-                @component('admin.ordem-servico._form', ['clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas])
+                @component('admin.ordem-servico._form', ['clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos])
                 @endcomponent
             </div>
         </div>

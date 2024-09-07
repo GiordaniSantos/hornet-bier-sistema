@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('ordem_servicos', function (Blueprint $table) {
             $table->dropColumn('descricao_servico');
-            $table->decimal('valor_total', 10, 2);
+            $table->decimal('valor_total', 10, 2)->nullable();
         });
     }
 

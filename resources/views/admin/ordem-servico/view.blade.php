@@ -86,14 +86,24 @@
                     <tr>
                         <td>Peças Utilizadas:</td>
                         <td>
+                            <?php $valorTotal = 0 ?>
                             @foreach($ordemServico->pecas as $peca)
-                                {{$peca->nome_admin}} - R${{ number_format($peca->valor_unitario, 2, ',', '.') }} {{ $peca->pivot->quantidade }}x<br>
+                                <?php $valorTotal += $peca->pivot->valor_peca * $peca->pivot->quantidade?>
+                                {{$peca->nome}} - R${{ number_format($peca->pivot->valor_peca, 2, ',', '.') }} x {{ $peca->pivot->quantidade }} = R${{ number_format($peca->pivot->valor_peca * $peca->pivot->quantidade, 2, ',', '.') }}<br>
                             @endforeach
+                            <br>Valor Total de Peças: R${{ number_format($valorTotal, 2, ',', '.') }}
                         </td>
                     </tr>
                     <tr>
                         <td>Serviços Prestados:</td>
-                        <td><?=$ordemServico->descricao_servico?></td>
+                        <td>
+                            desmontagem<br>
+                            limpeza<br>
+                            @foreach($ordemServico->servicos as $servico)
+                                {{$servico->nome}}<br>
+                            @endforeach
+                            ajuste da temperatura de 0 a - 1 grau
+                        </td>
                     </tr>
                     <tr>
                         <td>Valor Mão de Obra:</td>

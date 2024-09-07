@@ -7,7 +7,9 @@ use App\Models\OrdemServico;
 use App\Models\OrdemServicoPeca;
 use App\Models\Problema;
 use App\Models\OrdemServicoProblema;
+use App\Models\OrdemServicoServico;
 use App\Models\Peca;
+use App\Models\Servico;
 use Illuminate\Http\Request;
 use LaravelQRCode\Facades\QRCode;
 
@@ -32,8 +34,9 @@ class OrdemServicoController extends Controller
         $clientes = Cliente::all();
         $problemas = Problema::all();
         $pecas = Peca::all();
+        $servicos = Servico::all();
 
-        return view('admin.ordem-servico.create', ['clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas]);
+        return view('admin.ordem-servico.create', ['clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos]);
     }
 
     /**
@@ -49,15 +52,25 @@ class OrdemServicoController extends Controller
             $valor = str_replace(',', '.', $valor);
             $request['valor'] = $valor;
         }
+    
         $ordemServicoCriado = $ordemServico->create($request->all());
+        if($request->data_saida){
+            $ordemServicoCriado->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
+        }
+        $valorTotal = 0;
         if($ordemServicoCriado){
             foreach($request->pecas as $peca){
                 $ordemPeca = new OrdemServicoPeca;
                 $ordemPeca->ordem_servico_id = $ordemServicoCriado->id;
                 $ordemPeca->peca_id = $peca['peca_id'];
                 $ordemPeca->quantidade = $peca['quantidade'];
+                $ordemPeca->valor_peca = $peca['valor_unitario'];
                 $ordemPeca->save();
+                $valorTotal += $peca['valor_unitario'] * $peca['quantidade'];
             }
+
+            $ordemServicoCriado->valor_total = $valorTotal + $request->valor;
+            $ordemServicoCriado->save();
 
             foreach($request->problema_id as $problema){
                 $ordemProblema = new OrdemServicoProblema;
@@ -65,9 +78,16 @@ class OrdemServicoController extends Controller
                 $ordemProblema->problema_id = $problema;
                 $ordemProblema->save();
             }
+
+            foreach($request->servico_id as $servicoId){
+                $servico = new OrdemServicoServico;
+                $servico->ordem_servico_id = $ordemServicoCriado->id;
+                $servico->servico_id = $servicoId;
+                $servico->save();
+            }
             alert()->success('Concluído','Ordem de Serviço criada com sucesso.');
         }
-        return redirect()->route('ordem-servico.show', ['ordem_servico' => $ordemServicoCriado]);
+        return redirect()->route('ordem-servico.edit', ['ordem_servico' => $ordemServicoCriado]);
     }
 
     /**
@@ -88,8 +108,9 @@ class OrdemServicoController extends Controller
         $clientes = Cliente::all();
         $problemas = Problema::all();
         $pecas = Peca::all();
+        $servicos = Servico::all();
         
-        return view('admin.ordem-servico.edit', ['ordemServico' => $ordemServico, 'clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas]);
+        return view('admin.ordem-servico.edit', ['ordemServico' => $ordemServico, 'clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos]);
     }
 
     /**
@@ -105,15 +126,18 @@ class OrdemServicoController extends Controller
             $request['valor'] = $valor;
         }
 
-        OrdemServicoPeca::where('ordem_servico_id', $request->idOs)->delete();
-
+        /*OrdemServicoPeca::where('ordem_servico_id', $request->idOs)->delete();
+        $valorTotal = 0;
         foreach($request->pecas as $peca){
             $ordemPeca = new OrdemServicoPeca;
             $ordemPeca->ordem_servico_id = $request->idOs;
             $ordemPeca->peca_id = $peca['peca_id'];
             $ordemPeca->quantidade = $peca['quantidade'];
+            $ordemPeca->valor_peca = $peca['valor_unitario'];
             $ordemPeca->save();
+            $valorTotal += $peca['valor_unitario'] * $peca['quantidade'];
         }
+        $ordemServico->valor_total = $valorTotal;
 
         OrdemServicoProblema::where('ordem_servico_id', $request->idOs)->delete();
   
@@ -123,6 +147,16 @@ class OrdemServicoController extends Controller
             $ordemProblema->problema_id = $problema;
             $ordemProblema->save();
         }
+
+        OrdemServicoServico::where('ordem_servico_id', $request->idOs)->delete();
+
+        foreach($request->servico_id as $servicoId){
+            $servico = new OrdemServicoServico;
+            $servico->ordem_servico_id = $request->idOs;
+            $servico->servico_id = $servicoId;
+            $servico->save();
+        }*/
+
         $ordemServico->data_saida = null;
         if($request->data_saida){
             $ordemServico->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
@@ -142,6 +176,7 @@ class OrdemServicoController extends Controller
     {
         OrdemServicoProblema::where('ordem_servico_id', $ordemServico->id)->delete();
         OrdemServicoPeca::where('ordem_servico_id', $ordemServico->id)->delete();
+        OrdemServicoServico::where('ordem_servico_id', $ordemServico->id)->delete();
         $ordemServico->delete();
 
         alert()->success('Concluído','Ordem de Serviço excluida com sucesso.');

@@ -12,7 +12,7 @@ class OrdemServico extends Model
 
     protected $table = 'ordem_servicos';
 
-    protected $fillable = ['status', 'modelo', 'serie', 'numero_motor', 'valor', 'valor_total', 'cliente_id'];
+    protected $fillable = ['status', 'modelo', 'serie', 'numero_motor', 'valor', 'cliente_id'];
 
     public static function rules(): array
     {
@@ -74,8 +74,13 @@ class OrdemServico extends Model
         return $this->belongsToMany(Problema::class, 'ordem_servico_problemas', 'ordem_servico_id', 'problema_id');
     }
 
+    public function servicos()
+    {
+        return $this->belongsToMany(Servico::class, 'ordem_servico_servicos', 'ordem_servico_id', 'servico_id');
+    }
+
     public function pecas()
     {
-        return $this->belongsToMany(Peca::class, 'ordem_servico_pecas', 'ordem_servico_id', 'peca_id')->withPivot('quantidade');
+        return $this->belongsToMany(Peca::class, 'ordem_servico_pecas', 'ordem_servico_id', 'peca_id')->withPivot(['quantidade', 'valor_peca']);
     }
 }
