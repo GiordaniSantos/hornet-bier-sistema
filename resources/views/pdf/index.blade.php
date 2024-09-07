@@ -44,7 +44,7 @@ if($ordemServico->data_saida && date('d/m/Y', strtotime(str_replace('/', '-', $o
         <table>
             <tr>
                 <td style="text-align: center; width: 200px;"><img src="https://hornetbier.com.br/images/nova-logo.png" alt="Hornet Bier Logo"></td>
-                <td>
+                <td style="text-align: center;">
                     <h3>RELATÓRIO ATENDIMENTO TÉCNICO</h3>
                     Hornetbier Manutenção de Chopeiras, Vendas e Projetos<br>
                     CNPJ 50.934.088 / 0001-97<br>
@@ -55,8 +55,10 @@ if($ordemServico->data_saida && date('d/m/Y', strtotime(str_replace('/', '-', $o
         </table>
         <table>
             <tr>
-                <td><strong>Cliente:</strong> {{ $ordemServico->cliente->nome }}</td>
-                <td><strong>CNPJ/CPF:</strong> {{ $ordemServico->cliente->cpf_cnpj }}</td>
+                <td colspan="4"><strong>Cliente:</strong> {{ $ordemServico->cliente->nome }}</td>
+            </tr>
+            <tr>
+                <td colspan="2"><strong>CNPJ/CPF:</strong> {{ $ordemServico->cliente->cpf_cnpj }}</td>
                 <td><strong>Cidade:</strong> {{ $ordemServico->cliente->cidade }}</td>
                 <td><strong>Número de OS:</strong> {{ $ordemServico->numero }}</td>
             </tr>
@@ -66,32 +68,25 @@ if($ordemServico->data_saida && date('d/m/Y', strtotime(str_replace('/', '-', $o
                 <td colspan="2"><strong>NÚMERO DO MOTOR:</strong> {{ $ordemServico->serie }}</td>
             </tr>
             <tr>
-                <td colspan="4"><strong>Problema apresentado no equipamento:</strong> <br>
+                <td colspan="4"><strong>Problema Apresentado no Equipamento:</strong> <br>
                     {{ implode(', ', $ordemServico->problemas->pluck('nome')->toArray()) }}
                 </td>
             </tr>
             <tr>
-                <td colspan="4"><strong>Descrição dos serviços prestados:</strong> <br>
+                <td colspan="4"><strong>Descrição dos Serviços Prestados:</strong> <br>
                     Desmontagem, Limpeza,
                     @foreach($ordemServico->servicos as $servico)
                         {{$servico->nome}}, 
                     @endforeach
-                    Ajuste da temperatura de 0 a - 1 grau
+                    Ajuste da temperatura de 0 a -1 grau
                 </td>
             </tr>
             <tr>
-                <td colspan="4" style="text-align: center;"><strong>PEÇAS UTILIZADAS</strong></td>
+                <td colspan="4"><strong>Informações Adicionais:</strong> <br>
+                    Orçamento Válido por: 3 dias <br>
+                    Forma de Pagamento: Pix, Débito ou Cartão de Crédito
+                </td>
             </tr>
-            <tr>
-                <td colspan="2"><strong>PEÇA</strong></td>
-                <td colspan="2"><strong>QUANTIDADE</strong></td>
-            </tr>
-            @foreach($ordemServico->pecas as $peca)
-                <tr>
-                    <td colspan="2">{{ $peca->nome }}</td>
-                    <td colspan="2">{{ $peca->pivot->quantidade }}</td>
-                </tr>
-            @endforeach
             <tr>
                 <td><strong>Data de Entrada:</strong> {{ $ordemServico->created_at->format('d/m/Y') }}</td>
                 <td><strong>{{ $dataSaida }}:</strong> {{ $ordemServico->data_saida ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : null }}</td>
