@@ -49,7 +49,7 @@ if($ordemServico->data_saida && date('d/m/Y', strtotime(str_replace('/', '-', $o
                     Hornetbier Manutenção de Chopeiras, Vendas e Projetos<br>
                     CNPJ 50.934.088 / 0001-97<br>
                     Sapucaia do Sul, Bairro Vargas. CEP. 93219-070<br>
-                    Fone. 51.99944-6655 - Hélio / 51.99293-4558 - Fábio<br>
+                    Fone: (51) 99944-6655<br>
                 </td>
             </tr>
         </table>
