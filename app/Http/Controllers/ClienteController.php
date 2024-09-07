@@ -72,9 +72,16 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        $cliente->delete();
-  
-        alert()->success('Concluído','Cliente removido com sucesso.');
-        return redirect()->route('cliente.index');
+        try {
+            $cliente->delete();
+            alert()->success('Concluído','Cliente removido com sucesso.');
+            return redirect()->route('cliente.index');
+        } catch (\Exception $e) {
+            alert()->error('Erro', $e->getMessage());
+            if ($e instanceof \Illuminate\Database\QueryException) {
+                alert()->error('Erro', 'Erro ao remover o cliente. Existem ordens de serviço associadas a este cliente.');
+            }
+            return redirect()->route('cliente.index');
+        }
     }
 }
