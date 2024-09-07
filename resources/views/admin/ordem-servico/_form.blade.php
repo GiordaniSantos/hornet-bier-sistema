@@ -13,7 +13,7 @@ if ($pecas) {
         $selected = ($ordemServico->peca_id ?? old('peca_id')) == $peca->id ? 'selected' : '';
         $pecasData[] = [
             'id' => $peca->id,
-            'text' => $peca->nome_admin ." - R$". number_format($peca->valor_unitario, 2, ',', '.'),
+            'text' => $peca->nome ." - R$". number_format($peca->valor_unitario, 2, ',', '.'),
             'selected' => $selected
         ];
     }
@@ -128,7 +128,7 @@ if ($pecas) {
                                 <option></option>
                                 @if ($pecas)            
                                     @foreach ($pecas as $peca)
-                                        <option value="{{$peca->id}}" {{ ($ordemServico->peca_id ?? old('peca_id')) == $peca->id ? 'selected' : '' }}>{{$peca->nome_admin}} - R${{ number_format($peca->valor_unitario, 2, ',', '.') }}</option>
+                                        <option value="{{$peca->id}}" {{ ($ordemServico->peca_id ?? old('peca_id')) == $peca->id ? 'selected' : '' }}>{{$peca->nome}} - R${{ number_format($peca->valor_unitario, 2, ',', '.') }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -148,7 +148,7 @@ if ($pecas) {
                                     <option></option>
                                     @if ($pecas)            
                                         @foreach ($pecas as $peca)
-                                            <option value="{{$peca->id}}" {{ $ordemServicoPeca->id == $peca->id ? 'selected' : '' }}>{{$peca->nome_admin}} - R${{ number_format($peca->valor_unitario, 2, ',', '.') }}</option>
+                                            <option value="{{$peca->id}}" {{ $ordemServicoPeca->id == $peca->id ? 'selected' : '' }}>{{$peca->nome}} - R${{ number_format($peca->valor_unitario, 2, ',', '.') }}</option>
                                         @endforeach
                                     @endif
                                 </select>

@@ -32,10 +32,6 @@
                         <td>{{ $peca->id }}</td>
                     </tr>
                     <tr>
-                        <td>Nome Gerenciamento:</td>
-                        <td>{{ $peca->nome_admin }}</td>
-                    </tr>
-                    <tr>
                         <td>Nome:</td>
                         <td>{{ $peca->nome }}</td>
                     </tr>
@@ -45,11 +41,11 @@
                     </tr>
                     <tr>
                         <td>Data Criação:</td>
-                        <td>{{ $peca->created_at->format('d/m/Y à H:i:s') }}</td>
+                        <td>{{ $peca->created_at->format('d/m/Y') }} às {{ $peca->created_at->format('H:i') }}h</td>
                     </tr>
                     <tr>
                         <td>Data Modificação:</td>
-                        <td>{{ $peca->updated_at->format('d/m/Y à H:i:s') }}</td>
+                        <td>{{ $peca->updated_at->format('d/m/Y') }} às {{ $peca->updated_at->format('H:i') }}h</td>
                     </tr>
                 </table>
             </div>
