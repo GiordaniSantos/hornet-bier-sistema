@@ -12,7 +12,7 @@ class OrdemServico extends Model
 
     protected $table = 'ordem_servicos';
 
-    protected $fillable = ['status', 'modelo', 'serie', 'numero_motor', 'descricao_servico', 'valor', 'cliente_id'];
+    protected $fillable = ['status', 'modelo', 'serie', 'numero_motor', 'valor', 'valor_total', 'cliente_id'];
 
     public static function rules(): array
     {

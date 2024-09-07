@@ -100,6 +100,10 @@
                         <td>R${{number_format($ordemServico->valor, 2, ',', '.')}}</td>
                     </tr>
                     <tr>
+                        <td>Valor Total:</td>
+                        <td>R${{number_format($ordemServico->valor_total, 2, ',', '.')}}</td>
+                    </tr>
+                    <tr>
                         <td>Status:</td>
                         <td>{{ $ordemServico->getStatusFormatado() }}</td>
                     </tr>

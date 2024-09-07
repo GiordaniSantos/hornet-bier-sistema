@@ -170,17 +170,6 @@ if ($pecas) {
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-sm-12 mb-3 mb-sm-0">
-            <label>Serviços Prestados:</label>
-            <textarea id="descricao_servico" name="descricao_servico" rows="5" cols="33" class="descricao_servico form-control form-control-user @error('descricao_servico') is-invalid @enderror" autocomplete="descricao_servico" autofocus>{{ isset($ordemServico) ? old('descricao_servico', $ordemServico->descricao_servico) : old('descricao') }}</textarea>
-            @error('descricao')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-    </div>
-    <div class="form-group row">
         @if(isset($ordemServico))
             <div class="col-sm-4 mb-3 mb-sm-0">
                 <label>Data de Entrada:</label>
@@ -308,11 +297,6 @@ if ($pecas) {
         dateFormat: "d/m/Y",
         allowInput: true,
         defaultDate: "<?php echo $defaultDateDataSaida; ?>"
-    });
-    
-    tinymce.init({
-        selector:'textarea.descricao_servico',
-        language: 'pt_BR',
     });
 
     $(document).on('click', '.remove-table-row', function(){
