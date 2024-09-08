@@ -55,12 +55,12 @@ if($ordemServico->data_saida && date('d/m/Y', strtotime(str_replace('/', '-', $o
         </table>
         <table>
             <tr>
-                <td colspan="4"><strong>Cliente:</strong> {{ $ordemServico->cliente->nome }}</td>
+                <td colspan="2"><strong>CLIENTE:</strong> {{ $ordemServico->cliente->nome }}</td>
+                <td colspan="2"><strong>CNPJ/CPF:</strong> {{ $ordemServico->cliente->cpf_cnpj }}</td>
             </tr>
             <tr>
-                <td colspan="2"><strong>CNPJ/CPF:</strong> {{ $ordemServico->cliente->cpf_cnpj }}</td>
-                <td><strong>Cidade:</strong> {{ $ordemServico->cliente->cidade }}</td>
-                <td><strong>Número de OS:</strong> {{ $ordemServico->numero }}</td>
+                <td colspan="2"><strong>Cidade:</strong> {{ $ordemServico->cliente->cidade }}</td>
+                <td colspan="2"><strong>Número de OS:</strong> {{ $ordemServico->numero }}</td>
             </tr>
             <tr>
                 <td><strong>MODELO:</strong> {{ $ordemServico->modelo }}</td>
