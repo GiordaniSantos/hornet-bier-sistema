@@ -55,7 +55,7 @@ if($ordemServico->data_saida && date('d/m/Y', strtotime(str_replace('/', '-', $o
         </table>
         <table>
             <tr>
-                <td colspan="2"><strong>CLIENTE:</strong> {{ $ordemServico->cliente->nome }}</td>
+                <td colspan="2"><strong>Cliente:</strong> {{ $ordemServico->cliente->nome }}</td>
                 <td colspan="2"><strong>CNPJ/CPF:</strong> {{ $ordemServico->cliente->cpf_cnpj }}</td>
             </tr>
             <tr>
