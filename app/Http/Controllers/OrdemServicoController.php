@@ -53,10 +53,10 @@ class OrdemServicoController extends Controller
             $request['valor'] = $valor;
         }
     
-        $ordemServicoCriado = $ordemServico->create($request->all());
         if($request->data_saida){
-            $ordemServicoCriado->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
+            $ordemServico->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
         }
+        $ordemServicoCriado = $ordemServico->create($request->all());
         $valorTotal = $request->valor;
         
         if($ordemServicoCriado){
