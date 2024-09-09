@@ -53,10 +53,10 @@ class OrdemServicoController extends Controller
             $request['valor'] = $valor;
         }
     
-        if($request->data_saida){
-            $ordemServico->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
-        }
         $ordemServicoCriado = $ordemServico->create($request->all());
+        if($request->data_saida){
+            $ordemServicoCriado->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
+        }
         $valorTotal = $request->valor;
         
         if($ordemServicoCriado){
@@ -70,10 +70,9 @@ class OrdemServicoController extends Controller
                     $ordemPeca->save();
                     $valorTotal += $peca['valor_unitario'] * $peca['quantidade'];
                 }
-    
-                $ordemServicoCriado->save();
             }
             $ordemServicoCriado->valor_total = $valorTotal;
+            $ordemServicoCriado->save();
 
             foreach($request->problema_id as $problema){
                 $ordemProblema = new OrdemServicoProblema;
