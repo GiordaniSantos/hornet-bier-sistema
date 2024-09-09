@@ -32,8 +32,12 @@
                     <td>{{ $cliente->id }}</td>
                 </tr>
                 <tr>
-                    <td>Nome:</td>
+                    <td>Nome (Razão Social):</td>
                     <td>{{ $cliente->nome }}</td>
+                </tr>
+                <tr>
+                    <td>Nome Contato:</td>
+                    <td>{{ $cliente->nome_contato }}</td>
                 </tr>
                 <tr>
                     <td>E-mail:</td>

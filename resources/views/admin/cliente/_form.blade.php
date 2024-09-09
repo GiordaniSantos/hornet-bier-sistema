@@ -10,8 +10,8 @@
         @csrf
 @endif
     <div class="form-group row">
-        <div class="col-sm-6 mb-3 mb-sm-0">
-            <label>Nome:</label>
+        <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+            <label>Nome (Razão Social):</label>
             <input type="text" class="form-control form-control-user @error('nome') is-invalid @enderror" name="nome" required autocomplete="nome" autofocus
                 id="nome" value="{{ isset($cliente) ? old('nome', $cliente->nome) : old('nome') }}">
             @error('nome')
@@ -20,7 +20,16 @@
                 </span>
             @enderror
         </div>
-        <div class="col-sm-6">
+        <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+            <label>Nome do Contato:</label>
+            <input type="text" class="form-control form-control-user @error('nome_contato') is-invalid @enderror" name="nome_contato" autocomplete="nome_contato" autofocus id="nome_contato" value="{{ isset($cliente) ? old('nome_contato', $cliente->nome_contato) : old('nome_contato') }}">
+            @error('nome_contato')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="col-12 col-sm-4">
             <label>Endereço de Email:</label>
             <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="email" name="email" autocomplete="email" value="{{ isset($cliente) ? old('email', $cliente->email) : old('email') }}">
             @error('email')
