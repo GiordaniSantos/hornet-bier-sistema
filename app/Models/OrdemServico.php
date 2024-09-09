@@ -62,6 +62,7 @@ class OrdemServico extends Model
             StatusOrdemServico::Aberto->value => 'Aberto',
             StatusOrdemServico::Fechado->value => 'Fechado',
             StatusOrdemServico::EmAndamento->value => 'Em Andamento',
+            StatusOrdemServico::NaoExecutado->value => 'Não Executado',
             default => 'Status desconhecido',
         };
     }

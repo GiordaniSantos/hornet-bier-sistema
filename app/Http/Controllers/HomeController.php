@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\OrdemServico;
 use App\Models\User;
+use App\Enums\StatusOrdemServico;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -29,7 +30,7 @@ class HomeController extends Controller
         $totalOrdemServicos = OrdemServico::all()->count();
         $totalClientes = Cliente::all()->count();
         $totalUsers = User::all()->count();
-        $totalValorOrdemServicos = OrdemServico::sum('valor_total');
+        $totalValorOrdemServicos = OrdemServico::whereNot('status', StatusOrdemServico::NaoExecutado->value)->sum('valor_total');
         
         return view('home', [
             'totalOrdemServicos' => $totalOrdemServicos,
