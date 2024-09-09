@@ -144,7 +144,7 @@ if ($pecas) {
                 @if(!isset($ordemServico) || isset($ordemServico) && count($ordemServico->pecas) == 0)
                     <tr>
                         <td>
-                            <select name="pecas[0][peca_id]" class="single-peca js-states form-control" style="width: 100%">
+                            <select name="pecas[0][peca_id]" class="single-peca js-states form-control" style="width: 100%" {{ $isDisabled }}>
                                 <option></option>
                                 @if ($pecas)            
                                     @foreach ($pecas as $peca)
@@ -154,11 +154,11 @@ if ($pecas) {
                             </select>
                         </td>
                         <td>
-                            <input type="number" name="pecas[0][quantidade]" placeholder="Digite a quantidade" class="form-control">
+                            <input type="number" name="pecas[0][quantidade]" placeholder="Digite a quantidade" class="form-control" {{ $isDisabled }}>
                             <input type="hidden" name="pecas[0][valor_unitario]" value="">
                         </td>
                         <td>
-                            <button type="button" name="add" id="add" class="btn btn-success">Adicionar</button>
+                            <button type="button" name="add" id="add" class="btn btn-success" {{ $isDisabled }}>Adicionar</button>
                         </td>
                     </tr>
                 @else
@@ -253,6 +253,17 @@ if ($pecas) {
                 @enderror
             </div>
         @endif
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-12 mb-3 mb-sm-0">
+            <label>Observações:</label>
+            <textarea id="observacao" name="observacao" {{ $isDisabled }} rows="5" cols="33" class="form-control form-control-user @error('observacao') is-invalid @enderror" autocomplete="observacao" autofocus>{{ isset($ordemServico) ? old('observacao', $ordemServico->observacao) : old('observacao') }}</textarea>
+            @error('observacao')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
     </div>
     
     <button class="btn btn-success" type="submit">{{isset($ordemServico->id) ? 'Atualizar' : 'Criar'}}</button>

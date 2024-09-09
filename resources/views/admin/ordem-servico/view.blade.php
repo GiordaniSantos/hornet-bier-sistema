@@ -122,6 +122,10 @@
                         <td>{{ $ordemServico->data_saida ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : null }}</td>
                     </tr>
                     <tr>
+                        <td>Observações:</td>
+                        <td>{{ $ordemServico->observacao }}</td>
+                    </tr>
+                    <tr>
                         <td>Data de Criação da OS:</td>
                         <td>{{ $ordemServico->created_at->format('d/m/Y') }} às {{ $ordemServico->created_at->format('H:i') }}h</td>
                     </tr>
