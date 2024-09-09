@@ -57,21 +57,23 @@ class OrdemServicoController extends Controller
         if($request->data_saida){
             $ordemServicoCriado->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
         }
-        $valorTotal = 0;
+        $valorTotal = $request->valor;
         
         if($ordemServicoCriado){
-            foreach($request->pecas as $peca){
-                $ordemPeca = new OrdemServicoPeca;
-                $ordemPeca->ordem_servico_id = $ordemServicoCriado->id;
-                $ordemPeca->peca_id = $peca['peca_id'];
-                $ordemPeca->quantidade = $peca['quantidade'];
-                $ordemPeca->valor_peca = $peca['valor_unitario'];
-                $ordemPeca->save();
-                $valorTotal += $peca['valor_unitario'] * $peca['quantidade'];
+            if($request->pecas && isset($request->pecas[0]['peca_id'])){
+                foreach($request->pecas as $peca){
+                    $ordemPeca = new OrdemServicoPeca;
+                    $ordemPeca->ordem_servico_id = $ordemServicoCriado->id;
+                    $ordemPeca->peca_id = $peca['peca_id'];
+                    $ordemPeca->quantidade = $peca['quantidade'];
+                    $ordemPeca->valor_peca = $peca['valor_unitario'];
+                    $ordemPeca->save();
+                    $valorTotal += $peca['valor_unitario'] * $peca['quantidade'];
+                }
+    
+                $ordemServicoCriado->save();
             }
-
-            $ordemServicoCriado->valor_total = $valorTotal + $request->valor;
-            $ordemServicoCriado->save();
+            $ordemServicoCriado->valor_total = $valorTotal;
 
             foreach($request->problema_id as $problema){
                 $ordemProblema = new OrdemServicoProblema;
@@ -80,11 +82,13 @@ class OrdemServicoController extends Controller
                 $ordemProblema->save();
             }
 
-            foreach($request->servico_id as $servicoId){
-                $servico = new OrdemServicoServico;
-                $servico->ordem_servico_id = $ordemServicoCriado->id;
-                $servico->servico_id = $servicoId;
-                $servico->save();
+            if($request->servico_id){
+                foreach($request->servico_id as $servicoId){
+                    $servico = new OrdemServicoServico;
+                    $servico->ordem_servico_id = $ordemServicoCriado->id;
+                    $servico->servico_id = $servicoId;
+                    $servico->save();
+                }
             }
             alert()->success('Concluído','Ordem de Serviço criada com sucesso.');
         }
@@ -127,9 +131,9 @@ class OrdemServicoController extends Controller
             $request['valor'] = $valor;
         }
 
+        $valorTotal = $request->valor;
+        OrdemServicoPeca::where('ordem_servico_id', $request->idOs)->delete();
         if($request->pecas && isset($request->pecas[0]['peca_id'])){
-            OrdemServicoPeca::where('ordem_servico_id', $request->idOs)->delete();
-            $valorTotal = 0;
 
             foreach($request->pecas as $peca){
                 $ordemPeca = new OrdemServicoPeca;
@@ -140,8 +144,8 @@ class OrdemServicoController extends Controller
                 $ordemPeca->save();
                 $valorTotal += $peca['valor_unitario'] * $peca['quantidade'];
             }
-            $ordemServico->valor_total = $valorTotal + $request->valor;
         }
+        $ordemServico->valor_total = $valorTotal;
 
         if($request->problema_id){
             OrdemServicoProblema::where('ordem_servico_id', $request->idOs)->delete();
@@ -154,9 +158,8 @@ class OrdemServicoController extends Controller
             }
         }
 
+        OrdemServicoServico::where('ordem_servico_id', $request->idOs)->delete();
         if($request->servico_id){
-            OrdemServicoServico::where('ordem_servico_id', $request->idOs)->delete();
-    
             foreach($request->servico_id as $servicoId){
                 $servico = new OrdemServicoServico;
                 $servico->ordem_servico_id = $request->idOs;

@@ -119,7 +119,7 @@ if ($pecas) {
         </div>
         <div class="col-12 col-sm-6">
             <label>Servico(s) Prestado(s):</label>
-            <select name="servico_id[]" class="multiple-servico js-states form-control @error('servico_id') is-invalid @enderror" multiple required autocomplete="servico_id" autofocus id="servico_id" {{ $isDisabled }}>
+            <select name="servico_id[]" class="multiple-servico js-states form-control @error('servico_id') is-invalid @enderror" multiple autocomplete="servico_id" autofocus id="servico_id" {{ $isDisabled }}>
                 @if ($servicos)            
                     @foreach ($servicos as $servico)
                         <option value="{{$servico->id}}">{{$servico->nome}}</option>
@@ -141,10 +141,10 @@ if ($pecas) {
                     <th>Quantidade</th>
                     <th>Ação</th>
                 </tr>
-                @if(!isset($ordemServico))
+                @if(!isset($ordemServico) || isset($ordemServico) && count($ordemServico->pecas) == 0)
                     <tr>
                         <td>
-                            <select name="pecas[0][peca_id]" class="single-peca js-states form-control" required style="width: 100%">
+                            <select name="pecas[0][peca_id]" class="single-peca js-states form-control" style="width: 100%">
                                 <option></option>
                                 @if ($pecas)            
                                     @foreach ($pecas as $peca)
@@ -154,7 +154,7 @@ if ($pecas) {
                             </select>
                         </td>
                         <td>
-                            <input type="number" name="pecas[0][quantidade]" placeholder="Digite a quantidade" required class="form-control">
+                            <input type="number" name="pecas[0][quantidade]" placeholder="Digite a quantidade" class="form-control">
                             <input type="hidden" name="pecas[0][valor_unitario]" value="">
                         </td>
                         <td>
@@ -165,7 +165,7 @@ if ($pecas) {
                     @foreach($ordemServico->pecas as $key=>$ordemServicoPeca)
                         <tr>
                             <td>
-                                <select name="pecas[<?=$key?>][peca_id]" class="single-peca js-states form-control" required style="width: 100%" {{ $isDisabled }}>
+                                <select name="pecas[<?=$key?>][peca_id]" class="single-peca js-states form-control" style="width: 100%" {{ $isDisabled }}>
                                     <option></option>
                                     @if ($pecas)            
                                         @foreach ($pecas as $peca)
@@ -175,7 +175,7 @@ if ($pecas) {
                                 </select>
                             </td>
                             <td>
-                                <input type="number" name="pecas[<?=$key?>][quantidade]" placeholder="Digite a quantidade" required value="{{ $ordemServicoPeca->pivot->quantidade }}" class="form-control" {{ $isDisabled }}>
+                                <input type="number" name="pecas[<?=$key?>][quantidade]" placeholder="Digite a quantidade" value="{{ $ordemServicoPeca->pivot->quantidade }}" class="form-control" {{ $isDisabled }}>
                                 <input type="hidden" name="pecas[<?=$key?>][valor_unitario]" value="">
                             </td>
                             <td>
