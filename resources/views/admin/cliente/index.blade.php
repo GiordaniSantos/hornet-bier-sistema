@@ -22,6 +22,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
+                                <th>Contato</th>
                                 <th>email</th>
                                 <th>CPF/CNPJ</th>
                                 <th>Data de Criação</th>
@@ -33,6 +34,7 @@
                                 <tr>
                                     <td>{{$cliente->id}}</td>
                                     <td>{{$cliente->nome}}</td>
+                                    <td>{{$cliente->nome_contato}}</td>
                                     <td>{{$cliente->email}}</td>
                                     <td>{{$cliente->cpf_cnpj}}</td>
                                     <td>{{$cliente->created_at->format('d/m/Y')}}</td>
