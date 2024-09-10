@@ -30,7 +30,7 @@ class HomeController extends Controller
         $totalOrdemServicos = OrdemServico::all()->count();
         $totalClientes = Cliente::all()->count();
         $totalUsers = User::all()->count();
-        $totalValorOrdemServicos = OrdemServico::whereNot('status', StatusOrdemServico::NaoExecutado->value)->sum('valor_total');
+        $totalValorOrdemServicos = OrdemServico::where('status', StatusOrdemServico::Fechado->value)->sum('valor_total');
         
         return view('home', [
             'totalOrdemServicos' => $totalOrdemServicos,
