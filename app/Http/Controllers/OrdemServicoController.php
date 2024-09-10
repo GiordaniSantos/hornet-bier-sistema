@@ -198,15 +198,10 @@ class OrdemServicoController extends Controller
         $ordemServico = OrdemServico::where(['id' => $id])->first();
         if(!$ordemServico->cliente->celular){
             alert()->error('Erro','O cliente não tem um celular cadastrado.');
+            return redirect()->route('ordem-servico.show', ['ordem_servico' => $ordemServico->id]);
         }
 
-        $whats = preg_replace('/[^0-9]/i', '', $ordemServico->cliente->celular);
-        $mensagem = 'Olá '.$ordemServico->cliente->nome.', para acessar seu orçamento de ordem de serviço n° '.$ordemServico->numero.' e acompanhar o status do andamento do serviço basta acessar o seguinte link: '.route('orcamento', ['id' => $ordemServico->id]);
-
-        $msg = urlencode($mensagem);
-        $url = "https://web.whatsapp.com/send?phone=55{$whats}&text={$msg}";
-
-        return redirect()->away($url)->withHeaders([
+        return redirect()->away($ordemServico->getWhatsappLink())->withHeaders([
             'target' => '_blank',
         ]);
     }
