@@ -65,7 +65,7 @@ if($ordemServico->data_saida && date('d/m/Y', strtotime(str_replace('/', '-', $o
             <tr>
                 <td><strong>MODELO:</strong> {{ $ordemServico->modelo }}</td>
                 <td><strong>SÉRIE:</strong> {{ $ordemServico->serie }}</td>
-                <td colspan="2"><strong>NÚMERO DO MOTOR:</strong> {{ $ordemServico->serie }}</td>
+                <td colspan="2"><strong>NÚMERO DO MOTOR:</strong> {{ $ordemServico->numero_motor }}</td>
             </tr>
             <tr>
                 <td colspan="4"><strong>Problema Apresentado no Equipamento:</strong> <br>
