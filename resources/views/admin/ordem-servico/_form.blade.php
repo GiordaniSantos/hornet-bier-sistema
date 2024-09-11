@@ -192,7 +192,7 @@ if ($pecas) {
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-sm-4">
             <label>Valor Mão de Obra (R$):</label>
             <input type="text" class="form-control form-control-user @error('valor') is-invalid @enderror" id="valor" required name="valor" autocomplete="valor" value="{{ isset($ordemServico) ? old('valor', $ordemServico->valor) : old('valor') }}" {{ $isDisabled }}>
             @error('valor')
@@ -208,7 +208,16 @@ if ($pecas) {
             </div>
         @endif
         @if(!isset($ordemServico))
-            <div class="col-12 col-sm-6 mb-3 mb-sm-0">
+            <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+                <label>Data de Entrada:</label>
+                <input type="datetime-local" class="form-control" id="data_entrada" required data-required-message="Por favor, selecione uma data" name="data_entrada" value="{{ isset($ordemServico) ? old('data_entrada', $ordemServico->data_entrada) : old('data_entrada') }}">
+                @error('data_entrada')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            <div class="col-12 col-sm-4 mb-3 mb-sm-0">
                 <label>Data de Saída/Previsão de Saída:</label>
                 <input type="datetime-local" class="form-control" id="data_saida" name="data_saida" value="{{ isset($ordemServico) ? old('data_saida', $ordemServico->data_saida) : old('data_saida') }}">
                 @error('data_saida')
@@ -223,7 +232,7 @@ if ($pecas) {
         @if(isset($ordemServico))
             <div class="col-sm-4 mb-3 mb-sm-0">
                 <label>Data de Entrada:</label>
-                <input type="datetime-local" class="form-control" required data-required-message="Por favor, selecione uma data" id="data_entrada" name="data_entrada" value="{{ isset($ordemServico) ? old('data_entrada', $ordemServico->created_at) : old('data_entrada') }}">
+                <input type="datetime-local" class="form-control" required data-required-message="Por favor, selecione uma data" id="data_entrada" name="data_entrada" value="{{ isset($ordemServico) ? old('data_entrada', $ordemServico->data_entrada) : old('data_entrada') }}">
                 @error('data_entrada')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -270,7 +279,7 @@ if ($pecas) {
 </form>
 
 <?php
-  $defaultDateDataEntrada = isset($ordemServico) && !empty($ordemServico->created_at) ? date('d/m/Y H:i', strtotime(str_replace('/', '-', $ordemServico->created_at))) : '';
+  $defaultDateDataEntrada = isset($ordemServico) && !empty($ordemServico->data_entrada) ? date('d/m/Y H:i', strtotime(str_replace('/', '-', $ordemServico->data_entrada))) : '';
   $defaultDateDataSaida = isset($ordemServico) && !empty($ordemServico->data_saida) ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : '';
 ?>
 
@@ -388,8 +397,7 @@ if ($pecas) {
 
     flatpickr("#data_entrada", {
         locale: "pt",
-        dateFormat: "d/m/Y H:i",
-        enableTime: true,
+        dateFormat: "d/m/Y",
         allowInput: true,
         defaultDate: "<?php echo $defaultDateDataEntrada; ?>"
     });

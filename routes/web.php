@@ -52,6 +52,9 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
     //ordem de servico
     Route::resource('/ordem-servico', OrdemServicoController::class);
 
+    //fechar ordem de serviço
+    Route::post('/fechar-ordem-servico/{id}', [OrdemServicoController::class, 'fecharOrdemServico'])->name('orcamento-servico.fechar');
+
     //servicos
     Route::resource('/servico', ServicoController::class);
 

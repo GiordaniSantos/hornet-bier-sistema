@@ -54,6 +54,9 @@ class OrdemServicoController extends Controller
         }
     
         $ordemServicoCriado = $ordemServico->create($request->all());
+        if($request->data_entrada){
+            $ordemServicoCriado->data_entrada = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_entrada)));
+        }
         if($request->data_saida){
             $ordemServicoCriado->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
         }
@@ -172,7 +175,7 @@ class OrdemServicoController extends Controller
             $ordemServico->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
         }
         if($request->data_entrada){
-            $ordemServico->created_at = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $request->data_entrada)));
+            $ordemServico->data_entrada = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_entrada)));
         }
         $ordemServico->update($request->all());
         alert()->success('Concluído','Ordem de Serviço atualizado com sucesso.');
@@ -191,6 +194,20 @@ class OrdemServicoController extends Controller
 
         alert()->success('Concluído','Ordem de Serviço excluida com sucesso.');
         return redirect()->route('ordem-servico.index');
+    }
+
+    public function fecharOrdemServico(Request $request, $id)
+    {
+        try {
+            $ordemServico = OrdemServico::where(['id' => $id])->first();
+            $ordemServico->status = $request->status;
+            $ordemServico->data_entrada = $request->data_entrada;
+            $ordemServico->data_saida = $request->data_saida;
+            $ordemServico->save();
+            return true;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function enviarOrcamentoWhatsapp($id)

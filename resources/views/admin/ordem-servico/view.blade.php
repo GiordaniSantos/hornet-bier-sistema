@@ -118,6 +118,10 @@
                         <td>{{ $ordemServico->getStatusFormatado() }}</td>
                     </tr>
                     <tr>
+                        <td>Data de Entrada:</td>
+                        <td>{{ $ordemServico->data_entrada ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_entrada))) : null }}</td>
+                    </tr>
+                    <tr>
                         <td>Data de Saída:</td>
                         <td>{{ $ordemServico->data_saida ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : null }}</td>
                     </tr>
