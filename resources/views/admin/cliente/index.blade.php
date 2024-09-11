@@ -35,7 +35,7 @@
                                     <td>{{$cliente->nome}}</td>
                                     <td>{{$cliente->nome_contato}}</td>
                                     <td>{{$cliente->email}}</td>
-                                    <td>{{$cliente->cpf_cnpj}}</td>
+                                    <td style="width: 30%;">{{$cliente->cpf_cnpj}}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
