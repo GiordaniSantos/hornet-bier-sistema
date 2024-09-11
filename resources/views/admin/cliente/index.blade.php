@@ -25,7 +25,6 @@
                                 <th>Contato</th>
                                 <th>email</th>
                                 <th>CPF/CNPJ</th>
-                                <th>Data de Criação</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -37,7 +36,6 @@
                                     <td>{{$cliente->nome_contato}}</td>
                                     <td>{{$cliente->email}}</td>
                                     <td>{{$cliente->cpf_cnpj}}</td>
-                                    <td>{{$cliente->created_at->format('d/m/Y')}}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

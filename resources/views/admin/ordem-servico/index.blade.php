@@ -28,9 +28,9 @@ use App\Enums\StatusOrdemServico;
                                 <th>ID</th>
                                 <th>Número OS</th>
                                 <th>Cliente</th>
-                                <th>Modelo</th>
                                 <th>Status</th>
                                 <th>Data de Entrada</th>
+                                <th>Data de Saída</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -40,9 +40,9 @@ use App\Enums\StatusOrdemServico;
                                     <td>{{$ordemServico->id}}</td>
                                     <td>{{$ordemServico->numero}}</td>
                                     <td>{{$ordemServico->cliente->nome}}</td>
-                                    <td>{{$ordemServico->modelo}}</td>
                                     <td>{{$ordemServico->getStatusFormatado()}}</td>
-                                    <td>{{$ordemServico->created_at->format('d/m/Y')}}</td>
+                                    <td>{{ $ordemServico->data_entrada ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_entrada))) : null }}</td>
+                                    <td>{{ $ordemServico->data_saida ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : null }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
