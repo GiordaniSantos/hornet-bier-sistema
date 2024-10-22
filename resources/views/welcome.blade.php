@@ -77,18 +77,40 @@
                 <div class="row content">
                     <div class="col-lg-6">
                         <p>
-                            Na Chopeiras Hornet Bier, nos orgulhamos de nossa Experiência , Produtos de Qualidade e Serviço Especializado , que nos diferenciam dos demais. Nosso principal objetivo é entregar Qualidade e Tecnologia aos nossos clientes, fomentando parcerias de longo prazo, fidelidade e altos índices de satisfação com nossos produtos e serviços.<br>
-                            Com uma equipe dedicada a fornecer serviços de manutenção de alto nível para torneiras de cerveja e cervejarias, garantimos que nossos clientes recebam a melhor experiência possível. Nosso compromisso com a excelência se reflete em todos os aspectos do nosso negócio, desde a qualidade dos nossos produtos até a expertise dos nossos técnicos.
+                            Na <strong>Chopeiras HornetBier</strong>, nos orgulhamos de nossa Experiência, Ótimo Atendimento e Serviço Qualificado, que nos diferenciam dos demais. <br>
+                            Nosso principal objetivo é entregar Qualidade aos nossos clientes, fomentando parcerias de longo prazo, fidelidade e altos índices de satisfação com nossos serviços. <br>
+                            Com uma dedicação em fornecer serviços de manutenção de alto nível para cervejarias, bares e clientes particulares.
                         </p>
                         
                     </div>
                     <div class="col-lg-6 pt-4 pt-lg-0">
                         <ul>
-                            <li><i class="ri-check-double-line"></i> Garantir que as torneiras de cerveja e as cervejarias estejam funcionando corretamente, fornecendo cerveja de alta qualidade aos clientes e mantendo um ambiente limpo e seguro.</li>
+                            <li><i class="ri-check-double-line"></i> Garantir que as Chopeiras estejam funcionando corretamente, fornecendo Chopp de alta qualidade aos clientes.</li>
                             <li><i class="ri-check-double-line"></i> fornecer um excelente atendimento ao cliente, ouvir o feedback do cliente e garantir que ele esteja satisfeito com os serviços prestados.</li>
                             <li><i class="ri-check-double-line"></i> Conduzir negócios com honestidade, transparência e integridade e garantir que todas as interações com clientes e parceiros sejam éticas e respeitosas.</li>
                             <li><i class="ri-check-double-line"></i> Comprometimento com excelência</li>
                         </ul>
+                    </div>
+                    <div class="row" style="margin-top: 35px;">
+                        <h4 class="text-center">Nosso Valores</h4>
+                        <div class="col-md-4">
+                            <button class="card-valores">Respeito nas Relações</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="card-valores card-valores-2">Honestidade</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="card-valores">Agilidade com Competência</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="card-valores card-valores-2">Confiança</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="card-valores">Compromentimento com Excelência</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="card-valores card-valores-2">Empatia</button>
+                        </div>
                     </div>
                 </div>
             </div>
