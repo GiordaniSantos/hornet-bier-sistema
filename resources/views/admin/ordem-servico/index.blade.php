@@ -19,6 +19,42 @@ use App\Enums\StatusOrdemServico;
             <span class="text">Adicionar</span>
         </a><br>
         
+        <form method="GET" action="{{ route('ordem-servico.index') }}">
+            <div class="form-group row mt-4">
+                <div class="col-12 col-lg-6 col-xl-4 mb-2">
+                    <select name="status" id="status" class="form-control form-control-user">
+                        <option value="">Selecione o Status</option>
+                        @foreach(StatusOrdemServico::cases() as $case)
+                            <option value="{{ $case->value }}" {{ request('status') == $case->value ? 'selected' : '' }}>{{ StatusOrdemServico::getDescription($case->value) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-4 mb-2">
+                    <select name="cliente_id" class="form-control">
+                        <option value="">Selecione o Cliente</option>
+                        @if ($clientes)            
+                            @foreach ($clientes as $cliente)
+                                <option value="{{$cliente->id}}" {{ request('cliente_id') == $cliente->id ? 'selected' : '' }}>{{$cliente->nome}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="col-12 col-lg-12 col-xl-4">
+                    <button type="submit" class="btn btn-info btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <span class="text">Filtrar</span>
+                    </button>
+                    <a href="{{ route('ordem-servico.index') }}" type="submit" class="btn btn-info btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fa-solid fa-broom"></i>
+                        </span>
+                        <span class="text">Limpar Filtro</span>
+                    </a>
+                </div>
+            </div>
+        </form>
         <div class="card shadow mb-4" style="margin-top: 1.5rem">
             <div class="card-body">
                 <div class="table-responsive">

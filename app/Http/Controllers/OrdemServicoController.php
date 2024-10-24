@@ -18,12 +18,25 @@ class OrdemServicoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ordemServicos = OrdemServico::orderBy('created_at', 'desc')->get();
+        $clientes = Cliente::all();
+        $query = OrdemServico::query();
+
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->has('cliente_id') && $request->cliente_id != '') {
+            $query->where('cliente_id', $request->cliente_id);
+        }
+
+        $ordemServicos = $query->orderBy('created_at', 'desc')->get();
 
         confirmDelete('Deletar Ordem de Serviço!', "Você tem certeza que quer deletar este registro?");
-        return view('admin.ordem-servico.index', ['ordemServicos' => $ordemServicos]);
+
+       
+        return view('admin.ordem-servico.index', ['ordemServicos' => $ordemServicos, 'clientes' => $clientes]);
     }
 
     /**
