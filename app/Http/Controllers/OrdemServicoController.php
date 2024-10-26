@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Helper;
 use App\Models\OrdemServico;
 use App\Models\OrdemServicoPeca;
 use App\Models\Problema;
@@ -234,6 +235,37 @@ class OrdemServicoController extends Controller
         return redirect()->away($ordemServico->getWhatsappLink())->withHeaders([
             'target' => '_blank',
         ]);
+    }
+
+    public function enviarMultiplosOrcamentoWhatsapp(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:ordem_servicos,id',
+        ]);
+
+        $ids = $request->input('ids');
+
+        $ordensServicos = OrdemServico::whereIn('id', $ids)
+        ->with('cliente')
+        ->whereHas('cliente', function($query) {
+            $query->whereNotNull('celular')->where('celular', '!=', '');
+        })
+        ->get();
+
+        if ($ordensServicos->isEmpty()) {
+            abort(400, 'O cliente não tem um celular cadastrado.');
+        }
+        
+        $clientes = $ordensServicos->pluck('cliente_id');
+
+        if (count($ordensServicos) != 1 && $clientes->count() === $clientes->unique()->count()) {
+            abort(400, 'Os orçamentos pertencem a clientes diferentes.');
+        } 
+
+        $mensagemFormatada = Helper::formataMensagemWhatsapp($ordensServicos->toArray());
+       
+        return response()->json(['url' => Helper::getWhatsappUrl(Helper::getWhatsappCelular($ordensServicos[0]->cliente->celular), $mensagemFormatada)]);
     }
 
     public function enviarOrcamentoPorEmail($id)

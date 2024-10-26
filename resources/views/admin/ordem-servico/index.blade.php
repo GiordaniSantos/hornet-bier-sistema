@@ -61,6 +61,7 @@ use App\Enums\StatusOrdemServico;
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>ID</th>
                                 <th>Número OS</th>
                                 <th>Cliente</th>
@@ -73,6 +74,9 @@ use App\Enums\StatusOrdemServico;
                         <tbody>
                             @foreach($ordemServicos as $ordemServico)
                                 <tr data-id="{{$ordemServico->id}}" data-data_entrada="{{$ordemServico->data_entrada}}" data-data_saida="{{$ordemServico->data_saida}}" data-status="{{$ordemServico->status}}">
+                                    <td class="text-center">
+                                        <input type="checkbox" class="ordemServicoCheckbox" value="{{$ordemServico->id}}">
+                                    </td>
                                     <td>{{$ordemServico->id}}</td>
                                     <td>{{$ordemServico->numero}}</td>
                                     <td>{{$ordemServico->cliente->nome}}</td>
@@ -101,6 +105,14 @@ use App\Enums\StatusOrdemServico;
                     </table>
                 </div>
             </div>
+        </div>
+        <div >
+            <button type="submit" id="btn-zap" class="btn btn-info btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </span>
+                <span class="text">Enviar Selecionados Whatsapp</span>
+            </button>
         </div>
     </div>
     <div class="modal fade" id="updateStatusModal" tabindex="-1" role="dialog" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
@@ -188,6 +200,43 @@ use App\Enums\StatusOrdemServico;
                     });
                 }
             });
+        });
+
+        document.getElementById('btn-zap').addEventListener('click', function() {
+            const checkboxes = document.querySelectorAll('.ordemServicoCheckbox:checked');
+            const selectedIds = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+            if(selectedIds.length == 0){
+                return Swal.fire({
+                        icon: "info",
+                        title: "Oops...",
+                        text: "Selecione pelo menos uma ordem de serviço!"
+                    });
+            }
+         
+            $.ajax({
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/admin/multiplo-orcamento-whatsapp',
+                data: {
+                    ids: selectedIds,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response, textStatus, xhr) {
+                    window.open(response.url, '_blank');
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro',
+                        text: 'Ocorreu um erro ao processar sua solicitação. '+xhr.responseJSON.message,
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+                
         });
     </script>
 @endsection
