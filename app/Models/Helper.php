@@ -22,7 +22,7 @@ class Helper extends Model
         $totalOrdens = count($ordemServicos);
 
         foreach($ordemServicos as $key => $ordemServico){
-            $mensagem .= '* '. $ordemServico['numero']. ' ($'.$ordemServico['valor_total'].')'. ' - '.route('orcamento', ['id' => $ordemServico['id']]);
+            $mensagem .= '* OS - '. $ordemServico['numero']. ' - Valor R$'. number_format($ordemServico['valor_total'], 2, ',', '.'). ' - link de acesso do serviço - '.route('orcamento', ['id' => $ordemServico['id']]);
 
             if ($key < $totalOrdens - 1) {
                 $mensagem .= '%0A';
