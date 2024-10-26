@@ -256,12 +256,12 @@ class OrdemServicoController extends Controller
         if ($ordensServicos->isEmpty()) {
             abort(400, 'O cliente não tem um celular cadastrado.');
         }
-        
+    
         $clientes = $ordensServicos->pluck('cliente_id');
-
-        if (count($ordensServicos) != 1 && $clientes->count() === $clientes->unique()->count()) {
+    
+        if ($clientes->unique()->count() > 1) {
             abort(400, 'Os orçamentos pertencem a clientes diferentes.');
-        } 
+        }
 
         $mensagemFormatada = Helper::formataMensagemWhatsapp($ordensServicos->toArray());
        
