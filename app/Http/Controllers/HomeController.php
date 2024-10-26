@@ -32,7 +32,8 @@ class HomeController extends Controller
         $totalUsers = User::all()->count();
         $totalValorOrdemServicos = OrdemServico::where('status', StatusOrdemServico::Fechado->value)->sum('valor_total');
         $totalValorMaoDeObra = OrdemServico::where('status', StatusOrdemServico::Fechado->value)->sum('valor');
-        $totalValorPecas = OrdemServico::where('status', StatusOrdemServico::Fechado->value)
+        $totalValorPecas = $totalValorOrdemServicos - $totalValorMaoDeObra;
+        /*$totalValorPecas = OrdemServico::where('status', StatusOrdemServico::Fechado->value)
         ->with('pecas')
         ->get()
         ->sum(function ($ordemServico) {
@@ -41,7 +42,7 @@ class HomeController extends Controller
                 $valorTotal += $peca->pivot->valor_peca * $peca->pivot->quantidade;
             }
            return $valorTotal;
-        });
+        });*/
         
         return view('home', [
             'totalOrdemServicos' => $totalOrdemServicos,
