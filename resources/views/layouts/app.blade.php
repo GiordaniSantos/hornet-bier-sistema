@@ -29,9 +29,9 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
-    <script src = "https://cdn.jsdelivr.net/npm/ flatpickr" > </script> 
+    <script src = "https://cdn.jsdelivr.net/npm/ flatpickr" > </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
@@ -46,7 +46,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('home')}}">
                 <div class="sidebar-brand-icon">
-                    
+
                     <img src="/images/nova-logo.png" width="40px" alt="">
                 </div>
                 <div class="sidebar-brand-text mx-3">Hornet Bier</div>
@@ -84,6 +84,12 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('marca.index') }}">
+                    <i class="fa-solid fa-building"></i>
+                    <span>Marcas</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('servico.index') }}">
                 <i class="fa-solid fa-briefcase"></i>
                 <span>Serviços</span></a>
@@ -101,7 +107,7 @@
                 <i class="fa-solid fa-users"></i>
                 <span>Usuários</span></a>
             </li>
-            
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -130,7 +136,7 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                       
+
                         <!--<li class="nav-item dropdown no-arrow d-sm-none">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -299,12 +305,12 @@
                     </ul>
 
                 </nav>
-            
+
 
             <main class="py-4">
                 @yield('content')
             </main>
-       
+
 
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
@@ -353,7 +359,7 @@
     <!-- Page level custom scripts -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         flatpickr("input[type=datetime-local]");

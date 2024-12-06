@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\MarcaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -48,6 +50,9 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
 
     //pecas
     Route::resource('/peca', PecaController::class);
+
+    //marcas
+    Route::resource('/marca', MarcaController::class);
 
     //ordem de servico
     Route::resource('/ordem-servico', OrdemServicoController::class);
