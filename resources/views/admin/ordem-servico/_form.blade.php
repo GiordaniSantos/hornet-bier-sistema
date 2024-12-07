@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 use App\Enums\StatusOrdemServico;
 
 $isDisabled = isset($ordemServico) && $ordemServico->status == StatusOrdemServico::Fechado->value ? 'disabled' : '';
@@ -24,6 +24,11 @@ if ($pecas) {
     }
 }
 
+$dataAtual = new DateTime();
+
+$dataAtual->modify('+10 days');
+
+$dataSaida = $dataAtual->format('d/m/Y');
 ?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
@@ -43,11 +48,11 @@ if ($pecas) {
         @csrf
 @endif
     <div class="form-group row">
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-md-6">
             <label>Cliente:</label>
             <select name="cliente_id" class="single-cliente js-states form-control" required {{ $isDisabled }}>
                 <option></option>
-                @if ($clientes)            
+                @if ($clientes)
                     @foreach ($clientes as $cliente)
                         <option value="{{$cliente->id}}" {{ ($ordemServico->cliente_id ?? old('cliente_id')) == $cliente->id ? 'selected' : '' }}>{{$cliente->nome}}</option>
                     @endforeach
@@ -63,26 +68,44 @@ if ($pecas) {
             @enderror
         </div>
         @if(isset($ordemServico))
-            <div class="col-12 col-sm-6 mb-3 mb-sm-0">
+            <div class="col-12 col-md-6 mb-3 mb-sm-0">
                 <label>Número da OS:</label>
                 <input type="text" class="form-control form-control-user" name="modelo" autocomplete="modelo" autofocus id="modelo" value="{{ isset($ordemServico) ? old('numero', $ordemServico->numero) : old('numero') }}" disabled>
             </div>
         @endif
     </div>
     <div class="form-group row">
-        @if(isset($ordemServico))
-            <input type="hidden" id="idOs" name="idOs" value="{{$ordemServico->id}}">
-        @endif
-        <div class="col-12 col-sm-4 mb-3 mb-sm-0">
-            <label>Modelo:</label>
-            <input type="text" class="form-control form-control-user @error('modelo') is-invalid @enderror" name="modelo" autocomplete="modelo" autofocus id="modelo" value="{{ isset($ordemServico) ? old('modelo', $ordemServico->modelo) : old('modelo') }}" {{ $isDisabled }}>
-            @error('modelo')
+        <div class="col-12 col-md-6">
+            <label>Marca:</label>
+            <select name="marca_id" class="single-marca js-states form-control" required {{ $isDisabled }}>
+                <option></option>
+                @if ($marcas)
+                    @foreach ($marcas as $marca)
+                        <option value="{{$marca->id}}" {{ ($ordemServico->marca_id ?? old('marca_id')) == $marca->id ? 'selected' : '' }}>{{$marca->nome}}</option>
+                    @endforeach
+                @endif
+            </select>
+            @error('marca_id')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
         </div>
-        <div class="col-12 col-sm-4">
+        <div class="col-12 col-md-6">
+            <label>Modelo:</label>
+            <input type="text" class="form-control form-control-user @error('modelo') is-invalid @enderror" name="modelo" autocomplete="modelo" autofocus id="modelo" value="{{ isset($ordemServico) ? old('modelo', $ordemServico->modelo) : old('modelo') }}" {{ $isDisabled }}>
+            @error('modelo')
+            <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+    </div>
+    <div class="form-group row">
+        @if(isset($ordemServico))
+            <input type="hidden" id="idOs" name="idOs" value="{{$ordemServico->id}}">
+        @endif
+        <div class="col-12 col-md-6">
             <label>Série:</label>
             <input type="text" class="form-control form-control-user @error('serie') is-invalid @enderror" name="serie" autocomplete="serie" autofocus id="serie" value="{{ isset($ordemServico) ? old('serie', $ordemServico->serie) : old('serie') }}" {{ $isDisabled }}>
             @error('serie')
@@ -91,7 +114,7 @@ if ($pecas) {
                 </span>
             @enderror
         </div>
-        <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+        <div class="col-12 col-md-6 mb-3 mb-sm-0">
             <label>Número do Motor:</label>
             <input type="text" class="form-control form-control-user @error('numero_motor') is-invalid @enderror" name="numero_motor" autocomplete="numero_motor" autofocus id="numero_motor" value="{{ isset($ordemServico) ? old('numero_motor', $ordemServico->numero_motor) : old('numero_motor') }}" {{ $isDisabled }}>
             @error('numero_motor')
@@ -102,10 +125,10 @@ if ($pecas) {
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-md-6">
             <label>Problema(s) Apresentado(s):</label>
             <select name="problema_id[]" class="multiple-problem js-states form-control @error('problema_id') is-invalid @enderror" multiple required autocomplete="problema_id" autofocus id="problema_id" {{ $isDisabled }}>
-                @if ($problemas)            
+                @if ($problemas)
                     @foreach ($problemas as $problema)
                         <option value="{{$problema->id}}">{{$problema->nome}}</option>
                     @endforeach
@@ -117,10 +140,10 @@ if ($pecas) {
                 </span>
             @enderror
         </div>
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-md-6">
             <label>Servico(s) Prestado(s):</label>
             <select name="servico_id[]" class="multiple-servico js-states form-control @error('servico_id') is-invalid @enderror" multiple autocomplete="servico_id" autofocus id="servico_id" {{ $isDisabled }}>
-                @if ($servicos)            
+                @if ($servicos)
                     @foreach ($servicos as $servico)
                         <option value="{{$servico->id}}">{{$servico->nome}}</option>
                     @endforeach
@@ -146,7 +169,7 @@ if ($pecas) {
                         <td>
                             <select name="pecas[0][peca_id]" class="single-peca js-states form-control" style="width: 100%" {{ $isDisabled }}>
                                 <option></option>
-                                @if ($pecas)            
+                                @if ($pecas)
                                     @foreach ($pecas as $peca)
                                         <option value="{{$peca->id}}" data-valor-unitario="{{$peca->valor_unitario}}" {{ ($ordemServico->peca_id ?? old('peca_id')) == $peca->id ? 'selected' : '' }}>{{$peca->nome}} - R${{ number_format($peca->valor_unitario, 2, ',', '.') }}</option>
                                     @endforeach
@@ -167,7 +190,7 @@ if ($pecas) {
                             <td>
                                 <select name="pecas[<?=$key?>][peca_id]" class="single-peca js-states form-control" style="width: 100%" {{ $isDisabled }}>
                                     <option></option>
-                                    @if ($pecas)            
+                                    @if ($pecas)
                                         @foreach ($pecas as $peca)
                                             <option value="{{$peca->id}}" data-valor-unitario="{{$peca->valor_unitario}}" {{ $ordemServicoPeca->id == $peca->id ? 'selected' : '' }}>{{$peca->nome}} - R${{ number_format($peca->valor_unitario, 2, ',', '.') }}</option>
                                         @endforeach
@@ -192,7 +215,7 @@ if ($pecas) {
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-12 col-sm-4">
+        <div class="col-12 col-md-4">
             <label>Valor Mão de Obra (R$):</label>
             <input type="text" class="form-control form-control-user @error('valor') is-invalid @enderror" id="valor" required name="valor" autocomplete="valor" value="{{ isset($ordemServico) ? old('valor', $ordemServico->valor) : old('valor') }}" {{ $isDisabled }}>
             @error('valor')
@@ -202,13 +225,13 @@ if ($pecas) {
             @enderror
         </div>
         @if(isset($ordemServico))
-            <div class="col-12 col-sm-6">
+            <div class="col-12 col-md-6">
                 <label>Valor Total (R$):</label>
                 <input type="text" class="form-control form-control-user" id="valor_total" disabled required name="valor_total" autocomplete="valor_total" value="{{ isset($ordemServico) ? old('valor_total', $ordemServico->valor_total) : old('valor_total') }}">
             </div>
         @endif
         @if(!isset($ordemServico))
-            <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+            <div class="col-12 col-md-4 mb-3 mb-sm-0">
                 <label>Data de Entrada:</label>
                 <input type="datetime-local" class="form-control" id="data_entrada" required data-required-message="Por favor, selecione uma data" name="data_entrada" value="{{ isset($ordemServico) ? old('data_entrada', $ordemServico->data_entrada) : old('data_entrada') }}">
                 @error('data_entrada')
@@ -217,7 +240,7 @@ if ($pecas) {
                     </span>
                 @enderror
             </div>
-            <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+            <div class="col-12 col-md-4 mb-3 mb-sm-0">
                 <label>Data de Saída/Previsão de Saída:</label>
                 <input type="datetime-local" class="form-control" id="data_saida" name="data_saida" value="{{ isset($ordemServico) ? old('data_saida', $ordemServico->data_saida) : old('data_saida') }}">
                 @error('data_saida')
@@ -230,7 +253,7 @@ if ($pecas) {
     </div>
     <div class="form-group row">
         @if(isset($ordemServico))
-            <div class="col-sm-4 mb-3 mb-sm-0">
+            <div class="col-md-4 mb-3 mb-sm-0">
                 <label>Data de Entrada:</label>
                 <input type="datetime-local" class="form-control" required data-required-message="Por favor, selecione uma data" id="data_entrada" name="data_entrada" value="{{ isset($ordemServico) ? old('data_entrada', $ordemServico->data_entrada) : old('data_entrada') }}">
                 @error('data_entrada')
@@ -239,7 +262,7 @@ if ($pecas) {
                     </span>
                 @enderror
             </div>
-            <div class="col-sm-4 mb-3 mb-sm-0">
+            <div class="col-md-4 mb-3 mb-sm-0">
                 <label>Data de Saída/Previsão de Saída:</label>
                 <input type="datetime-local" class="form-control" id="data_saida" name="data_saida" value="{{ isset($ordemServico) ? old('data_saida', $ordemServico->data_saida) : old('data_saida') }}">
                 @error('data_saida')
@@ -248,7 +271,7 @@ if ($pecas) {
                     </span>
                 @enderror
             </div>
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <label>Status:</label>
                 <select name="status" class="form-control form-control-user @error('status') is-invalid @enderror" id="status">
                     @foreach(StatusOrdemServico::cases() as $case)
@@ -274,13 +297,13 @@ if ($pecas) {
             @enderror
         </div>
     </div>
-    
+
     <button class="btn btn-success" type="submit">{{isset($ordemServico->id) ? 'Atualizar' : 'Criar'}}</button>
 </form>
 
 <?php
   $defaultDateDataEntrada = isset($ordemServico) && !empty($ordemServico->data_entrada) ? date('d/m/Y H:i', strtotime(str_replace('/', '-', $ordemServico->data_entrada))) : '';
-  $defaultDateDataSaida = isset($ordemServico) && !empty($ordemServico->data_saida) ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : '';
+  $defaultDateDataSaida = isset($ordemServico) && !empty($ordemServico->data_saida) ? date('d/m/Y', strtotime(str_replace('/', '-', $ordemServico->data_saida))) : $dataSaida;
 ?>
 
 
@@ -340,7 +363,7 @@ if ($pecas) {
             $(this).closest('tr').find('input[name*="valor_unitario"]').val(valorUnitario);
         });
     })
-    
+
 
     $(document).ready(function() {
 
@@ -366,7 +389,12 @@ if ($pecas) {
             language: 'pt-BR'
         });
 
-       
+        $('.single-marca').select2({
+            placeholder: 'Selecione a marca',
+            allowClear: true,
+            language: 'pt-BR'
+        });
+
         $('.single-peca').select2({
             placeholder: 'Selecione a peça',
             allowClear: true,
@@ -377,7 +405,7 @@ if ($pecas) {
                 });
             }
         });
-        
+
         $('.multiple-problem').select2({
             language: 'pt-BR',
         });
