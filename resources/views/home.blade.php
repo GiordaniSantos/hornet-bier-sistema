@@ -51,7 +51,14 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-12">
+            <a href="javascript:;" id="toggleButton">
+                <i class="fa-solid fa-eye fa-2x text-gray-900"></i>
+            </a>
+        </div>
+    </div>
+    <br>
     <!-- Content Row -->
     <div class="row">
         <!-- Earnings (Monthly) Card Example -->
@@ -117,7 +124,9 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1" style="color: #000000 !important">
                                 Faturamento Bruto</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">R${{isset($totalValorOrdemServicos) ? $totalValorOrdemServicos : '0'}}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800 hidden-value" id="valorBruto">
+                                R$.........
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fa-solid fa-money-bill fa-2x text-gray-300"></i>
@@ -133,7 +142,9 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1" style="color: #000000 !important">
                                 Faturamento por Mão de Obra</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">R${{isset($totalValorMaoDeObra) ? $totalValorMaoDeObra : '0'}}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800 hidden-value" id="valorMaoDeObra">
+                                R$.........
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fa-solid fa-wallet fa-2x text-gray-300"></i>
@@ -149,7 +160,9 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1" style="color: #000000 !important">
                                 Custo com Peças</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">R${{isset($totalValorPecas) ? $totalValorPecas : '0'}}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800 hidden-value" id="valorPecas">
+                                R$.........
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fa-solid fa-cash-register fa-2x text-gray-300"></i>
@@ -196,8 +209,32 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+<script>
+    $(document).ready(function() {
+        const valorBruto = "{{ isset($totalValorOrdemServicos) ? $totalValorOrdemServicos : '0' }}";
+        const valorMaoDeObra = "{{isset($totalValorMaoDeObra) ? $totalValorMaoDeObra : '0'}}";
+        const valorPecas = "{{isset($totalValorPecas) ? $totalValorPecas : '0'}}";
+        
+        $('#toggleButton').on('click', function() {
+            const senhaCorreta = "{{ env('SENHA_VALORES_TELA_INICIAL') }}";
+            const senhaUsuario = prompt("Por favor, insira a senha:");
 
-</div>
+            if (senhaUsuario === senhaCorreta) {
+                if ($('#valorBruto').hasClass('hidden-value')) {
+                    $('#valorBruto').removeClass('hidden-value').addClass('visible').text('R$' + valorBruto);
+                    $('#valorMaoDeObra').removeClass('hidden-value').addClass('visible').text('R$' + valorMaoDeObra);
+                    $('#valorPecas').removeClass('hidden-value').addClass('visible').text('R$' + valorPecas);
+                } else {
+                    $('#valorBruto').text('R$.........').removeClass('visible').addClass('hidden-value');
+                    $('#valorMaoDeObra').text('R$.........').removeClass('visible').addClass('hidden-value');
+                    $('#valorPecas').text('R$.........').removeClass('visible').addClass('hidden-value');
+                }
+            } else {
+                alert("Senha incorreta. Tente novamente.");
+            }
+        });
+    });
+</script>
 
 <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
