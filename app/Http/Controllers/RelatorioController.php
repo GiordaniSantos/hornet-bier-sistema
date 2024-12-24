@@ -37,7 +37,7 @@ class RelatorioController extends Controller
         $setTotal = OrdemServico::whereMonth('created_at', '=', 9)->whereYear('created_at', '=', date('Y'))->count();
         $outTotal = OrdemServico::whereMonth('created_at', '=', 10)->whereYear('created_at', '=', date('Y'))->count();
         $novTotal = OrdemServico::whereMonth('created_at', '=', 11)->whereYear('created_at', '=', date('Y'))->count();
-        $dezTotal = OrdemServico::whereMonth('created_at', '=', 1)->whereYear('created_at', '=', date('Y'))->count();
+        $dezTotal = OrdemServico::whereMonth('created_at', '=', 12)->whereYear('created_at', '=', date('Y'))->count();
         
         $dados = [
             $janTotal,
