@@ -60,6 +60,10 @@
                         <td>{{ $ordemServico->numero }}</td>
                     </tr>
                     <tr>
+                        <td>Marca:</td>
+                        <td>{{ $ordemServico->marca ? $ordemServico->marca->nome : null}}</td>
+                    </tr>
+                    <tr>
                         <td>Modelo:</td>
                         <td>{{$ordemServico->modelo}}</td>
                     </tr>

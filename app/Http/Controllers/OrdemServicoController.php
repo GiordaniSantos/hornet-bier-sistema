@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Helper;
+use App\Models\Marca;
 use App\Models\OrdemServico;
 use App\Models\OrdemServicoPeca;
 use App\Models\Problema;
@@ -36,7 +37,7 @@ class OrdemServicoController extends Controller
 
         confirmDelete('Deletar Ordem de Serviço!', "Você tem certeza que quer deletar este registro?");
 
-       
+
         return view('admin.ordem-servico.index', ['ordemServicos' => $ordemServicos, 'clientes' => $clientes]);
     }
 
@@ -49,8 +50,9 @@ class OrdemServicoController extends Controller
         $problemas = Problema::all();
         $pecas = Peca::all();
         $servicos = Servico::all();
+        $marcas = Marca::all();
 
-        return view('admin.ordem-servico.create', ['clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos]);
+        return view('admin.ordem-servico.create', ['clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos, 'marcas' => $marcas]);
     }
 
     /**
@@ -66,7 +68,7 @@ class OrdemServicoController extends Controller
             $valor = str_replace(',', '.', $valor);
             $request['valor'] = $valor;
         }
-    
+
         $ordemServicoCriado = $ordemServico->create($request->all());
         if($request->data_entrada){
             $ordemServicoCriado->data_entrada = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_entrada)));
@@ -75,7 +77,7 @@ class OrdemServicoController extends Controller
             $ordemServicoCriado->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
         }
         $valorTotal = $request->valor;
-        
+
         if($ordemServicoCriado){
             if($request->pecas && isset($request->pecas[0]['peca_id'])){
                 foreach($request->pecas as $peca){
@@ -117,7 +119,7 @@ class OrdemServicoController extends Controller
     public function show(OrdemServico $ordemServico)
     {
         confirmDelete('Deletar Ordem de Serviço!', "Você tem certeza que quer deletar este registro?");
-        
+
         return view('admin.ordem-servico.view', ['ordemServico' => $ordemServico]);
     }
 
@@ -130,15 +132,16 @@ class OrdemServicoController extends Controller
         $problemas = Problema::all();
         $pecas = Peca::all();
         $servicos = Servico::all();
-        
-        return view('admin.ordem-servico.edit', ['ordemServico' => $ordemServico, 'clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos]);
+        $marcas = Marca::all();
+
+        return view('admin.ordem-servico.edit', ['ordemServico' => $ordemServico, 'clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos, 'marcas' => $marcas]);
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, OrdemServico $ordemServico)
-    {   
+    {
         //dd($request->pecas);
         $request->validate(OrdemServico::rules(), OrdemServico::feedback());
         if($request->valor){
@@ -165,7 +168,7 @@ class OrdemServicoController extends Controller
 
         if($request->problema_id){
             OrdemServicoProblema::where('ordem_servico_id', $request->idOs)->delete();
-      
+
             foreach($request->problema_id as $problema){
                 $ordemProblema = new OrdemServicoProblema;
                 $ordemProblema->ordem_servico_id = $request->idOs;
@@ -256,15 +259,15 @@ class OrdemServicoController extends Controller
         if ($ordensServicos->isEmpty()) {
             abort(400, 'O cliente não tem um celular cadastrado.');
         }
-    
+
         $clientes = $ordensServicos->pluck('cliente_id');
-    
+
         if ($clientes->unique()->count() > 1) {
             abort(400, 'Os orçamentos pertencem a clientes diferentes.');
         }
 
         $mensagemFormatada = Helper::formataMensagemWhatsapp($ordensServicos->toArray());
-       
+
         return response()->json(['url' => Helper::getWhatsappUrl(Helper::getWhatsappCelular($ordensServicos[0]->cliente->celular), $mensagemFormatada)]);
     }
 

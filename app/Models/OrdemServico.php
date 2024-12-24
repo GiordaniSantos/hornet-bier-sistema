@@ -12,7 +12,7 @@ class OrdemServico extends Model
 
     protected $table = 'ordem_servicos';
 
-    protected $fillable = ['status', 'modelo', 'serie', 'numero_motor', 'valor', 'cliente_id', 'observacao'];
+    protected $fillable = ['status', 'modelo', 'serie', 'numero_motor', 'valor', 'cliente_id', 'observacao', 'marca_id'];
 
     public static function rules(): array
     {
@@ -67,7 +67,7 @@ class OrdemServico extends Model
         };
     }
 
-    public function getWhatsappLink() 
+    public function getWhatsappLink()
     {
         if (!($this->cliente->celular)) {
             return false;
@@ -83,6 +83,11 @@ class OrdemServico extends Model
     public function cliente(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo('App\Models\Cliente', 'cliente_id', 'id');
+    }
+
+    public function marca(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo('App\Models\Marca', 'marca_id', 'id');
     }
 
     public function problemas()

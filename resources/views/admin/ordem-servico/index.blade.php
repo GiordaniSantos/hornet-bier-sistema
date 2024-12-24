@@ -1,5 +1,9 @@
 <?php
 use App\Enums\StatusOrdemServico;
+
+$dataAtual = new DateTime();
+$dataAtual->modify('+10 days');
+$dataSaida = $dataAtual->format('Y-m-d');
 ?>
 
 @extends('layouts.app')
@@ -73,7 +77,7 @@ use App\Enums\StatusOrdemServico;
                         </thead>
                         <tbody>
                             @foreach($ordemServicos as $ordemServico)
-                                <tr data-id="{{$ordemServico->id}}" data-data_entrada="{{$ordemServico->data_entrada}}" data-data_saida="{{$ordemServico->data_saida}}" data-status="{{$ordemServico->status}}">
+                                <tr data-id="{{$ordemServico->id}}" data-data_entrada="{{$ordemServico->data_entrada}}" data-data_saida="{{$ordemServico->data_saida ? $ordemServico->data_saida : $dataSaida}}" data-status="{{$ordemServico->status}}">
                                     <td class="text-center">
                                         <input type="checkbox" class="ordemServicoCheckbox" value="{{$ordemServico->id}}">
                                     </td>

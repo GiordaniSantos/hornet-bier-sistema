@@ -11286,3 +11286,15 @@ body.sidebar-toggled footer.sticky-footer {
 .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple{
   border: 1px solid #d1d3e2 !important;
 }
+
+.hidden-value {
+  font-family: 'Courier New', Courier, monospace; /* Fonte monoespaçada */
+  color: #ffffff; /* Cor do texto igual ao fundo */
+  user-select: none; /* Impede a seleção do texto */
+  padding: 5px;
+  border-radius: 3px;
+}
+.visible {
+  color: #000; /* Torna o texto visível */
+  transition: opacity 0.4s ease; /* Transição suave para a opacidade */
+}

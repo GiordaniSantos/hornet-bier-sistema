@@ -19,7 +19,7 @@
         <div class="card mb-4">
             <div class="card-header">Editar Ordem de Serviço</div>
             <div class="card-body">
-                @component('admin.ordem-servico._form', ['ordemServico' => $ordemServico, 'clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos])
+                @component('admin.ordem-servico._form', ['ordemServico' => $ordemServico, 'clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos, 'marcas' => $marcas])
                 @endcomponent
             </div>
         </div>
