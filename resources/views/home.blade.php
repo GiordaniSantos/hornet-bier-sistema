@@ -50,6 +50,14 @@
                 · {{$dia}} de {{$mes_extenso["$mes"]}}, {{$ano}} <!-- · 12:16 PM-->
             </div>
         </div>
+        <div style="display:flex;">
+            <form method="get" action="{{ route('home') }}" enctype="multipart/form-data" style="display:flex;">
+                @csrf
+                <input class="form-control" id="ano" name="ano" type="number" placeholder="" value="{{$anoInputValue}}">
+                <button class="btn btn-primary" type="submit" style="margin-left: 5px;margin-right: 5px;">Filtrar</button>
+                <a href="{{route('home')}}" class="btn btn-primary" type="submit">limpar</a>
+            </form>
+        </div>
     </div>
     <div class="row">
         <div class="col-12">

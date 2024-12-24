@@ -27,11 +27,13 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $totalOrdemServicos = OrdemServico::all()->count();
+        $ano = $request->has('ano') ? $request->ano : date('Y');
+
+        $totalOrdemServicos = OrdemServico::whereYear('created_at', '=', $ano)->get()->count();
         $totalClientes = Cliente::all()->count();
         $totalUsers = User::all()->count();
-        $totalValorOrdemServicos = OrdemServico::where('status', StatusOrdemServico::Fechado->value)->sum('valor_total');
-        $totalValorMaoDeObra = OrdemServico::where('status', StatusOrdemServico::Fechado->value)->sum('valor');
+        $totalValorOrdemServicos = OrdemServico::where('status', StatusOrdemServico::Fechado->value)->whereYear('created_at', '=', $ano)->sum('valor_total');
+        $totalValorMaoDeObra = OrdemServico::where('status', StatusOrdemServico::Fechado->value)->whereYear('created_at', '=', $ano)->sum('valor');
         $totalValorPecas = $totalValorOrdemServicos - $totalValorMaoDeObra;
         /*$totalValorPecas = OrdemServico::where('status', StatusOrdemServico::Fechado->value)
         ->with('pecas')

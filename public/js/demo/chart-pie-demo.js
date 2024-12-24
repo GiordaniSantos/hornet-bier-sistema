@@ -1,10 +1,10 @@
-// Set new default font family and font color to mimic Bootstrap's default styling
-
 var dataOSPorCliente;
+
 $.ajax({
   url: 'relatorio-os-por-cliente',
   type: 'GET',
   async: false,
+  data: { ano: ano },
   success: function(data){
     dataOSPorCliente = data;
   },

@@ -1,9 +1,21 @@
 // Set new default font family and font color to mimic Bootstrap's default styling
 var dataMembresia;
+
+const url = new URL(window.location.href);
+const params = new URLSearchParams(url.search);
+
+let ano = params.get('ano');
+
+if (!ano) {
+  const currentDate = new Date();
+  ano = currentDate.getFullYear();
+}
+
 $.ajax({
   url: 'relatorio-os-mes',
   type: 'GET',
   async: false,
+  data: { ano: ano },
   success: function(data){
     dataMembresia = data;
   },
