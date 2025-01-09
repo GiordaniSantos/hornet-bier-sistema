@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\OrdemServicoController;
 use App\Http\Controllers\Api\ProblemaController;
+use App\Http\Controllers\Api\ServicoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('ordem-servico', OrdemServicoController::class);
 
     Route::apiResource('problema', ProblemaController::class);
+
+    Route::apiResource('servico', ServicoController::class);
 
     Route::get('relatorio', [HomeController::class, 'index']);
 });
