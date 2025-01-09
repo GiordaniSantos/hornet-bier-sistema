@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\OrdemServicoController;
 use App\Http\Controllers\Api\ProblemaController;
 use App\Http\Controllers\Api\ServicoController;
+use App\Http\Controllers\Api\MarcaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('problema', ProblemaController::class);
 
     Route::apiResource('servico', ServicoController::class);
+
+    Route::apiResource('marca', MarcaController::class);
 
     Route::get('relatorio', [HomeController::class, 'index']);
 });
