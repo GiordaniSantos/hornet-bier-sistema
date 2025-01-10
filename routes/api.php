@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ClienteController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\OrdemServicoController;
 use App\Http\Controllers\Api\ProblemaController;
@@ -35,6 +36,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('marca', MarcaController::class);
 
     Route::apiResource('peca', PecaController::class);
+
+    Route::apiResource('cliente', ClienteController::class);
 
     Route::get('relatorio', [HomeController::class, 'index']);
 });
