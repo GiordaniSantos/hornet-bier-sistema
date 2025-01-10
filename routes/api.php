@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\OrdemServicoController;
 use App\Http\Controllers\Api\ProblemaController;
 use App\Http\Controllers\Api\ServicoController;
 use App\Http\Controllers\Api\MarcaController;
+use App\Http\Controllers\Api\PecaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('servico', ServicoController::class);
 
     Route::apiResource('marca', MarcaController::class);
+
+    Route::apiResource('peca', PecaController::class);
 
     Route::get('relatorio', [HomeController::class, 'index']);
 });
