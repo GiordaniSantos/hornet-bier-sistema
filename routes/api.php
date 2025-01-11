@@ -29,6 +29,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('ordem-servico', OrdemServicoController::class);
 
+    Route::get('ordem-servico/view/{id}', [OrdemServicoController::class, 'view']);
+
     Route::apiResource('problema', ProblemaController::class);
 
     Route::apiResource('servico', ServicoController::class);
