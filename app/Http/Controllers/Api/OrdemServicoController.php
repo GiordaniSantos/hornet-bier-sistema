@@ -3,7 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cliente;
+use App\Models\Marca;
 use App\Models\OrdemServico;
+use App\Models\OrdemServicoPeca;
+use App\Models\OrdemServicoProblema;
+use App\Models\OrdemServicoServico;
+use App\Models\Peca;
+use App\Models\Problema;
+use App\Models\Servico;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -55,7 +63,57 @@ class OrdemServicoController extends Controller
      */
     public function store(Request $request)
     {
-       
+        $request->validate(OrdemServico::rules(), OrdemServico::feedback());
+
+        $ordemServico = new OrdemServico();
+        if($request->valor){
+            $valor = str_replace('.', '', $request->valor);
+            $valor = str_replace(',', '.', $valor);
+            $request['valor'] = $valor;
+        }
+
+        $ordemServicoCriado = $ordemServico->create($request->all());
+        if($request->data_entrada){
+            $ordemServicoCriado->data_entrada = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_entrada)));
+        }
+        if($request->data_saida){
+            $ordemServicoCriado->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
+        }
+        $valorTotal = $request->valor;
+
+        if($ordemServicoCriado){
+            if($request->pecas && isset($request->pecas[0]['peca_id'])){
+                foreach($request->pecas as $peca){
+                    $ordemPeca = new OrdemServicoPeca;
+                    $ordemPeca->ordem_servico_id = $ordemServicoCriado->id;
+                    $ordemPeca->peca_id = $peca['peca_id'];
+                    $ordemPeca->quantidade = $peca['quantidade'];
+                    $ordemPeca->valor_peca = $peca['valor_unitario'];
+                    $ordemPeca->save();
+                    $valorTotal += $peca['valor_unitario'] * $peca['quantidade'];
+                }
+            }
+            $ordemServicoCriado->valor_total = $valorTotal;
+            $ordemServicoCriado->save();
+
+            foreach($request->problema_id as $problema){
+                $ordemProblema = new OrdemServicoProblema;
+                $ordemProblema->ordem_servico_id = $ordemServicoCriado->id;
+                $ordemProblema->problema_id = $problema;
+                $ordemProblema->save();
+            }
+
+            if($request->servico_id){
+                foreach($request->servico_id as $servicoId){
+                    $servico = new OrdemServicoServico;
+                    $servico->ordem_servico_id = $ordemServicoCriado->id;
+                    $servico->servico_id = $servicoId;
+                    $servico->save();
+                }
+            }
+        }
+        
+        return response()->json($ordemServicoCriado, 201);
     }
 
        /**
@@ -64,9 +122,38 @@ class OrdemServicoController extends Controller
      * @param  \App\Models\OrdemServico  $ordemservico
      * @return \Illuminate\Http\Response
      */
-    public function show(OrdemServico $ordemServico)
+    public function show($id)
     {
-        return response()->json($ordemServico, 200);
+        $ordemServico = OrdemServico::with(['cliente', 'marca', 'problemas', 'servicos', 'pecas'])->where('id', $id)->first();
+
+        if (!$ordemServico) {
+            return response()->json(['message' => 'Ordem de serviço não encontrada'], 404);
+        }
+
+        // Transformando os dados
+        $dadosTransformados = [
+            'numero' => $ordemServico->numero,
+            'marca' => $ordemServico->marca->id ?? null,
+            'modelo' => $ordemServico->modelo,
+            'serie' => $ordemServico->serie,
+            'numero_motor' => $ordemServico->numero_motor,
+            'cliente' => $ordemServico->cliente->id, // ID do cliente
+            'problemas' => $ordemServico->problemas->pluck('id')->toArray(), // IDs dos problemas
+            'servicos' => $ordemServico->servicos->pluck('id')->toArray(), // IDs dos serviços
+            'pecas' => $ordemServico->pecas->map(function($peca, $index) {
+                return [
+                    'id' => $index + 1,
+                    'peca_id' => $peca->id,
+                    'quantidade' => $peca->pivot->quantidade,
+                    'valor_unitario' => number_format($peca->valor_unitario, 2, ',', '.') // Formatação do valor
+                ];
+            })->toArray(),
+            'valorMaoDeObra' => number_format($ordemServico->valor, 2, ',', '.'), // Formatação do valor da mão de obra
+            'dataEntrada' => Carbon::parse($ordemServico->data_entrada)->toDateString(), // Formato ISO 8601
+            'dataSaida' => Carbon::parse($ordemServico->data_saida)->toDateString() // Formato ISO 8601
+        ];
+
+        return response()->json($dadosTransformados, 200);
     }
 
        /**
@@ -129,6 +216,17 @@ class OrdemServicoController extends Controller
      return response()->json($dadosTransformados, 200);
     }
 
+    public function recursos()
+    {
+        $clientes = Cliente::select('id', 'nome')->get();
+        $problemas = Problema::select('id', 'nome')->get();
+        $pecas = Peca::select('id', 'nome', 'valor_unitario')->get();
+        $servicos = Servico::select('id', 'nome')->get();
+        $marcas = Marca::select('id', 'nome')->get();
+
+        return response()->json(['clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos, 'marcas' => $marcas], 200);
+    }
+
      /**
      * Update the specified resource in storage.
      *
@@ -147,8 +245,13 @@ class OrdemServicoController extends Controller
      * @param \App\Models\OrdemServico $ordemservico
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(OrdemServico $ordemServico)
     {
-        
+        OrdemServicoProblema::where('ordem_servico_id', $ordemServico->id)->delete();
+        OrdemServicoPeca::where('ordem_servico_id', $ordemServico->id)->delete();
+        OrdemServicoServico::where('ordem_servico_id', $ordemServico->id)->delete();
+        $ordemServico->delete();
+
+        return response()->json(['msg' => 'Registro deletado com sucesso!'], 200);
     }
 }

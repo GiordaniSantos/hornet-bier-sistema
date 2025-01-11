@@ -31,6 +31,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('ordem-servico/view/{id}', [OrdemServicoController::class, 'view']);
 
+    Route::get('ordem-servico-recursos', [OrdemServicoController::class, 'recursos']);
+
     Route::apiResource('problema', ProblemaController::class);
 
     Route::apiResource('servico', ServicoController::class);
