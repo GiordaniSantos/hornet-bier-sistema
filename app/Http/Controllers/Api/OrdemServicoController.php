@@ -73,11 +73,11 @@ class OrdemServicoController extends Controller
         }
 
         $ordemServicoCriado = $ordemServico->create($request->all());
-        if($request->data_entrada){
-            $ordemServicoCriado->data_entrada = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_entrada)));
+        if ($request->data_entrada) {
+            $ordemServicoCriado->data_entrada = Carbon::parse($request->data_entrada)->format('Y-m-d');
         }
-        if($request->data_saida){
-            $ordemServicoCriado->data_saida = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_saida)));
+        if ($request->data_saida) {
+            $ordemServicoCriado->data_saida = Carbon::parse($request->data_saida)->format('Y-m-d');
         }
         $valorTotal = $request->valor;
 
@@ -234,9 +234,61 @@ class OrdemServicoController extends Controller
      * @param  \App\Models\OrdemServico  $ordemservico
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, OrdemServico $ordemServico)
     {
-        
+        $request->validate(OrdemServico::rules(), OrdemServico::feedback());
+        if($request->valor){
+            $valor = str_replace('.', '', $request->valor);
+            $valor = str_replace(',', '.', $valor);
+            $request['valor'] = $valor;
+        }
+
+        $valorTotal = $request->valor;
+        OrdemServicoPeca::where('ordem_servico_id', $request->idOs)->delete();
+        if($request->pecas && isset($request->pecas[0]['peca_id'])){
+
+            foreach($request->pecas as $peca){
+                $ordemPeca = new OrdemServicoPeca;
+                $ordemPeca->ordem_servico_id = $request->idOs;
+                $ordemPeca->peca_id = $peca['peca_id'];
+                $ordemPeca->quantidade = $peca['quantidade'];
+                $ordemPeca->valor_peca = $peca['valor_unitario'];
+                $ordemPeca->save();
+                $valorTotal += $peca['valor_unitario'] * $peca['quantidade'];
+            }
+        }
+        $ordemServico->valor_total = $valorTotal;
+
+        if($request->problema_id){
+            OrdemServicoProblema::where('ordem_servico_id', $request->idOs)->delete();
+
+            foreach($request->problema_id as $problema){
+                $ordemProblema = new OrdemServicoProblema;
+                $ordemProblema->ordem_servico_id = $request->idOs;
+                $ordemProblema->problema_id = $problema;
+                $ordemProblema->save();
+            }
+        }
+
+        OrdemServicoServico::where('ordem_servico_id', $request->idOs)->delete();
+        if($request->servico_id){
+            foreach($request->servico_id as $servicoId){
+                $servico = new OrdemServicoServico;
+                $servico->ordem_servico_id = $request->idOs;
+                $servico->servico_id = $servicoId;
+                $servico->save();
+            }
+        }
+
+        $ordemServico->data_saida = null;
+        if ($request->data_entrada) {
+            $ordemServico->data_entrada = Carbon::parse($request->data_entrada)->format('Y-m-d');
+        }
+        if ($request->data_saida) {
+            $ordemServico->data_saida = Carbon::parse($request->data_saida)->format('Y-m-d');
+        }
+        $ordemServico->update($request->all());
+        return response()->json($ordemServico, 201);
     }
 
     /**
