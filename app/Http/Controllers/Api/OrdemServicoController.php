@@ -130,7 +130,6 @@ class OrdemServicoController extends Controller
             return response()->json(['message' => 'Ordem de serviço não encontrada'], 404);
         }
 
-        // Transformando os dados
         $dadosTransformados = [
             'id' => $ordemServico->id,
             'numero' => $ordemServico->numero,
@@ -138,20 +137,20 @@ class OrdemServicoController extends Controller
             'modelo' => $ordemServico->modelo,
             'serie' => $ordemServico->serie,
             'numero_motor' => $ordemServico->numero_motor,
-            'cliente' => $ordemServico->cliente->id ?? null, // ID do cliente
-            'problemas' => $ordemServico->problemas->pluck('id')->toArray(), // IDs dos problemas
-            'servicos' => $ordemServico->servicos->pluck('id')->toArray(), // IDs dos serviços
+            'cliente' => $ordemServico->cliente->id ?? null,
+            'problemas' => $ordemServico->problemas->pluck('id')->toArray(),
+            'servicos' => $ordemServico->servicos->pluck('id')->toArray(),
             'pecas' => $ordemServico->pecas->map(function($peca, $index) {
                 return [
                     'id' => $index + 1,
                     'peca_id' => $peca->id,
                     'quantidade' => $peca->pivot->quantidade,
-                    'valor_unitario' => number_format($peca->valor_unitario, 2, ',', '.') // Formatação do valor
+                    'valor_unitario' => $peca->valor_unitario,
                 ];
             })->toArray(),
-            'valorMaoDeObra' => number_format($ordemServico->valor, 2, ',', '.'), // Formatação do valor da mão de obra
-            'dataEntrada' => Carbon::parse($ordemServico->data_entrada)->toDateString(), // Formato ISO 8601
-            'dataSaida' => Carbon::parse($ordemServico->data_saida)->toDateString() // Formato ISO 8601
+            'valorMaoDeObra' => $ordemServico->valor,
+            'dataEntrada' => Carbon::parse($ordemServico->data_entrada)->toDateString(),
+            'dataSaida' => Carbon::parse($ordemServico->data_saida)->toDateString()
         ];
 
         return response()->json($dadosTransformados, 200);
@@ -165,56 +164,56 @@ class OrdemServicoController extends Controller
      */
     public function view($id)
     {
-     $ordemServico = OrdemServico::with(['cliente', 'pecas', 'problemas', 'servicos'])->where('id', $id)->first();
+        $ordemServico = OrdemServico::with(['cliente', 'pecas', 'problemas', 'servicos'])->where('id', $id)->first();
 
-     if (!$ordemServico) {
-         return response()->json(['message' => 'Ordem de serviço não encontrada'], 404);
-     }
+        if (!$ordemServico) {
+            return response()->json(['message' => 'Ordem de serviço não encontrada'], 404);
+        }
 
-    $problemasString = "";
-    foreach ($ordemServico->problemas as $problema) {
-        $problemasString .= $problema->nome . "\n";
-    }
+        $problemasString = "";
+        foreach ($ordemServico->problemas as $problema) {
+            $problemasString .= $problema->nome . "\n";
+        }
 
-    $servicosString = "Desmontagem\nLimpeza\n";
-    foreach ($ordemServico->servicos as $servico) {
-        $servicosString .= $servico->nome . "\n";
-    }
-    $servicosString .= "Ajuste da temperatura de 0 a - 1 grau";
+        $servicosString = "Desmontagem\nLimpeza\n";
+        foreach ($ordemServico->servicos as $servico) {
+            $servicosString .= $servico->nome . "\n";
+        }
+        $servicosString .= "Ajuste da temperatura de 0 a - 1 grau";
 
 
-    $pecasString = '';
-    $valorTotal = 0;
-    foreach ($ordemServico->pecas as $peca) {
-        $valorPeca = $peca->pivot->valor_peca * $peca->pivot->quantidade;
-        $valorTotal += $valorPeca;
-        $pecasString .= "{$peca->nome} - R$" . number_format($peca->pivot->valor_peca, 2, ',', '.') . " x {$peca->pivot->quantidade} = R$" . number_format($valorPeca, 2, ',', '.') . "\n";
-    }
-    $pecasString .= "\nValor Total de Peças: R$" . number_format($valorTotal, 2, ',', '.');
- 
+        $pecasString = '';
+        $valorTotal = 0;
+        foreach ($ordemServico->pecas as $peca) {
+            $valorPeca = $peca->pivot->valor_peca * $peca->pivot->quantidade;
+            $valorTotal += $valorPeca;
+            $pecasString .= "{$peca->nome} - R$" . number_format($peca->pivot->valor_peca, 2, ',', '.') . " x {$peca->pivot->quantidade} = R$" . number_format($valorPeca, 2, ',', '.') . "\n";
+        }
+        $pecasString .= "\nValor Total de Peças: R$" . number_format($valorTotal, 2, ',', '.');
+    
 
-     $dadosTransformados = [
-        'id' => $ordemServico->id,
-        'numero' => $ordemServico->numero,
-        'marca' => $ordemServico->marca->nome ?? null,
-        'modelo' => $ordemServico->modelo,
-        'serie' => $ordemServico->serie,
-        'numero_motor' => $ordemServico->numero_motor,
-        'cliente' => $ordemServico->cliente->nome,
-        'problemas' => $problemasString,
-        'pecas' => $pecasString,
-        'servicos' => $servicosString,
-        'valor_mao_de_obra' => $ordemServico->valor,
-        'valor_total' => $ordemServico->valor_total,
-        'status' => $ordemServico->getStatusFormatado(),
-        'data_entrada' => Carbon::parse($ordemServico->data_entrada)->format('d/m/Y'),
-        'data_saida' => Carbon::parse($ordemServico->data_saida)->format('d/m/Y'),
-        'observacao' => $ordemServico->observacao,
-        'data_criacao' => $ordemServico->created_at,
-        'data_modificacao' => $ordemServico->updated_at
-     ];
- 
-     return response()->json($dadosTransformados, 200);
+        $dadosTransformados = [
+            'id' => $ordemServico->id,
+            'numero' => $ordemServico->numero,
+            'marca' => $ordemServico->marca->nome ?? null,
+            'modelo' => $ordemServico->modelo,
+            'serie' => $ordemServico->serie,
+            'numero_motor' => $ordemServico->numero_motor,
+            'cliente' => $ordemServico->cliente->nome,
+            'problemas' => $problemasString,
+            'pecas' => $pecasString,
+            'servicos' => $servicosString,
+            'valor_mao_de_obra' => $ordemServico->valor,
+            'valor_total' => $ordemServico->valor_total,
+            'status' => $ordemServico->getStatusFormatado(),
+            'data_entrada' => Carbon::parse($ordemServico->data_entrada)->format('d/m/Y'),
+            'data_saida' => Carbon::parse($ordemServico->data_saida)->format('d/m/Y'),
+            'observacao' => $ordemServico->observacao,
+            'data_criacao' => $ordemServico->created_at,
+            'data_modificacao' => $ordemServico->updated_at
+        ];
+    
+        return response()->json($dadosTransformados, 200);
     }
 
     public function recursos()
