@@ -132,12 +132,13 @@ class OrdemServicoController extends Controller
 
         // Transformando os dados
         $dadosTransformados = [
+            'id' => $ordemServico->id,
             'numero' => $ordemServico->numero,
             'marca' => $ordemServico->marca->id ?? null,
             'modelo' => $ordemServico->modelo,
             'serie' => $ordemServico->serie,
             'numero_motor' => $ordemServico->numero_motor,
-            'cliente' => $ordemServico->cliente->id, // ID do cliente
+            'cliente' => $ordemServico->cliente->id ?? null, // ID do cliente
             'problemas' => $ordemServico->problemas->pluck('id')->toArray(), // IDs dos problemas
             'servicos' => $ordemServico->servicos->pluck('id')->toArray(), // IDs dos serviços
             'pecas' => $ordemServico->pecas->map(function($peca, $index) {
