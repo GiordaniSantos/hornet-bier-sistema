@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\StatusOrdemServico;
 use App\Http\Controllers\Controller;
 use App\Models\Cliente;
 use App\Models\Marca;
@@ -149,6 +150,8 @@ class OrdemServicoController extends Controller
                 ];
             })->toArray(),
             'valorMaoDeObra' => $ordemServico->valor,
+            'status' => $ordemServico->status,
+            'valorTotal' => $ordemServico->valor_total,
             'dataEntrada' => Carbon::parse($ordemServico->data_entrada)->toDateString(),
             'dataSaida' => Carbon::parse($ordemServico->data_saida)->toDateString()
         ];
@@ -216,7 +219,7 @@ class OrdemServicoController extends Controller
         return response()->json($dadosTransformados, 200);
     }
 
-    public function recursos()
+    public function recursos(Request $request)
     {
         $clientes = Cliente::select('id', 'nome')->get();
         $problemas = Problema::select('id', 'nome')->get();
@@ -224,7 +227,17 @@ class OrdemServicoController extends Controller
         $servicos = Servico::select('id', 'nome')->get();
         $marcas = Marca::select('id', 'nome')->get();
 
-        return response()->json(['clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos, 'marcas' => $marcas], 200);
+        $status = [];
+        if($request->withStatus){
+            foreach(StatusOrdemServico::cases() as $case){
+                $status[] = [
+                    'value' => $case->value,
+                    'descricao' => StatusOrdemServico::getDescription($case->value)
+                ];
+            }
+        }
+
+        return response()->json(['clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos, 'marcas' => $marcas, 'status' => $status], 200);
     }
 
      /**
