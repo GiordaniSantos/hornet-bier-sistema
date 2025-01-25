@@ -43,6 +43,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('cliente', ClienteController::class);
 
+    Route::get('select-clientes', [ClienteController::class, 'selectClientes']);
+
     Route::get('relatorio', [HomeController::class, 'index']);
 });
 

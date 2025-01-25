@@ -15,7 +15,15 @@ class PecaController extends Controller
      */
     public function index(Request $request)
     {
-        $pecas = Peca::select('id', 'nome', 'valor_unitario', 'created_at')->orderBy('created_at', 'desc')->paginate(10);
+        $termo = $request->input('termo');
+
+        $query = Peca::select('id', 'nome', 'valor_unitario', 'created_at');
+
+        if ($termo) {
+            $query->whereRaw('LOWER(nome) LIKE ?', ['%' . strtolower($termo) . '%']);
+        }
+
+        $pecas = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return response()->json($pecas, 200);
     }

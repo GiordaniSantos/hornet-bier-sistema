@@ -74,4 +74,11 @@ class ClienteController extends Controller
 
         return response()->json(['msg' => 'Registro deletado com sucesso!'], 200);
     }
+
+    public function selectClientes()
+    {
+        $clientes = Cliente::select('id', 'nome')->orderBy('nome', 'asc')->get();
+
+        return response()->json($clientes, 200);
+    }
 }
