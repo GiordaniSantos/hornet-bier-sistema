@@ -16,7 +16,15 @@ class ProblemaController extends Controller
      */
     public function index(Request $request)
     {
-        $problemas = Problema::select('id', 'nome', 'created_at')->orderBy('created_at', 'desc')->paginate(10);
+        $termo = $request->input('termo');
+
+        $query = Problema::select('id', 'nome', 'created_at');
+
+        if ($termo) {
+            $query->whereRaw('LOWER(nome) LIKE ?', ['%' . strtolower($termo) . '%']);
+        }
+
+        $problemas = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return response()->json($problemas, 200);
     }
