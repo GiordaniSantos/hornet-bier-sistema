@@ -16,7 +16,15 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        $clientes = Cliente::select('id', 'nome', 'nome_contato', 'cpf_cnpj')->orderBy('created_at', 'desc')->paginate(10);
+        $termo = $request->input('termo');
+
+        $query = Cliente::select('id', 'nome', 'nome_contato', 'cpf_cnpj');
+
+        if ($termo) {
+            $query->whereRaw('LOWER(nome) LIKE ?', ['%' . strtolower($termo) . '%']);
+        }
+
+        $clientes = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return response()->json($clientes, 200);
     }
