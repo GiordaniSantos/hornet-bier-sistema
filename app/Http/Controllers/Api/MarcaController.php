@@ -16,7 +16,15 @@ class MarcaController extends Controller
      */
     public function index(Request $request)
     {
-        $marcas = Marca::select('id', 'nome', 'created_at')->orderBy('created_at', 'desc')->paginate(10);
+        $termo = $request->input('termo');
+
+        $query = Marca::select('id', 'nome', 'created_at');
+
+        if ($termo) {
+            $query->whereRaw('LOWER(nome) LIKE ?', ['%' . strtolower($termo) . '%']);
+        }
+
+        $marcas = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return response()->json($marcas, 200);
     }
