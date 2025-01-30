@@ -16,7 +16,15 @@ class ServicoController extends Controller
      */
     public function index(Request $request)
     {
-        $servicos = Servico::select('id', 'nome', 'created_at')->orderBy('created_at', 'desc')->paginate(10);
+        $termo = $request->input('termo');
+
+        $query = Servico::select('id', 'nome', 'created_at');
+
+        if ($termo) {
+            $query->whereRaw('LOWER(nome) LIKE ?', ['%' . strtolower($termo) . '%']);
+        }
+
+        $servicos = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return response()->json($servicos, 200);
     }
