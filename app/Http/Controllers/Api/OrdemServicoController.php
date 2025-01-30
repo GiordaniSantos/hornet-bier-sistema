@@ -240,6 +240,21 @@ class OrdemServicoController extends Controller
         return response()->json(['clientes' => $clientes, 'problemas' => $problemas, 'pecas' => $pecas, 'servicos' => $servicos, 'marcas' => $marcas, 'status' => $status], 200);
     }
 
+    public function recursosFiltros(Request $request)
+    {
+        $clientes = Cliente::select('id', 'nome')->get();
+
+        $status = [];
+        foreach(StatusOrdemServico::cases() as $case){
+            $status[] = [
+                'value' => $case->value,
+                'descricao' => StatusOrdemServico::getDescription($case->value)
+            ];
+        }
+
+        return response()->json(['clientes' => $clientes, 'status' => $status], 200);
+    }
+
      /**
      * Update the specified resource in storage.
      *

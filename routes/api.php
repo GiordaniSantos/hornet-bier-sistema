@@ -33,6 +33,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('ordem-servico-recursos', [OrdemServicoController::class, 'recursos']);
 
+    Route::get('ordem-servico-recursos-filtro', [OrdemServicoController::class, 'recursosFiltros']);
+
     Route::apiResource('problema', ProblemaController::class);
 
     Route::apiResource('servico', ServicoController::class);
