@@ -31,11 +31,11 @@ class OrdemServicoController extends Controller
         
         $query->select('id', 'status', 'numero', 'valor_total', 'data_entrada', 'data_saida', 'cliente_id');
         
-        if ($request->has('status') && $request->status != null) {
+        if ($request->filled('status') && $request->status !== 'null') {
             $query->where('status', $request->status);
         }
-        
-        if ($request->has('cliente_id') && $request->cliente_id != null) {
+
+        if ($request->filled('cliente_id') && $request->cliente_id !== 'null') {
             $query->where('cliente_id', $request->cliente_id);
         }
         
