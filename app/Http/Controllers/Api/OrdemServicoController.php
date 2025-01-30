@@ -242,7 +242,7 @@ class OrdemServicoController extends Controller
 
     public function recursosFiltros(Request $request)
     {
-        $clientes = Cliente::select('id', 'nome')->get();
+        $clientes = Cliente::select('id', 'nome')->orderBy('nome', 'asc')->get();
 
         $status = [];
         foreach(StatusOrdemServico::cases() as $case){
