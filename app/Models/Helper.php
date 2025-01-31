@@ -37,6 +37,11 @@ class Helper extends Model
         return self::isMobile()?"https://api.whatsapp.com/send?phone=55{$whats}&text={$msg}":"https://web.whatsapp.com/send?phone=55{$whats}&text={$msg}";
     }
 
+    public static function getWhatsappUrlApi(string $whats, string $msg):string
+    {
+        return "https://api.whatsapp.com/send?phone=55{$whats}&text={$msg}";
+    }
+
     public static function getWhatsappCelular(string $celular):string
     {
         return preg_replace('/[^0-9]/i', '', $celular);

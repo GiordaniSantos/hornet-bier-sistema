@@ -67,7 +67,7 @@ class OrdemServico extends Model
         };
     }
 
-    public function getWhatsappLink()
+    public function getWhatsappLink($isApi = false)
     {
         if (!($this->cliente->celular)) {
             return false;
@@ -76,6 +76,10 @@ class OrdemServico extends Model
         $ordens = [];
         $ordens[] = $this;
         $mensagem = Helper::formataMensagemWhatsapp($ordens);
+
+        if($isApi){
+            return Helper::getWhatsappUrlApi(Helper::getWhatsappCelular($this->cliente->celular), $mensagem);
+        }
 
         return Helper::getWhatsappUrl(Helper::getWhatsappCelular($this->cliente->celular), $mensagem);
     }

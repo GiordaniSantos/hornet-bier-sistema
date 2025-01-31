@@ -342,6 +342,6 @@ class OrdemServicoController extends Controller
             abort(404, 'O cliente não tem um celular cadastrado.');
         }
 
-        return response()->json($ordemServico->getWhatsappLink(), 200);
+        return response()->json($ordemServico->getWhatsappLink(true), 200);
     }
 }
