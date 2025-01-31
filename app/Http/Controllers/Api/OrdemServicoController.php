@@ -334,4 +334,14 @@ class OrdemServicoController extends Controller
 
         return response()->json(['msg' => 'Registro deletado com sucesso!'], 200);
     }
+
+    public function getUrlOrcamentoWhatsapp($id)
+    {
+        $ordemServico = OrdemServico::where(['id' => $id])->first();
+        if(!$ordemServico->cliente->celular){
+            abort(404, 'O cliente não tem um celular cadastrado.');
+        }
+
+        return response()->json($ordemServico->getWhatsappLink(), 200);
+    }
 }
