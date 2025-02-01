@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Enums\StatusOrdemServico;
 use App\Http\Controllers\Controller;
 use App\Models\Cliente;
+use App\Models\Helper;
 use App\Models\Marca;
 use App\Models\OrdemServico;
 use App\Models\OrdemServicoPeca;
@@ -343,5 +344,30 @@ class OrdemServicoController extends Controller
         }
 
         return response()->json($ordemServico->getWhatsappLink(true), 200);
+    }
+
+    public function getUrlMultiplosOrcamentoWhatsapp(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:ordem_servicos,id',
+        ]);
+
+        $ids = $request->input('ids');
+
+        $ordensServicos = OrdemServico::whereIn('id', $ids)
+        ->with('cliente')
+        ->whereHas('cliente', function($query) {
+            $query->whereNotNull('celular')->where('celular', '!=', '');
+        })
+        ->get();
+
+        if ($ordensServicos->isEmpty()) {
+            abort(400, 'O cliente não tem um celular cadastrado.');
+        }
+
+        $mensagemFormatada = Helper::formataMensagemWhatsapp($ordensServicos->toArray());
+
+        return response()->json(['url' => Helper::getWhatsappUrlApi(Helper::getWhatsappCelular($ordensServicos[0]->cliente->celular), $mensagemFormatada)]);
     }
 }

@@ -37,6 +37,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('ordem-servico/get-url-orcamento-whatsapp/{id}', [OrdemServicoController::class, 'getUrlOrcamentoWhatsapp']);
 
+    Route::post('ordem-servico/get-url-multiplo-orcamento-whatsapp', [OrdemServicoController::class, 'getUrlMultiplosOrcamentoWhatsapp']);
+
     Route::apiResource('problema', ProblemaController::class);
 
     Route::apiResource('servico', ServicoController::class);
