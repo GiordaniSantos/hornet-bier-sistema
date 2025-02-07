@@ -177,7 +177,7 @@ $dataSaida = $dataAtual->format('d/m/Y');
                             </select>
                         </td>
                         <td>
-                            <input type="number" name="pecas[0][quantidade]" placeholder="Digite a quantidade" class="form-control" {{ $isDisabled }}>
+                            <input type="text" inputmode="numeric"  pattern="^\d{1,3}(?:\.\d{3})*(?:,\d{1,2})?$" name="pecas[0][quantidade]" placeholder="Digite a quantidade" class="form-control" {{ $isDisabled }}>
                             <input type="hidden" name="pecas[0][valor_unitario]" value="">
                         </td>
                         <td>
@@ -198,7 +198,7 @@ $dataSaida = $dataAtual->format('d/m/Y');
                                 </select>
                             </td>
                             <td>
-                                <input type="number" name="pecas[<?=$key?>][quantidade]" placeholder="Digite a quantidade" value="{{ $ordemServicoPeca->pivot->quantidade }}" class="form-control" {{ $isDisabled }}>
+                                <input type="text" inputmode="numeric"  pattern="^\d{1,3}(?:\.\d{3})*(?:,\d{1,2})?$" name="pecas[<?=$key?>][quantidade]" placeholder="Digite a quantidade" value="{{ $ordemServicoPeca->pivot->quantidade }}" class="form-control" {{ $isDisabled }}>
                                 <input type="hidden" name="pecas[<?=$key?>][valor_unitario]" value="">
                             </td>
                             <td>
@@ -335,7 +335,7 @@ $dataSaida = $dataAtual->format('d/m/Y');
                     </select>
                 </td>
                 <td>
-                    <input type="number" name="pecas[${i}][quantidade]" placeholder="Digite a quantidade" required class="form-control" />
+                    <input type="text" inputmode="numeric" pattern="^\\d{1,3}(?:\\.\\d{3})*(?:,\\d{1,2})?$" name="pecas[${i}][quantidade]" placeholder="Digite a quantidade" required class="form-control" />
                      <input type="hidden" name="pecas[${i}][valor_unitario]" value="">
                 </td>
                 <td>
@@ -413,6 +413,10 @@ $dataSaida = $dataAtual->format('d/m/Y');
         $('.multiple-servico').select2({
             language: 'pt-BR',
         });
+    });
+
+    $('#quantidade').mask('0.000', {
+        reverse: true
     });
 
     $('#valor').mask('#.##0,00', {
