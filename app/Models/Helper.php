@@ -32,6 +32,22 @@ class Helper extends Model
         return $mensagem;
     }
 
+    public static function formataMensagemLinkPagamentoWhatsapp(string $link, array $pagamentos):string
+    {
+        $mensagem = 'Olá ' . $pagamentos[0]['itens'][0]['cliente']['nome'] .', segue o link para pagamento dos respectivos serviços: %0A';
+
+        foreach($pagamentos[0]['itens'] as $key => $item){
+            $ordemServico = $item->ordemServico;
+            $mensagem .= '* OS - '. $ordemServico->numero. ' - Valor R$ '. number_format($ordemServico->valor_total, 2, ',', '.');
+        
+            $mensagem .= '%0A';
+        }
+
+        $mensagem .= url($link);
+
+        return $mensagem;
+    }
+
     public static function getWhatsappUrl(string $whats, string $msg):string
     {
         return self::isMobile()?"https://api.whatsapp.com/send?phone=55{$whats}&text={$msg}":"https://web.whatsapp.com/send?phone=55{$whats}&text={$msg}";

@@ -95,6 +95,7 @@ $dataSaida = $dataAtual->format('Y-m-d');
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" href="{{route('orcamento', ['id' => $ordemServico->id])}}" target="_blank">Gerar Orçamento</a>
                                                 <a class="dropdown-item" href="{{route('orcamento-zap', ['id' => $ordemServico->id])}}" target="_blank">Enviar Orçamento por Whatsapp</a>
+                                                <a class="dropdown-item" href="{{route('link-pagamento', ['id' => $ordemServico->id])}}" target="_blank">Enviar Link de Pagamento</a>
                                                 <a class="dropdown-item" href="{{route('orcamento-email', ['id' => $ordemServico->id])}}">Enviar Orçamento por Email</a>
                                                 <button class="dropdown-item" data-toggle="modal" data-target="#updateStatusModal">Alterar Status</button>
                                                 <a class="dropdown-item" href="{{route('ordem-servico.edit', ['ordem_servico' => $ordemServico->id])}}">Atualizar</a>
@@ -116,6 +117,12 @@ $dataSaida = $dataAtual->format('Y-m-d');
                     <i class="fa-brands fa-whatsapp"></i>
                 </span>
                 <span class="text">Enviar Selecionados Whatsapp</span>
+            </button>
+            <button type="submit" id="btn-pagamento" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fa-solid fa-money-check-dollar"></i>
+                </span>
+                <span class="text">Enviar Link de Pagamento</span>
             </button>
         </div>
     </div>
@@ -210,6 +217,15 @@ $dataSaida = $dataAtual->format('Y-m-d');
             const checkboxes = document.querySelectorAll('.ordemServicoCheckbox:checked');
             const selectedIds = Array.from(checkboxes).map(checkbox => checkbox.value);
 
+            const params = new URLSearchParams(window.location.search);
+            if (!params.has('cliente_id')) {
+                return Swal.fire({
+                    icon: "info",
+                    title: "Oops...",
+                    text: "Primeiro filtre por cliente para usar essa funcionalidade!"
+                });
+            }
+            
             if(selectedIds.length == 0){
                 return Swal.fire({
                         icon: "info",
@@ -224,6 +240,52 @@ $dataSaida = $dataAtual->format('Y-m-d');
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 url: '/admin/multiplo-orcamento-whatsapp',
+                data: {
+                    ids: selectedIds,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response, textStatus, xhr) {
+                    window.open(response.url, '_blank');
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro',
+                        text: 'Ocorreu um erro ao processar sua solicitação. '+xhr.responseJSON.message,
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+                
+        });
+
+        document.getElementById('btn-pagamento').addEventListener('click', function() {
+            const checkboxes = document.querySelectorAll('.ordemServicoCheckbox:checked');
+            const selectedIds = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+            const params = new URLSearchParams(window.location.search);
+            if (!params.has('cliente_id')) {
+                return Swal.fire({
+                    icon: "info",
+                    title: "Oops...",
+                    text: "Primeiro filtre por cliente para usar essa funcionalidade!"
+                });
+            }
+
+            if(selectedIds.length == 0){
+                return Swal.fire({
+                        icon: "info",
+                        title: "Oops...",
+                        text: "Selecione pelo menos uma ordem de serviço!"
+                    });
+            }
+         
+            $.ajax({
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/admin/link-multiplo-pagamento-whatsapp',
                 data: {
                     ids: selectedIds,
                     _token: '{{ csrf_token() }}'

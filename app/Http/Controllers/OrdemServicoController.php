@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatusPagamento;
 use App\Models\Cliente;
 use App\Models\Helper;
 use App\Models\Marca;
@@ -10,10 +11,14 @@ use App\Models\OrdemServicoPeca;
 use App\Models\Problema;
 use App\Models\OrdemServicoProblema;
 use App\Models\OrdemServicoServico;
+use App\Models\Pagamento;
+use App\Models\PagamentoItem;
 use App\Models\Peca;
 use App\Models\Servico;
+use MP;
 use Illuminate\Http\Request;
 use LaravelQRCode\Facades\QRCode;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class OrdemServicoController extends Controller
 {

@@ -108,6 +108,12 @@
                 <span>Usuários</span></a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('pagamento.index') }}">
+                <i class="fa-solid fa-money-check-dollar"></i>
+                <span>Pagamentos</span></a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
