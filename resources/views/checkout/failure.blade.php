@@ -69,11 +69,15 @@
                                 </td>
                             </tr>
                         @endforeach
+                        <tr>
+                            <td colspan="3" class="text-right">Taxa:</td>
+                            <td>R$ {{number_format($pagamento->valor_taxa, 2, ',', '.')}}</td>
+                        </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <th colspan="3" class="text-right">Total Tentativa:</th>
-                            <th>{{number_format($pagamento->valor, 2, ',', '.')}}</th>
+                            <th>R$ {{number_format($pagamento->valor, 2, ',', '.')}}</th>
                         </tr>
                     </tfoot>
                 </table>

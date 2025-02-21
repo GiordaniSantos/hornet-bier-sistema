@@ -93,9 +93,9 @@ $dataSaida = $dataAtual->format('Y-m-d');
                                                 <i class="fa-solid fa-bars"></i>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="{{route('orcamento', ['id' => $ordemServico->id])}}" target="_blank">Gerar Orçamento</a>
+                                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#orcamentoModal">Gerar Orçamento</a>
                                                 <a class="dropdown-item" href="{{route('orcamento-zap', ['id' => $ordemServico->id])}}" target="_blank">Enviar Orçamento por Whatsapp</a>
-                                                <a class="dropdown-item" href="{{route('link-pagamento', ['id' => $ordemServico->id])}}" target="_blank">Enviar Link de Pagamento</a>
+                                                <a class="dropdown-item" href="#" onclick="perguntarTipoTaxa({{ $ordemServico->id }})">Enviar Link de Pagamento</a>
                                                 <a class="dropdown-item" href="{{route('orcamento-email', ['id' => $ordemServico->id])}}">Enviar Orçamento por Email</a>
                                                 <button class="dropdown-item" data-toggle="modal" data-target="#updateStatusModal">Alterar Status</button>
                                                 <a class="dropdown-item" href="{{route('ordem-servico.edit', ['ordem_servico' => $ordemServico->id])}}">Atualizar</a>
@@ -259,6 +259,8 @@ $dataSaida = $dataAtual->format('Y-m-d');
                 
         });
 
+        const inputOptions = @json($inputOptionsTaxas);
+
         document.getElementById('btn-pagamento').addEventListener('click', function() {
             const checkboxes = document.querySelectorAll('.ordemServicoCheckbox:checked');
             const selectedIds = Array.from(checkboxes).map(checkbox => checkbox.value);
@@ -280,29 +282,59 @@ $dataSaida = $dataAtual->format('Y-m-d');
                     });
             }
          
-            $.ajax({
-                type: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/admin/link-multiplo-pagamento-whatsapp',
-                data: {
-                    ids: selectedIds,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (response, textStatus, xhr) {
-                    window.open(response.url, '_blank');
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Erro',
-                        text: 'Ocorreu um erro ao processar sua solicitação. '+xhr.responseJSON.message,
-                        confirmButtonText: 'OK'
+            Swal.fire({
+                title: 'Cobrar Taxa?',
+                input: 'select',
+                inputOptions: inputOptions,
+                inputPlaceholder: 'Selecione uma opção',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Confirmar'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: '/admin/link-multiplo-pagamento-whatsapp?taxa='+result.value,
+                        data: {
+                            ids: selectedIds,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response, textStatus, xhr) {
+                            window.open(response.url, '_blank');
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Erro',
+                                text: 'Ocorreu um erro ao processar sua solicitação. '+xhr.responseJSON.message,
+                                confirmButtonText: 'OK'
+                            });
+                        }
                     });
                 }
             });
+            
                 
         });
+
+        function perguntarTipoTaxa(id) {
+            Swal.fire({
+                title: 'Cobrar Taxa?',
+                input: 'select',
+                inputOptions: inputOptions,
+                inputPlaceholder: 'Selecione uma opção',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Confirmar'
+            }).then((result) => {
+                if (result.value) {
+                    const url = `/admin/link-pagamento-whatsapp/${id}?taxa=${result.value}`;
+                    window.open(url, '_blank');
+                }
+            });
+        }
     </script>
 @endsection

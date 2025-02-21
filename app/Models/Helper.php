@@ -43,6 +43,8 @@ class Helper extends Model
             $mensagem .= '%0A';
         }
 
+        $mensagem .= 'Taxa - R$'. number_format($pagamentos[0]->valor_taxa, 2, ',', '.'). '%0AValor Total R$ '. number_format($pagamentos[0]->valor, 2, ',', '.');
+        $mensagem .= '%0A';
         $mensagem .= url($link);
 
         return $mensagem;

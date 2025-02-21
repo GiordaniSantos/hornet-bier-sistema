@@ -29,12 +29,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Total:</td>
-                        <td>   
-                            ${{number_format($pagamento->valor, 2, ',', '.')}}
-                        </td>
-                    </tr>
-                    <tr>
                         <td>Itens:</td>
                         <td>   
                             @foreach($pagamento->itens as $item)
@@ -43,6 +37,18 @@
                                 </a> -  {{$item->cliente->nome}} - R${{number_format($item->valor_item, 2, ',', '.')}}
                                 <hr class="my-3"/>
                             @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Taxa:</td>
+                        <td>   
+                            ${{number_format($pagamento->valor_taxa, 2, ',', '.')}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total:</td>
+                        <td>   
+                            ${{number_format($pagamento->valor, 2, ',', '.')}}
                         </td>
                     </tr>
                     <tr>

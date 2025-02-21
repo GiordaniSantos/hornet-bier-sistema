@@ -11,7 +11,7 @@ class Pagamento extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['valor', 'status', 'tipo', 'cliente_id', 'ordem_servico_id', 'session_id'];
+    protected $fillable = ['valor', 'status', 'tipo', 'cliente_id', 'ordem_servico_id', 'session_id', 'tipo_taxa', 'valor_taxa'];
 
     protected static function boot()
     {

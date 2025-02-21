@@ -3,17 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Enums\StatusPagamento;
+use App\Enums\TaxaPagamento;
 use App\Models\OrdemServico;
 use App\Models\Pagamento;
 use App\Models\PagamentoItem;
 use MP;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CheckoutController extends Controller
 {
-    public function checkoutOrdemServico($id)
+    public function checkoutOrdemServico(Request $request, $id)
     {
+        if(!$request->get('taxa')){
+            alert()->error('Erro','É preciso informar se haverá taxa ou não na cobrança.');
+            return redirect()->route('ordem-servico.index');
+        }
+
         $ordemServico = OrdemServico::where(['id' => $id])->first();
 
         if(!$ordemServico){
@@ -23,8 +30,9 @@ class CheckoutController extends Controller
 
         $lineItems = [];
         $totalPrice = 0;
-        
-        $totalPrice = $ordemServico->valor_total;
+        $taxa = $this->calcularTaxa(TaxaPagamento::from($request->get('taxa')), $ordemServico->valor_total);
+
+        $totalPrice = $ordemServico->valor_total + $taxa;
         $lineItems[] = [
             'title' => 'Ordem de Serviço n° '.$ordemServico->numero,
             "currency_id" => "BRL",
@@ -54,6 +62,8 @@ class CheckoutController extends Controller
         $paymentData = [
             'valor' => $totalPrice,
             'status' => StatusPagamento::Pendente,
+            'tipo_taxa' => TaxaPagamento::from($request->get('taxa')),
+            'valor_taxa' => $taxa,
             'session_id' => $preference['response']['id']
         ];
         $pagamento = Pagamento::create($paymentData);
@@ -78,6 +88,10 @@ class CheckoutController extends Controller
 
     public function checkoutMultiploOrdemServico(Request $request)
     {
+        if(!$request->get('taxa')){
+            abort(500, 'É preciso informar se haverá taxa ou não na cobrança.');
+        }
+
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'integer|exists:ordem_servicos,id',
@@ -115,6 +129,18 @@ class CheckoutController extends Controller
             ];
         }
 
+        $taxa = $this->calcularTaxa(TaxaPagamento::from($request->get('taxa')), $totalPrice);
+        $totalPrice += $taxa;
+
+        if ($taxa > 0) {
+            $lineItems[] = [
+                'title' => 'Taxa da Máquina',
+                "currency_id" => "BRL",
+                'unit_price' => doubleval($taxa),
+                'quantity' => 1,
+            ];
+        }
+
         $preference_data = array (
             "items" => $lineItems,
             "payer" => array (
@@ -137,6 +163,8 @@ class CheckoutController extends Controller
         $paymentData = [
             'valor' => $totalPrice,
             'status' => StatusPagamento::Pendente,
+            'tipo_taxa' => TaxaPagamento::from($request->get('taxa')),
+            'valor_taxa' => $taxa,
             'session_id' => $preference['response']['id']
         ];
         $pagamento = Pagamento::create($paymentData);
@@ -197,6 +225,24 @@ class CheckoutController extends Controller
             ]);
         } catch (\Exception $e) {
             return view('checkout.failure', ['message' => $e->getMessage()]);
+        }
+    }
+
+    public function calcularTaxa(TaxaPagamento $tipoTaxa, float $valor): float
+    {
+        switch ($tipoTaxa) {
+            case TaxaPagamento::Nao:
+                return 0;
+            case TaxaPagamento::CartaoCredito:
+                return $valor * 0.0498;
+            case TaxaPagamento::CartaoDebito:
+                return $valor * 0.0399;
+            case TaxaPagamento::Boleto:
+                return 3.49;
+            case TaxaPagamento::Pix:
+                return $valor * 0.0099;
+            default:
+                throw new InvalidArgumentException("Tipo de taxa inválido.");
         }
     }
 }

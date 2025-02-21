@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\StatusPagamento;
+use App\Enums\TaxaPagamento;
 use App\Models\Cliente;
 use App\Models\Helper;
 use App\Models\Marca;
@@ -42,8 +43,9 @@ class OrdemServicoController extends Controller
 
         confirmDelete('Deletar Ordem de Serviço!', "Você tem certeza que quer deletar este registro?");
 
+        $inputOptionsTaxas = TaxaPagamento::getInputOptions();
 
-        return view('admin.ordem-servico.index', ['ordemServicos' => $ordemServicos, 'clientes' => $clientes]);
+        return view('admin.ordem-servico.index', ['ordemServicos' => $ordemServicos, 'clientes' => $clientes, 'inputOptionsTaxas' => $inputOptionsTaxas]);
     }
 
     /**

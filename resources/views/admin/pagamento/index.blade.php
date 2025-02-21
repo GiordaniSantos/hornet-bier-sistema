@@ -1,3 +1,7 @@
+<?php
+use App\Enums\TaxaPagamento;
+?>
+
 @extends('layouts.app')
 
 @section('titulo', 'Hornet Bier - Pagamentos')
@@ -16,6 +20,7 @@
                                 <th>Pagamento</th>
                                 <th>Data</th>
                                 <th>Status</th>
+                                <th>Taxa</th>
                                 <th>Total</th>
                                 <th>Itens</th>
                                 <th>Ações</th>
@@ -32,6 +37,9 @@
                                             {{$pagamento->isPaid() ? 'Pago' : 'Não Pago'}}
                                         </small
                                         >
+                                    </td>
+                                    <td class="py-1 px-2">
+                                        {{ TaxaPagamento::getDescription($pagamento->tipo_taxa) }}
                                     </td>
                                     <td class="py-1 px-2">${{number_format($pagamento->valor, 2, ',', '.')}}</td>
                                     <td>{{$pagamento->itens()->count()}} iten(s)</td>

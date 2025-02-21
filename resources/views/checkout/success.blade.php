@@ -70,6 +70,10 @@
                                 </td>
                             </tr>
                         @endforeach
+                        <tr>
+                            <td colspan="3" class="text-right">Taxa:</td>
+                            <td>R$ {{number_format($pagamento->valor_taxa, 2, ',', '.')}}</td>
+                        </tr>
                     </tbody>
                     <tfoot>
                         <tr>
