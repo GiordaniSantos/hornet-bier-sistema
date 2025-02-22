@@ -93,6 +93,6 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
     Route::get('/meu-perfil', [UserController::class, 'viewPerfil'])->name('perfil.view');
     Route::put('/meu-perfil/{id}', [UserController::class, 'updatePerfil'])->name('perfil.update');
 
-    Route::get('/configuracao', [ConfiguracaoController::class, 'edit'])->name('configuracao');
-    Route::post('/configuracao', [ConfiguracaoController::class, 'update'])->name('configuracao.update');
+    Route::get('/configuracao', [ConfiguracaoController::class, 'edit'])->name('configuracao')->middleware('admin');
+    Route::post('/configuracao', [ConfiguracaoController::class, 'update'])->name('configuracao.update')->middleware('admin');
 });
