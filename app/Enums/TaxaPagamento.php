@@ -12,8 +12,8 @@ enum TaxaPagamento: int
     public static function getDescription($value)
     {
         return match ($value) {
-            self::Nao->value => 'Não',
-            self::CartaoCredito->value => 'Cartão de Crédito - 4,98%',
+            self::Nao->value => 'Não Cobrado',
+            self::CartaoCredito->value => 'Cartão de Crédito - 5,31%',
             self::CartaoDebito->value => 'Débito - 3,99%',
             self::Boleto->value => 'Boleto - R$3,49',
             self::Pix->value => 'Pix - 0,99%',
@@ -24,8 +24,8 @@ enum TaxaPagamento: int
     public function descricao(): string
     {
         return match($this) {
-            self::Nao => 'Não',
-            self::CartaoCredito => 'Cartão de Crédito - 4,98%',
+            self::Nao => 'Não Cobrado',
+            self::CartaoCredito => 'Cartão de Crédito - 5,31%',
             self::CartaoDebito => 'Débito - 3,99%',
             self::Boleto => 'Boleto - R$3,49',
             self::Pix => 'Pix - 0,99%',

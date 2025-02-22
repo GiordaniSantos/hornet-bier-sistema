@@ -45,7 +45,7 @@ use App\Enums\TaxaPagamento;
                                     <td>{{$pagamento->itens()->count()}} iten(s)</td>
                                     <td>
                                         @if (!$pagamento->isPaid())
-                                            <a href="<?=$pagamento->getWhatsappLinkPagamento('https://www.mercadopago.com.br/checkout/v1/redirect?pref_id='.$pagamento->session_id, false)?>" target="_blank" class="btn btn-primary">
+                                            <a href="<?=$pagamento->getWhatsappLinkPagamento('https://www.mercadopago.com.br/checkout/v1/redirect?pref_id='.$pagamento->session_id, false)?>" target="_blank" class="btn btn-info">
                                                 Reenviar
                                             </a>
                                         @endif
@@ -57,6 +57,7 @@ use App\Enums\TaxaPagamento;
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" href="{{route('pagamento.show', ['pagamento' => $pagamento->id])}}">Visualizar</a>
+                                                <a href="{{ route('pagamento.destroy', $pagamento->id) }}" class="dropdown-item" data-confirm-delete="true">Deletar</a>
                                             </div>
                                         </div>
                                     </td>

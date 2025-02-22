@@ -234,7 +234,7 @@ class CheckoutController extends Controller
             case TaxaPagamento::Nao:
                 return 0;
             case TaxaPagamento::CartaoCredito:
-                return $valor * 0.0498;
+                return $valor * 0.0531;
             case TaxaPagamento::CartaoDebito:
                 return $valor * 0.0399;
             case TaxaPagamento::Boleto:
