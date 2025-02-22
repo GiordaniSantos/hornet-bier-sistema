@@ -36,7 +36,7 @@ class CheckoutController extends Controller
         $lineItems[] = [
             'title' => 'Ordem de Serviço n° '.$ordemServico->numero,
             "currency_id" => "BRL",
-            'unit_price' => doubleval($ordemServico->valor_total),
+            'unit_price' => doubleval($totalPrice),
             'quantity' => 1,
         ];
         
