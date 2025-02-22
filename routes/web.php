@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ConfiguracaoController;
 use App\Http\Controllers\ProblemaController;
 use App\Http\Controllers\PecaController;
 use App\Http\Controllers\OrdemServicoController;
@@ -91,4 +92,7 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
     Route::resource('/usuario', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'viewPerfil'])->name('perfil.view');
     Route::put('/meu-perfil/{id}', [UserController::class, 'updatePerfil'])->name('perfil.update');
+
+    Route::get('/configuracao', [ConfiguracaoController::class, 'edit'])->name('configuracao');
+    Route::post('/configuracao', [ConfiguracaoController::class, 'update'])->name('configuracao.update');
 });
