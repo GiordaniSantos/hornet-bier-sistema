@@ -65,6 +65,7 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
 
     //pagamentos
     Route::resource('/pagamento', PagamentoController::class);
+    Route::get('/alterar-status-pagamento/{id}', [PagamentoController::class, 'setStatusPagamento'])->name('set-status-pagamento');
 
     //fechar ordem de serviço
     Route::post('/fechar-ordem-servico/{id}', [OrdemServicoController::class, 'fecharOrdemServico'])->name('orcamento-servico.fechar');

@@ -57,6 +57,7 @@ use App\Enums\TaxaPagamento;
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" href="{{route('pagamento.show', ['pagamento' => $pagamento->id])}}">Visualizar</a>
+                                                <a class="dropdown-item" href="{{route('set-status-pagamento', ['id' => $pagamento->id])}}">Altera Status</a>
                                                 <a href="{{ route('pagamento.destroy', $pagamento->id) }}" class="dropdown-item" data-confirm-delete="true">Deletar</a>
                                             </div>
                                         </div>

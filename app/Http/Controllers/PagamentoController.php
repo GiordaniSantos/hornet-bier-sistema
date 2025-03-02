@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatusPagamento;
 use App\Models\Pagamento;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,20 @@ class PagamentoController extends Controller
 
         confirmDelete('Deletar pagamento!', "Você tem certeza que quer deletar este registro?");
         return view('admin.pagamento.index', ['pagamentos' => $pagamentos]);
+    }
+
+    public function setStatusPagamento($id)
+    {
+        $pagamento = Pagamento::where('id', $id)->first();
+        if (!$pagamento) {
+            alert()->error('Erro', 'Pagamento não encontrado.');
+            return redirect()->route('pagamento.index');
+        }
+        $pagamento->status = $pagamento->status == StatusPagamento::Pago->value ? StatusPagamento::Pendente->value : StatusPagamento::Pago->value;
+        $pagamento->save();
+ 
+        alert()->success('Concluído','Status alterado com sucesso.');
+        return redirect()->route('pagamento.index');
     }
 
     /**
