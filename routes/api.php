@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ProblemaController;
 use App\Http\Controllers\Api\ServicoController;
 use App\Http\Controllers\Api\MarcaController;
 use App\Http\Controllers\Api\PecaController;
+use App\Http\Controllers\Api\PagamentoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +49,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('peca', PecaController::class);
 
     Route::apiResource('cliente', ClienteController::class);
+
+    Route::apiResource('pagamento', PagamentoController::class);
+
+    Route::get('set-status-pagamento/{id}', [PagamentoController::class, 'setStatusPagamento'])->name('set-status-pagamento');
 
     Route::get('select-clientes', [ClienteController::class, 'selectClientes']);
 
