@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ServicoController;
 use App\Http\Controllers\Api\MarcaController;
 use App\Http\Controllers\Api\PecaController;
 use App\Http\Controllers\Api\PagamentoController;
+use App\Http\Controllers\Api\CheckoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('cliente', ClienteController::class);
 
     Route::apiResource('pagamento', PagamentoController::class);
+
+    Route::get('pagamento/taxa/get-taxas-cobranca', [PagamentoController::class, 'getOptionsTaxaPagamento'])->name('taxas-pagamento');
+    
+    Route::get('pagamento/get-link-pagamento-whatsapp/{id}', [CheckoutController::class, 'getUrlCheckoutOrdemServico'])->name('link-pagamento');
+
+    Route::post('pagamento/get-link-multiplo-pagamento-whatsapp', [CheckoutController::class, 'getUrlCheckoutMultiploOrdemServico'])->name('multiplo-link-pagamento');
 
     Route::get('set-status-pagamento/{id}', [PagamentoController::class, 'setStatusPagamento'])->name('set-status-pagamento');
 

@@ -39,4 +39,14 @@ enum TaxaPagamento: int
             return $carry;
         }, []);
     }
+
+    public static function getInputOptionsApi(): array
+    {
+        return array_map(function ($item) {
+            return [
+                'value' => $item->value,
+                'label' => $item->descricao(),
+            ];
+        }, self::cases());
+    }
 }

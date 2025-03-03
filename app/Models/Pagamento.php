@@ -31,8 +31,8 @@ class Pagamento extends Model
         $pagamentos = [];
         $pagamentos[] = $this;
         $mensagem = Helper::formataMensagemLinkPagamentoWhatsapp($link, $pagamentos);
-
-        return Helper::getWhatsappUrl(Helper::getWhatsappCelular($this->itens[0]['cliente']['celular']), $mensagem);
+        
+        return $isApi ? Helper::getWhatsappUrlApi(Helper::getWhatsappCelular($this->itens[0]['cliente']['celular']), $mensagem) : Helper::getWhatsappUrl(Helper::getWhatsappCelular($this->itens[0]['cliente']['celular']), $mensagem);
     }
 
     public function isPaid()

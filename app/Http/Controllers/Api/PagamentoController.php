@@ -42,12 +42,19 @@ class PagamentoController extends Controller
     {
         $pagamento = Pagamento::where('id', $id)->first();
         if (!$pagamento) {
-            return response()->json('Pagamento não encontrado', 404);
+            abort(404, 'Pagamento não encontrado');
         }
         $pagamento->status = $pagamento->status == StatusPagamento::Pago->value ? StatusPagamento::Pendente->value : StatusPagamento::Pago->value;
         $pagamento->save();
  
         return response()->json($pagamento, 200);
+    }
+
+    public function getOptionsTaxaPagamento()
+    {
+        $inputOptionsTaxas = TaxaPagamento::getInputOptionsApi();
+
+        return response()->json($inputOptionsTaxas, 200);
     }
 
     /**
@@ -72,7 +79,7 @@ class PagamentoController extends Controller
         $pagamento = Pagamento::with(['itens'])->where('id', $id)->first();
 
         if (!$pagamento) {
-            return response()->json('Pagamento não encontrado.', 404);
+            abort(404, 'Pagamento não encontrado');
         }
 
         $itensFormatados = $pagamento->itens->map(function($item) {
