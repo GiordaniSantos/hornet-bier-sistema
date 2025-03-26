@@ -12,7 +12,7 @@ class OrdemServico extends Model
 
     protected $table = 'ordem_servicos';
 
-    protected $fillable = ['status', 'modelo', 'serie', 'numero_motor', 'valor', 'cliente_id', 'observacao', 'marca_id'];
+    protected $fillable = ['status', 'modelo', 'serie', 'numero_motor', 'valor', 'cliente_id', 'observacao', 'marca_id', 'voltagem'];
 
     public static function rules(): array
     {
@@ -22,6 +22,7 @@ class OrdemServico extends Model
             'observacao' => 'max:1000',
             'serie' => 'max:200',
             //'valor' => 'numeric',
+            'voltagem' => 'required|in:127,220',
             'cliente_id' => 'required|exists:clientes,id'
         ];
     }
@@ -36,6 +37,7 @@ class OrdemServico extends Model
             'serie.max' => 'O campo :attribute não pode ultrapassar 200 caracteres.',
             'cliente_id.exists' => 'O cliente informado não existe!',
             'cliente_id.required' => 'O cliente deve ser selecionado!',
+            'voltagem.in' => 'O valor deve ser 127V ou 220V',
             //'valor.numeric' => "O campo :attribute deve ser do tipo numérico"
         ];
     }

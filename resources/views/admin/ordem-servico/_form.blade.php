@@ -75,7 +75,7 @@ $dataSaida = $dataAtual->format('d/m/Y');
         @endif
     </div>
     <div class="form-group row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <label>Marca:</label>
             <select name="marca_id" class="single-marca js-states form-control" required {{ $isDisabled }}>
                 <option></option>
@@ -91,11 +91,24 @@ $dataSaida = $dataAtual->format('d/m/Y');
                 </span>
             @enderror
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <label>Modelo:</label>
             <input type="text" class="form-control form-control-user @error('modelo') is-invalid @enderror" name="modelo" autocomplete="modelo" autofocus id="modelo" value="{{ isset($ordemServico) ? old('modelo', $ordemServico->modelo) : old('modelo') }}" {{ $isDisabled }}>
             @error('modelo')
             <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="col-12 col-md-4">
+            <label>Voltagem:</label>
+            <select name="voltagem" class="form-control" required {{ $isDisabled }}>
+                <option value="">Selecione a Voltagem</option>
+                <option value="127" {{ ($ordemServico->voltagem ?? old('voltagem')) == 127 ? 'selected' : '' }}>127V</option>
+                <option value="220" {{ ($ordemServico->voltagem ?? old('voltagem')) == 220 ? 'selected' : '' }}>220V</option>
+            </select>
+            @error('voltagem')
+                <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror

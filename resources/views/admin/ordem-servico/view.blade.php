@@ -76,6 +76,10 @@
                         <td>{{$ordemServico->numero_motor}}</td>
                     </tr>
                     <tr>
+                        <td>Voltagem:</td>
+                        <td>{{$ordemServico->voltagem}}V</td>
+                    </tr>
+                    <tr>
                         <td>Cliente:</td>
                         <td>{{$ordemServico->cliente->nome}}</td>
                     </tr>
