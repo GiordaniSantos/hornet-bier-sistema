@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClienteRequest;
 use App\Models\Cliente;
-use Illuminate\Http\Request;
+use App\Repositories\ClienteRepository;
 
 class ClienteController extends Controller
 {
@@ -12,7 +13,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::orderBy('created_at', 'desc')->get();
+        $clientes = ClienteRepository::all('created_at', 'desc');
 
         confirmDelete('Deletar cliente!', "Você tem certeza que quer deletar este registro?");
         return view('admin.cliente.index', ['clientes' => $clientes]);
@@ -29,14 +30,14 @@ class ClienteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ClienteRequest $request)
     {
-        $request->validate(Cliente::rules(), Cliente::feedback());
-        $cliente = new Cliente();
-        $clienteCriado = $cliente->create($request->all());
-        if($clienteCriado){
-            alert()->success('Concluído','Cliente adicionado com sucesso.');
+        $clienteCriado = ClienteRepository::create($request->all());
+
+        if ($clienteCriado) {
+            alert()->success('Concluído', 'Cliente adicionado com sucesso.');
         }
+
         return view('admin.cliente.view', ['cliente' => $clienteCriado]);
     }
 
@@ -59,10 +60,9 @@ class ClienteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(ClienteRequest $request, Cliente $cliente)
     {   
-        $request->validate(Cliente::rules($cliente), Cliente::feedback());
-        $cliente->update($request->all());
+        ClienteRepository::update($cliente, $request->all());
         alert()->success('Concluído','Cliente atualizado com sucesso.');
         return view('admin.cliente.view', ['cliente' => $cliente]);
     }
@@ -73,7 +73,7 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         try {
-            $cliente->delete();
+            ClienteRepository::delete($cliente);
             alert()->success('Concluído','Cliente removido com sucesso.');
             return redirect()->route('cliente.index');
         } catch (\Exception $e) {

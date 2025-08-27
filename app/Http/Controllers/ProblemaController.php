@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProblemaRequest;
 use App\Models\Problema;
+use App\Repositories\ProblemaRepository;
 use Illuminate\Http\Request;
 
 class ProblemaController extends Controller
@@ -12,7 +14,7 @@ class ProblemaController extends Controller
      */
     public function index()
     {
-        $problemas = Problema::orderBy('created_at', 'desc')->get();
+        $problemas = ProblemaRepository::all('created_at', 'desc');
 
         confirmDelete('Deletar problema!', "Você tem certeza que quer deletar este registro?");
         return view('admin.problema.index', ['problemas' => $problemas]);
@@ -29,11 +31,9 @@ class ProblemaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProblemaRequest $request)
     {
-        $request->validate(Problema::rules(), Problema::feedback());
-        $problema = new Problema();
-        $problemaCriado = $problema->create($request->all());
+        $problemaCriado = ProblemaRepository::create($request->all());
         if($problemaCriado){
             alert()->success('Concluído','Problema adicionado com sucesso.');
         }
@@ -59,9 +59,9 @@ class ProblemaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Problema $problema)
+    public function update(ProblemaRequest $request, Problema $problema)
     {
-        $problema->update($request->all());
+        ProblemaRepository::update($problema, $request->all());
         alert()->success('Concluído','Problema atualizado com sucesso.');
         return redirect()->route('problema.index', ['problema' => $problema->id]);
     }
@@ -72,7 +72,7 @@ class ProblemaController extends Controller
     public function destroy(Problema $problema)
     {
         try {
-            $problema->delete();
+            ProblemaRepository::delete($problema);
             alert()->success('Concluído','Problema removido com sucesso.');
             return redirect()->route('problema.index');
         } catch (\Exception $e) {
