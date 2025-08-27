@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProblemaRequest;
 use App\Models\Problema;
 use App\Repositories\ProblemaRepository;
-use Illuminate\Http\Request;
 
 class ProblemaController extends Controller
 {

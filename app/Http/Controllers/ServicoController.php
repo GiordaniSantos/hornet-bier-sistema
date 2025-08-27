@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Servico;
+use App\Repositories\ServicoRepository;
 use Illuminate\Http\Request;
 
 class ServicoController extends Controller
@@ -12,7 +13,7 @@ class ServicoController extends Controller
      */
     public function index()
     {
-        $servicos = Servico::orderBy('created_at', 'desc')->get();
+        $servicos = ServicoRepository::all('created_at', 'desc');
 
         confirmDelete('Deletar serviço!', "Você tem certeza que quer deletar este registro?");
         return view('admin.servico.index', ['servicos' => $servicos]);
@@ -31,8 +32,7 @@ class ServicoController extends Controller
      */
     public function store(Request $request)
     {
-        $servico = new Servico();
-        $servicoCriada = $servico->create($request->all());
+        $servicoCriada = ServicoRepository::create($request->all());
         if($servicoCriada){
             alert()->success('Concluído','Serviço adicionado com sucesso.');
         }
@@ -60,7 +60,7 @@ class ServicoController extends Controller
      */
     public function update(Request $request, Servico $servico)
     {
-        $servico->update($request->all());
+        ServicoRepository::update($servico, $request->all());
         alert()->success('Concluído','Serviço atualizado com sucesso.');
         return redirect()->route('servico.index', ['servico' => $servico->id]);
     }
@@ -71,7 +71,7 @@ class ServicoController extends Controller
     public function destroy(Servico $servico)
     {
         try {
-            $servico->delete();
+            ServicoRepository::delete($servico);
             alert()->success('Concluído','Servico removido com sucesso.');
             return redirect()->route('servico.index');
         } catch (\Exception $e) {
