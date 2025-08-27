@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MarcaRequest;
 use App\Models\Marca;
-use Illuminate\Http\Request;
+use App\Repositories\MarcaRepository;
 
 class MarcaController extends Controller
 {
@@ -12,7 +13,7 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $marcas = Marca::orderBy('created_at', 'desc')->get();
+        $marcas = MarcaRepository::all('created_at', 'desc');
 
         confirmDelete('Deletar marca!', "Você tem certeza que quer deletar este registro?");
         return view('admin.marca.index', ['marcas' => $marcas]);
@@ -29,11 +30,9 @@ class MarcaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MarcaRequest $request)
     {
-        $request->validate(Marca::rules(), Marca::feedback());
-        $marca = new Marca();
-        $marcaCriado = $marca->create($request->all());
+        $marcaCriado = MarcaRepository::create($request->all());
         if($marcaCriado){
             alert()->success('Concluído','Marca adicionada com sucesso.');
         }
@@ -59,10 +58,9 @@ class MarcaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Marca $marca)
+    public function update(MarcaRequest $request, Marca $marca)
     {
-        $request->validate(Marca::rules(), Marca::feedback());
-        $marca->update($request->all());
+        MarcaRepository::update($marca, $request->all());
         alert()->success('Concluído','Marca atualizada com sucesso.');
         return view('admin.marca.view', ['marca' => $marca]);
     }
@@ -73,7 +71,7 @@ class MarcaController extends Controller
     public function destroy(Marca $marca)
     {
         try {
-            $marca->delete();
+            MarcaRepository::delete($marca);
             alert()->success('Concluído','Marca removida com sucesso.');
             return redirect()->route('marca.index');
         } catch (\Exception $e) {

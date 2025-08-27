@@ -32,7 +32,6 @@ class ClienteRequest extends FormRequest
      */
     public function messages(): array
     {
-        // Pega as mensagens de feedback do seu modelo Cliente.
         return Cliente::feedback();
     }
 }
