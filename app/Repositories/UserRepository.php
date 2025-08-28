@@ -5,7 +5,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
-abstract class UserRepository extends AbstractRepository
+class UserRepository extends AbstractRepository
 {
     protected static $model = User::class;
 
@@ -28,7 +28,7 @@ abstract class UserRepository extends AbstractRepository
         return $user;
     }
 
-     public static function updateUser(Model $user, array $attributes): Model
+    public static function updateUser(Model $user, array $attributes): Model
     {
         $user->name = $attributes['name'] ?? null;
 

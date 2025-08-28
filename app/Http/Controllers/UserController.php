@@ -78,7 +78,7 @@ class UserController extends Controller
         if(!$user){
             abort(404, 'Usuário não encotrado!');
         }
-
+        
         $user = UserRepository::updateUser($user, $request->all());
        
         if($user){
