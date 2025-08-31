@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Cliente;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ClienteRequest extends FormRequest
@@ -22,7 +21,13 @@ class ClienteRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Cliente::rules();
+        return [
+            'nome' => 'required|max:250',
+            //'cpf_cnpj' => ['required', new CpfOuCnpj],
+            'cidade' => 'max:200',
+            'nome_contato' => 'max:250'
+            //'email' => ['max:255', Rule::unique('clientes')->ignore($cliente ? $cliente->id : null)],
+        ];
     }
 
      /**
@@ -32,6 +37,13 @@ class ClienteRequest extends FormRequest
      */
     public function messages(): array
     {
-        return Cliente::feedback();
+        return [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'nome.max' => 'O campo :attribute não pode ultrapassar 250 caracteres.',
+            'cidade.max' => 'O campo :attribute não pode ultrapassar 200 caracteres.',
+            'nome_contato.max' => 'O campo :attribute não pode ultrapassar 250 caracteres.'
+            //'email.max' => 'O campo email não pode ultrapassar 255 caracteres.',
+            //'email.email' => 'O campo email deve ser do tipo Email.',
+        ];
     }
 }

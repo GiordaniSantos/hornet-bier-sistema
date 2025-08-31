@@ -11,21 +11,6 @@ class Problema extends Model
 
     protected $fillable = ['nome'];
 
-    public static function rules(): array
-    {
-        return [
-            'nome' => 'required|max:300'
-        ];
-    }
-
-    public static function feedback(): array
-    {
-        return [
-            'required' => 'O campo :attribute deve ser preenchido',
-            'nome.max' => 'O campo :attribute não pode ultrapassar 300 caracteres.'
-        ];
-    }
-
     public static function boot()
     {
         parent::boot();

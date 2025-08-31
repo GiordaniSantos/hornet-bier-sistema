@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Marca;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MarcaRequest extends FormRequest
@@ -22,7 +21,9 @@ class MarcaRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Marca::rules();
+        return [
+            'nome' => 'required|max:250',
+        ];
     }
 
      /**
@@ -32,6 +33,9 @@ class MarcaRequest extends FormRequest
      */
     public function messages(): array
     {
-        return Marca::feedback();
+        return [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'nome.max' => 'O campo :attribute não pode ultrapassar 250 caracteres.',
+        ];
     }
 }

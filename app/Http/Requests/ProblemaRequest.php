@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Problema;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProblemaRequest extends FormRequest
@@ -22,7 +21,9 @@ class ProblemaRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Problema::rules();
+        return [
+            'nome' => 'required|max:300'
+        ];
     }
 
          /**
@@ -32,6 +33,9 @@ class ProblemaRequest extends FormRequest
      */
     public function messages(): array
     {
-        return Problema::feedback();
+        return [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'nome.max' => 'O campo :attribute não pode ultrapassar 300 caracteres.'
+        ];
     }
 }
