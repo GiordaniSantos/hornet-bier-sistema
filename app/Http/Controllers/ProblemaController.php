@@ -19,7 +19,7 @@ class ProblemaController extends Controller
      */
     public function index()
     {
-        $problemas = $this->service->all();
+        $problemas = $this->service->getAll();
 
         confirmDelete('Deletar problema!', "Você tem certeza que quer deletar este registro?");
         return view('admin.problema.index', ['problemas' => $problemas]);

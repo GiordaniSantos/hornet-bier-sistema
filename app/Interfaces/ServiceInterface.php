@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface ServiceInterface
 {
-    public function all(string $orderBy, string $orderDirection): Collection;
+    public function getAll(string $orderBy, string $orderDirection): Collection;
     public function create(array $attributes): Model|null;
     public function delete(Model $model): bool;
     public function find(int $id): Model|null;

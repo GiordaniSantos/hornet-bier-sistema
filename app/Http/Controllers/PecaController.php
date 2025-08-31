@@ -20,7 +20,7 @@ class PecaController extends Controller
      */
     public function index()
     {
-        $pecas = $this->pecaService->all();
+        $pecas = $this->pecaService->getAll();
 
         confirmDelete('Deletar peça!', "Você tem certeza que quer deletar este registro?");
         return view('admin.peca.index', ['pecas' => $pecas]);

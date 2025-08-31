@@ -20,7 +20,7 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $marcas = $this->service->all();
+        $marcas = $this->service->getAll();
 
         confirmDelete('Deletar marca!', "Você tem certeza que quer deletar este registro?");
         return view('admin.marca.index', ['marcas' => $marcas]);

@@ -19,7 +19,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = $this->service->all();
+        $clientes = $this->service->getAll();
 
         confirmDelete('Deletar cliente!', "Você tem certeza que quer deletar este registro?");
         return view('admin.cliente.index', ['clientes' => $clientes]);

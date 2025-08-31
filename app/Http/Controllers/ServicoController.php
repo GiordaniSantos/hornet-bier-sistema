@@ -19,7 +19,7 @@ class ServicoController extends Controller
      */
     public function index()
     {
-        $servicos = $this->service->all();
+        $servicos = $this->service->getAll();
 
         confirmDelete('Deletar serviço!', "Você tem certeza que quer deletar este registro?");
         return view('admin.servico.index', ['servicos' => $servicos]);

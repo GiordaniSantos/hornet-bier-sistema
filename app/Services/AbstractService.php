@@ -15,7 +15,7 @@ class AbstractService implements ServiceInterface
         $this->repository = $repository;
     }
 
-    public function all(string $orderBy = 'created_at', string $orderDirection = 'desc'): Collection
+    public function getAll(string $orderBy = 'created_at', string $orderDirection = 'desc'): Collection
     {
         return $this->repository->all($orderBy, $orderDirection);
     }

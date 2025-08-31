@@ -17,7 +17,7 @@ class UserController extends Controller
   
     public function index()
     {
-        $usuarios = $this->userService->all();
+        $usuarios = $this->userService->getAll();
 
         confirmDelete('Deletar usuário administrativo!', "Você tem certeza que quer deletar este registro?");
         return view('admin.user.index', ['usuarios' => $usuarios]);
