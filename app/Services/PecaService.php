@@ -2,38 +2,30 @@
 namespace App\Services;
 
 use App\Repositories\PecaRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class PecaService
+class PecaService extends AbstractService
 {
-    protected PecaRepository $pecaRepository;
-
-    public function __construct(PecaRepository $pecaRepository)
+    public function __construct(PecaRepository $repository)
     {
-        $this->pecaRepository = $pecaRepository;
-    }
-
-    public function all(string $oderBy, string $oderDirection): Collection
-    {
-        return $this->pecaRepository->all($oderBy, $oderDirection);
+        parent::__construct($repository);
     }
 
     public function createPeca(array $attributes): Model
     {
         $attributes['valor_unitario'] = $this->formatValor($attributes['valor_unitario']);
-        return $this->pecaRepository->create($attributes);
+        return $this->repository->create($attributes);
     }
 
     public function updatePeca(Model $peca, array $attributes): bool
     {
         $attributes['valor_unitario'] = $this->formatValor($attributes['valor_unitario']);
-        return $this->pecaRepository->update($peca, $attributes);
+        return $this->repository->update($peca, $attributes);
     }
 
     public function delete(Model $peca): bool
     {
-        return $this->pecaRepository->delete($peca);
+        return $this->repository->delete($peca);
     }
 
     protected function formatValor(string $valor): string

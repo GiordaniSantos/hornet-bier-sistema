@@ -4,16 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProblemaRequest;
 use App\Models\Problema;
-use App\Repositories\ProblemaRepository;
+use App\Services\ProblemaService;
 
 class ProblemaController extends Controller
 {
+    protected ProblemaService $service;
+
+    public function __construct(ProblemaService $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $problemas = ProblemaRepository::all('created_at', 'desc');
+        $problemas = $this->service->all();
 
         confirmDelete('Deletar problema!', "Você tem certeza que quer deletar este registro?");
         return view('admin.problema.index', ['problemas' => $problemas]);
@@ -32,7 +38,7 @@ class ProblemaController extends Controller
      */
     public function store(ProblemaRequest $request)
     {
-        $problemaCriado = ProblemaRepository::create($request->all());
+        $problemaCriado = $this->service->create($request->all());
         if($problemaCriado){
             alert()->success('Concluído','Problema adicionado com sucesso.');
         }
@@ -60,7 +66,7 @@ class ProblemaController extends Controller
      */
     public function update(ProblemaRequest $request, Problema $problema)
     {
-        ProblemaRepository::update($problema, $request->all());
+        $this->service->update($problema, $request->all());
         alert()->success('Concluído','Problema atualizado com sucesso.');
         return redirect()->route('problema.index', ['problema' => $problema->id]);
     }
@@ -71,7 +77,7 @@ class ProblemaController extends Controller
     public function destroy(Problema $problema)
     {
         try {
-            ProblemaRepository::delete($problema);
+            $this->service->delete($problema);
             alert()->success('Concluído','Problema removido com sucesso.');
             return redirect()->route('problema.index');
         } catch (\Exception $e) {

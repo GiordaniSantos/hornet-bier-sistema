@@ -5,5 +5,8 @@ use App\Models\Cliente;
 
 class ClienteRepository extends AbstractRepository
 {
-    protected static $model = Cliente::class;
+    public function __construct(Cliente $model)
+    {
+        parent::__construct($model);
+    }
 }

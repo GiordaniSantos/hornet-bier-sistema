@@ -5,5 +5,8 @@ use App\Models\Problema;
 
 class ProblemaRepository extends AbstractRepository
 {
-    protected static $model = Problema::class;
+    public function __construct(Problema $model)
+    {
+        parent::__construct($model);
+    }
 }

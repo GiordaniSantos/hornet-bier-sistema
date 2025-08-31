@@ -4,16 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClienteRequest;
 use App\Models\Cliente;
-use App\Repositories\ClienteRepository;
+use App\Services\ClienteService;
 
 class ClienteController extends Controller
 {
+    protected ClienteService $service;
+
+    public function __construct(ClienteService $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $clientes = ClienteRepository::all('created_at', 'desc');
+        $clientes = $this->service->all();
 
         confirmDelete('Deletar cliente!', "Você tem certeza que quer deletar este registro?");
         return view('admin.cliente.index', ['clientes' => $clientes]);
@@ -32,7 +38,7 @@ class ClienteController extends Controller
      */
     public function store(ClienteRequest $request)
     {
-        $clienteCriado = ClienteRepository::create($request->all());
+        $clienteCriado = $this->service->create($request->all());
 
         if ($clienteCriado) {
             alert()->success('Concluído', 'Cliente adicionado com sucesso.');
@@ -62,7 +68,7 @@ class ClienteController extends Controller
      */
     public function update(ClienteRequest $request, Cliente $cliente)
     {   
-        ClienteRepository::update($cliente, $request->all());
+        $this->service->update($cliente, $request->all());
         alert()->success('Concluído','Cliente atualizado com sucesso.');
         return view('admin.cliente.view', ['cliente' => $cliente]);
     }
@@ -73,7 +79,7 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         try {
-            ClienteRepository::delete($cliente);
+            $this->service->delete($cliente);
             alert()->success('Concluído','Cliente removido com sucesso.');
             return redirect()->route('cliente.index');
         } catch (\Exception $e) {

@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
+    protected UserService $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
   
     public function index()
     {
-        $usuarios = UserRepository::all('created_at', 'desc');
+        $usuarios = $this->userService->all();
 
         confirmDelete('Deletar usuário administrativo!', "Você tem certeza que quer deletar este registro?");
         return view('admin.user.index', ['usuarios' => $usuarios]);
@@ -27,7 +30,7 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $userCriado = UserRepository::createUser($request->all());
+        $userCriado = $this->userService->createUser($request->all());
         
         if($userCriado){
             alert()->success('Concluído','Conta administrativa adicionada com sucesso.');
@@ -43,12 +46,12 @@ class UserController extends Controller
 
     public function update(UserRequest $request, $id)
     {
-        $user = UserRepository::find($id);
+        $user = $this->userService->find($id);
         if(!$user){
             abort(404, 'Usuário não encotrado!');
         }
 
-        $user = UserRepository::updateUser($user, $request->all());
+        $user = $this->userService->updateUser($user, $request->all());
        
         if($user){
             alert()->success('Concluído','Conta administrativa atualizada com sucesso.');
@@ -59,7 +62,7 @@ class UserController extends Controller
 
     public function destroy(User $usuario)
     { 
-        UserRepository::delete($usuario);
+        $this->userService->delete($usuario);
   
         alert()->success('Concluído','Registro removido com sucesso.');
         return redirect()->route('usuario.index');
@@ -67,19 +70,19 @@ class UserController extends Controller
 
     public function viewPerfil()
     {
-        $user = UserRepository::find(\Auth::user()->id);
+        $user = $this->userService->find(\Auth::user()->id);
 
         return view('admin.perfil.view', ['user' => $user]);
     }
 
     public function updatePerfil(UserRequest $request, $id)
     {
-        $user = UserRepository::find(\Auth::user()->id);
+        $user = $this->userService->find(\Auth::user()->id);
         if(!$user){
             abort(404, 'Usuário não encotrado!');
         }
         
-        $user = UserRepository::updateUser($user, $request->all());
+        $user = $this->userService->updateUser($user, $request->all());
        
         if($user){
             alert()->success('Concluído','Conta administrativa atualizada com sucesso.');

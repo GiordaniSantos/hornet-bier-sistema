@@ -5,5 +5,8 @@ use App\Models\Marca;
 
 class MarcaRepository extends AbstractRepository
 {
-    protected static $model = Marca::class;
+    public function __construct(Marca $model)
+    {
+        parent::__construct($model);
+    }
 }

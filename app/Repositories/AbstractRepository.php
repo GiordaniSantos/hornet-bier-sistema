@@ -7,35 +7,45 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractRepository implements RepositoryInterface
 {
-    protected static $model;
+    protected Model $model;
 
-    public static function all(string $orderBy = 'id', string $orderDirection = 'asc'): Collection
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
+
+    public function all(string $orderBy = 'created_at', string $orderDirection = 'desc'): Collection
     {
         return self::loadModel()::all();
     }
 
-    public static function find(int $id): Model|null
+    public function persist(Model $model): bool
+    {
+        return $model->save();
+    }
+
+    public function find(int $id): Model|null
     {
         return self::loadModel()->query()->find($id);
     }
 
-    public static function create(array $attributes = []): Model|null
+    public function create(array $attributes = []): Model|null
     {
         return self::loadModel()->query()->create($attributes);
     }
 
-    public static function delete(Model $model): bool
+    public function delete(Model $model): bool
     {
         return $model->delete();
     }
 
-    public static function update(Model $model, array $attributes = []): bool
+    public function update(Model $model, array $attributes = []): bool
     {
         return $model->update($attributes);
     }
 
-    public static function loadModel(): Model
+    public function loadModel(): Model
     {
-        return app(static::$model);
+        return $this->model;
     }
 }

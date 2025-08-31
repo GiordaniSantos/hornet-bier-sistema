@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Models\OrdemServico;
+use App\Services\PdfService;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class PdfController extends Controller
 {
+    protected PdfService $pdfService;
+
+    public function __construct(PdfService $pdfService)
+    {
+        $this->pdfService = $pdfService;
+    }
 
     public function index($id)
     {
-        $ordemServico = OrdemServico::where(['id' => $id])->first();
+        $ordemServico = $this->pdfService->find($id);
 
         if(!$ordemServico){
             alert()->error('Erro','Ordem de Serviço não encontrada.');

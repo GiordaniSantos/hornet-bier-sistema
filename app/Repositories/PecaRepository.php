@@ -5,5 +5,8 @@ use App\Models\Peca;
 
 class PecaRepository extends AbstractRepository
 {
-    protected static $model = Peca::class;
+    public function __construct(Peca $model)
+    {
+        parent::__construct($model);
+    }
 }

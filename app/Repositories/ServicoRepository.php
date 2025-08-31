@@ -5,5 +5,8 @@ use App\Models\Servico;
 
 class ServicoRepository extends AbstractRepository
 {
-    protected static $model = Servico::class;
+    public function __construct(Servico $model)
+    {
+        parent::__construct($model);
+    }
 }

@@ -4,16 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MarcaRequest;
 use App\Models\Marca;
-use App\Repositories\MarcaRepository;
+use App\Services\MarcaService;
 
 class MarcaController extends Controller
 {
+    protected MarcaService $service;
+
+    public function __construct(MarcaService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $marcas = MarcaRepository::all('created_at', 'desc');
+        $marcas = $this->service->all();
 
         confirmDelete('Deletar marca!', "Você tem certeza que quer deletar este registro?");
         return view('admin.marca.index', ['marcas' => $marcas]);
@@ -32,7 +39,7 @@ class MarcaController extends Controller
      */
     public function store(MarcaRequest $request)
     {
-        $marcaCriado = MarcaRepository::create($request->all());
+        $marcaCriado = $this->service->create($request->all());
         if($marcaCriado){
             alert()->success('Concluído','Marca adicionada com sucesso.');
         }
@@ -60,7 +67,7 @@ class MarcaController extends Controller
      */
     public function update(MarcaRequest $request, Marca $marca)
     {
-        MarcaRepository::update($marca, $request->all());
+        $this->service->update($marca, $request->all());
         alert()->success('Concluído','Marca atualizada com sucesso.');
         return view('admin.marca.view', ['marca' => $marca]);
     }
@@ -71,7 +78,7 @@ class MarcaController extends Controller
     public function destroy(Marca $marca)
     {
         try {
-            MarcaRepository::delete($marca);
+            $this->service->delete($marca);
             alert()->success('Concluído','Marca removida com sucesso.');
             return redirect()->route('marca.index');
         } catch (\Exception $e) {
