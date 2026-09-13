@@ -200,7 +200,7 @@
                     <i class="fa-brands fa-whatsapp text-hornet-orange text-lg"></i>
                     <div>
                         <span class="block text-[10px] text-neutral-400 font-normal">Fale no WhatsApp</span>
-                        <span class="font-bold text-sm">(51) 9944-6655</span>
+                        <span class="font-bold text-sm">(51) 99944-6655</span>
                     </div>
                 </a>
                 <a href="https://www.instagram.com/hornetbier" target="_blank" class="flex items-center gap-3 text-xs text-white bg-neutral-900/80 p-3 rounded-lg border border-neutral-800 hover:border-hornet-orange transition-colors">
