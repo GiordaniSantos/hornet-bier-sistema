@@ -249,12 +249,11 @@
                         target="_blank" rel="noopener noreferrer"
                         class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-extrabold text-white text-sm sm:text-base uppercase tracking-wider mb-4 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:-translate-y-0.5 transition-all duration-300 group">
                         <span
-                            class="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:rotate-12 transition-transform">
+                            class="w-7 h-7 rounded-full bg-[#25D366] flex items-center justify-center text-white group-hover:rotate-12 transition-transform shadow-md">
                             <i class="fa-brands fa-whatsapp text-base"></i>
                         </span>
                         <span>SOLICITAR ORÇAMENTO</span>
-                        <i
-                            class="fa-solid fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                        <i class="fa-solid fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
                     </a>
 
                     <p class="text-neutral-400 italic text-xs sm:text-sm font-light max-w-md">
@@ -459,19 +458,15 @@
                     </div>
 
                     <div class="flex items-center gap-3">
-                        <a href="https://wa.me/555199446655" target="_blank" rel="noopener noreferrer"
-                            aria-label="WhatsApp Geral"
-                            class="w-10 h-10 rounded-full border border-hornet-orange flex items-center justify-center text-hornet-orange hover:bg-hornet-orange hover:text-white transition-all duration-300">
-                            <i class="fa-brands fa-whatsapp text-lg"></i>
-                        </a>
                         <a href="https://www.facebook.com/hornetbier/" target="_blank" rel="noopener noreferrer"
                             aria-label="Facebook"
-                            class="w-10 h-10 rounded-full border border-hornet-orange flex items-center justify-center text-hornet-orange hover:bg-hornet-orange hover:text-white transition-all duration-300">
-                            <i class="fa-brands fa-facebook text-lg"></i>
+                            class="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center shadow-md hover:scale-110 hover:shadow-lg transition-all duration-300">
+                            <i class="fa-brands fa-facebook-f text-lg"></i>
                         </a>
+                        
                         <a href="https://www.instagram.com/hornetbier" target="_blank" rel="noopener noreferrer"
                             aria-label="Instagram"
-                            class="w-10 h-10 rounded-full border border-hornet-orange flex items-center justify-center text-hornet-orange hover:bg-hornet-orange hover:text-white transition-all duration-300">
+                            class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center shadow-md hover:scale-110 hover:shadow-lg transition-all duration-300">
                             <i class="fa-brands fa-instagram text-lg"></i>
                         </a>
                     </div>
