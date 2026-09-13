@@ -100,7 +100,7 @@
         }
 
         .shadow-glow-orange {
-            box-shadow: 0 0 25px rgba(249, 99, 2, 0.5);
+            box-shadow: 0 0 30px rgba(249, 99, 2, 0.55);
         }
     </style>
 
@@ -112,7 +112,7 @@
       "image": "logo.jpeg",
       "@id": "https://www.hornetbier.com.br/#organization",
       "url": "https://www.hornetbier.com.br/",
-      "telephone": "+555199467757",
+      "telephone": "+555199446655",
       "priceRange": "$$",
       "address": {
         "@type": "PostalAddress",
@@ -141,11 +141,11 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 md:h-28 flex items-center justify-between relative z-30">
 
-            <a href="#" class="flex items-center gap-2 py-1 group z-40 relative -mb-6 sm:-mb-10 md:-mb-14 top-1 sm:top-2"
+            <a href="#" class="flex items-center gap-2 py-1 group z-40 relative -mb-8 sm:-mb-12 md:-mb-16 lg:-mb-20 top-1 sm:top-2"
                 aria-label="Hornet Bier Página Inicial">
                 <img src="/images/logo-nova.jpeg" alt="Chopeiras Hornet Bier Logo"
-                    class="h-20 w-20 sm:h-28 sm:w-28 md:h-36 md:w-36 lg:h-40 lg:w-40 object-contain rounded-full border-4 border-hornet-orange bg-black p-1 shadow-glow-orange transition-transform duration-300 group-hover:scale-105"
-                    onerror="this.onerror=null; this.src='https://placehold.co/180x180/000000/F96302?text=HORNET+BIER';">
+                    class="h-24 w-24 sm:h-32 sm:w-32 md:h-40 md:w-40 lg:h-48 lg:w-48 object-contain rounded-full border-4 border-hornet-orange bg-black p-1 shadow-glow-orange transition-transform duration-300 group-hover:scale-105"
+                    onerror="this.onerror=null; this.src='https://placehold.co/200x200/000000/F96302?text=HORNET+BIER';">
             </a>
 
             <nav class="hidden md:flex items-center gap-4 lg:gap-8 text-xs lg:text-sm font-extrabold tracking-wider uppercase">
@@ -158,7 +158,7 @@
             <div class="flex items-center gap-3 sm:gap-4">
                 <div class="hidden sm:flex items-center gap-3">
                     <span class="text-neutral-600 font-light text-lg">|</span>
-                    <a href="https://wa.me/555199467757" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+                    <a href="https://wa.me/555199446655" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Geral"
                         class="w-9 h-9 rounded-full border border-hornet-orange flex items-center justify-center text-hornet-orange hover:bg-hornet-orange hover:text-white transition-all duration-300">
                         <i class="fa-brands fa-whatsapp text-base"></i>
                     </a>
@@ -196,11 +196,11 @@
             </a>
             
             <div class="flex flex-col gap-3 pt-3 border-t border-neutral-800">
-                <a href="https://wa.me/555199467757" target="_blank" class="flex items-center gap-3 text-xs text-white bg-neutral-900/80 p-3 rounded-lg border border-neutral-800 hover:border-hornet-orange transition-colors">
+                <a href="https://wa.me/555199446655" target="_blank" class="flex items-center gap-3 text-xs text-white bg-neutral-900/80 p-3 rounded-lg border border-neutral-800 hover:border-hornet-orange transition-colors">
                     <i class="fa-brands fa-whatsapp text-hornet-orange text-lg"></i>
                     <div>
                         <span class="block text-[10px] text-neutral-400 font-normal">Fale no WhatsApp</span>
-                        <span class="font-bold text-sm">(51) 9946-7757</span>
+                        <span class="font-bold text-sm">(51) 9944-6655</span>
                     </div>
                 </a>
                 <a href="https://www.instagram.com/hornetbier" target="_blank" class="flex items-center gap-3 text-xs text-white bg-neutral-900/80 p-3 rounded-lg border border-neutral-800 hover:border-hornet-orange transition-colors">
@@ -216,7 +216,7 @@
 
     <main>
         <section id="inicio"
-            class="relative bg-[#08080C] border-b border-neutral-900 overflow-hidden flex flex-col lg:flex-row items-stretch pt-6 sm:pt-10 md:pt-12 lg:pt-0">
+            class="relative bg-[#08080C] border-b border-neutral-900 overflow-hidden flex flex-col lg:flex-row items-stretch pt-10 sm:pt-14 md:pt-16 lg:pt-6">
 
             <div class="w-full lg:w-1/2 flex items-center justify-end z-10 py-8 sm:py-12 lg:py-20 px-4 sm:px-8 lg:px-12">
                 <div class="w-full max-w-xl text-left">
@@ -245,7 +245,7 @@
                         <span>Instalação</span>
                     </div>
 
-                    <a href="https://wa.me/555199467757?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20minha%20chopeira."
+                    <a href="https://wa.me/555199446655?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20minha%20chopeira."
                         target="_blank" rel="noopener noreferrer"
                         class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-extrabold text-white text-sm sm:text-base uppercase tracking-wider mb-4 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:-translate-y-0.5 transition-all duration-300 group">
                         <span
@@ -432,9 +432,9 @@
                                 class="text-xs uppercase font-extrabold text-white tracking-wider block">RONALD</span>
                             <div class="flex items-center gap-2 mt-0.5">
                                 <i class="fa-solid fa-phone text-hornet-orange text-xs"></i>
-                                <a href="https://wa.me/555199467757" target="_blank"
+                                <a href="https://wa.me/5551999467757" target="_blank"
                                     class="text-sm sm:text-base font-bold text-white hover:text-hornet-orange transition-colors">
-                                    (51) 9946-7757
+                                    (51) 99946-7757
                                 </a>
                             </div>
                         </div>
@@ -459,6 +459,11 @@
                     </div>
 
                     <div class="flex items-center gap-3">
+                        <a href="https://wa.me/555199446655" target="_blank" rel="noopener noreferrer"
+                            aria-label="WhatsApp Geral"
+                            class="w-10 h-10 rounded-full border border-hornet-orange flex items-center justify-center text-hornet-orange hover:bg-hornet-orange hover:text-white transition-all duration-300">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                        </a>
                         <a href="https://www.facebook.com/hornetbier/" target="_blank" rel="noopener noreferrer"
                             aria-label="Facebook"
                             class="w-10 h-10 rounded-full border border-hornet-orange flex items-center justify-center text-hornet-orange hover:bg-hornet-orange hover:text-white transition-all duration-300">
@@ -481,7 +486,7 @@
         </section>
     </main>
 
-    <a href="https://wa.me/555199467757?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20informa%C3%A7%C3%B5es."
+    <a href="https://wa.me/555199446655?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20informa%C3%A7%C3%B5es."
         target="_blank" rel="noopener noreferrer" aria-label="Fale conosco no WhatsApp"
         class="fixed bottom-6 right-6 z-40 w-14 h-14 bg-emerald-500 text-white rounded-full flex items-center justify-center text-3xl shadow-2xl hover:bg-emerald-600 hover:scale-110 transition-all duration-300">
         <i class="fa-brands fa-whatsapp"></i>
