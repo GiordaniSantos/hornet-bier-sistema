@@ -216,10 +216,10 @@
 
     <main>
         <section id="inicio"
-            class="relative bg-[#08080C] border-b border-neutral-900 overflow-hidden flex flex-col lg:flex-row items-stretch pt-10 sm:pt-14 md:pt-16 lg:pt-6">
+            class="relative bg-[#08080C] border-b border-neutral-900 overflow-hidden flex flex-col lg:flex-row items-stretch">
 
-            <div class="w-full lg:w-1/2 flex items-center justify-end z-10 py-8 sm:py-12 lg:py-20 px-4 sm:px-8 lg:px-12">
-                <div class="w-full max-w-xl text-left">
+            <div class="w-full lg:w-1/2 flex items-center justify-end z-10 pt-14 sm:pt-16 md:pt-20 lg:pt-20 pb-8 sm:pb-12 lg:pb-20 px-4 sm:px-8 lg:px-12">
+                <div class="w-full max-w-xl text-left sm:mt-1 lg:mt-8">
 
                     <div
                         class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-extrabold uppercase tracking-widest bg-orange-500/10 text-orange-500 border border-orange-500/20 mb-4">
